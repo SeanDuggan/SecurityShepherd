@@ -119,6 +119,16 @@
 		<servlet-name>/addPlayer</servlet-name>
 		<url-pattern>/addPlayer</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+	  <servlet-name>/deletePlayers</servlet-name>
+	  <servlet-class>servlets.admin.userManagement.DeletePlayers</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	      <servlet-name>/deletePlayers</servlet-name>
+	      <url-pattern>/deletePlayers</url-pattern>
+	</servlet-mapping>
+	
 
 	<servlet>
 		<servlet-name>/assignPlayers</servlet-name>
