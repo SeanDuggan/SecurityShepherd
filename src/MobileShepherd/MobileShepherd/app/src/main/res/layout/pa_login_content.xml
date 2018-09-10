@@ -20,7 +20,7 @@
                         android:layout_marginTop="81dp"
                         android:text="Login"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="#DA70D6" />
+                        android:textColor="#FFF0F0F0" />
 
                     <EditText
                         android:id="@+id/etName"
@@ -34,7 +34,7 @@
                         android:background="@xml/edittext"
                         android:hint="Username"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="#DA70D6" />
+                        android:textColor="#FFF0F0F0" />
                         <requestFocus />
 
 
@@ -50,7 +50,7 @@
                         android:inputType="textPassword"
                         android:background="@xml/edittext"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="#DA70D6" >
+                        android:textColor="#FFF0F0F0" >
 
                     </EditText>
 

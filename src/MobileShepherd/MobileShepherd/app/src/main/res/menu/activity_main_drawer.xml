@@ -100,7 +100,7 @@
                 <item
                     android:id="@+id/nav_pa2"
                     android:icon="@mipmap/ic_action_image_timer_auto"
-                    android:title="Poor Authentication 1"
+                    android:title="Poor Authentication 2"
                     />
 
             </menu>
@@ -139,6 +139,18 @@
                     android:id="@+id/nav_ui"
                     android:icon="@mipmap/ic_action_notification_adb"
                     android:title="Untrusted Input"
+                    />
+            </menu>
+
+        </item>
+
+
+        <item android:title="Reverse Engineering">
+            <menu>
+                <item
+                    android:id="@+id/nav_re"
+                    android:icon="@mipmap/ic_action_notification_adb"
+                    android:title="Reverse Engineering"
                     />
             </menu>
 

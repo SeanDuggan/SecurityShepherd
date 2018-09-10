@@ -36,7 +36,7 @@
         android:ems="10"
         android:inputType="textPassword"
         android:text="unknownPassword"
-        android:textColor="#DA70D6" />
+        android:textColor="#FFF0F0F0" />
 
     <TextView
         android:id="@+id/theTextView"
@@ -47,7 +47,7 @@
         android:layout_marginTop="18dp"
         android:text="Send Credentials:"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#DA70D6" />
+        android:textColor="#FFF0F0F0" />
 
     <EditText
         android:id="@+id/editText2"
@@ -60,6 +60,6 @@
         android:editable="false"
         android:ems="10"
         android:text="Root"
-        android:textColor="#DA70D6" />
+        android:textColor="#FFF0F0F0" />
 
 </RelativeLayout>

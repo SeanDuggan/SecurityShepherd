@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text=""
-                android:textColor="#DA70D6"
+                android:textColor="#FFF0F0F0"
                 android:id="@+id/textView"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true" />

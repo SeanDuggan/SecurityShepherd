@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:textColor="#DA70D6" >
+        android:textColor="#c3c3c3" >
 
         <include
             layout="@layout/toolbar_main"
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:text="Click a message to copy it."
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="#DA70D6" />
+            android:textColor="#c3c3c3" />
 
         <Button
             android:id="@+id/Message1"

@@ -35,6 +35,11 @@
     <string name="action_license">License</string>
     <string name="action_exit">Exit</string>
 
+    <string name="deploy1">Lesson APK</string>
+    <string name="deploy2">Challenge 1 APK</string>
+    <string name="deploy3">Challenge 2 APK</string>
+    <string name="deploy4">Challenge 3 APK</string>
+    <string name="reverseOverview">The Apps needed for the reverse engineer challenges can be deployed to your local device storage. The Android SDK tools should be used to copy the APKs to a device which supports Reverse Engineer Tools.</string>
 
     <!--  Preferences -->
     <string name="dialog_based_preferences">Server Preferences</string>
@@ -49,6 +54,9 @@
     <string name="summary_license">This App is part of the Security Shepherd Project. The Security Shepherd project is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version. The Security Shepherd project is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details. You should have received a copy of the GNU General Public License along with the Security Shepherd project.  If not, see http://www.gnu.org/licenses.</string>
     <string name="title_test_preference">Test Server Connection</string>
     <string name="summary_test_preference">Tests the specified Server connection</string>
+    <string name="contact_license">Contact Us</string>
+    <string name="summary_contact">sean.duggan@owasp.org</string>
+
 
     <string name="message1">48656c6c6f2c20686f772061726520796f753f2057652061726520686f6c64696e67206120636f6d7065746974696f6e2c2077686f657665722063616e2067657420746865206b65792066726f6d207468697320636f6e766572736174696f6e2077696c6c2077696e2074686520636f6d7065746974696f6e</string>
     <string name="message2">576169742e2e2e20576861743f21204e6f626f647920746f6c64206d6521205468697320636f6d7065746974696f6e2077696c6c206265206f76657220696e207365636f6e64732120576861746576657220796f7520646f2c20646f206e6f74207075626c697368207468697320636f6e766572736174696f6e</string>

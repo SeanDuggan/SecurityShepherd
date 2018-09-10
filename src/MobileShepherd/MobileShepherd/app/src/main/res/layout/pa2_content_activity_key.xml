@@ -33,7 +33,7 @@
             android:layout_marginTop="20dp"
             android:gravity="center"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="#DA70D6"
+            android:textColor="#FFF0F0F0"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
 

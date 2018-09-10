@@ -59,73 +59,73 @@
 
         <activity
             android:name="BrokenCrypto"
-            android:label="@string/app_name"
+            android:label="@string/bc"
             android:theme="@style/AppTheme">
         </activity>
 
         <activity
             android:name="BrokenCrypto1"
-            android:label="@string/app_name"
+            android:label="@string/bc1"
             android:theme="@style/AppTheme">
         </activity>
 
         <activity
             android:name=".BrokenCrypto2"
-            android:label="@string/app_name"
+            android:label="@string/bc2"
             android:theme="@style/AppTheme">
         </activity>
 
         <activity
             android:name=".BrokenCrypto3"
-            android:label="@string/app_name"
+            android:label="@string/bc2"
             android:theme="@style/AppTheme">
         </activity>
 
         <activity
             android:name=".CSInjection"
-            android:label="@string/app_name"
+            android:label="@string/csi"
             android:theme="@style/AppTheme">
         </activity>
 
         <activity
             android:name=".CSInjection1"
-            android:label="@string/app_name"
+            android:label="@string/csi1"
             android:theme="@style/AppTheme">
         </activity>
 
         <activity
             android:name=".CSInjection2"
-            android:label="@string/app_name"
+            android:label="@string/csi2"
             android:theme="@style/AppTheme">
         </activity>
 
         <activity
         android:name=".UDataLeakage"
-        android:label="@string/app_name"
+        android:label="@string/udl"
         android:theme="@style/AppTheme">
     </activity>
 
         <activity
             android:name=".UDataLeakage1"
-            android:label="@string/app_name"
+            android:label="@string/udl1"
             android:theme="@style/AppTheme">
         </activity>
 
         <activity
             android:name=".providerLeakage"
-            android:label="@string/app_name"
+            android:label="@string/udl2"
             android:theme="@style/AppTheme">
         </activity>
 
         <activity
             android:name=".poorAuth"
-            android:label="@string/app_name"
+            android:label="@string/pa"
             android:theme="@style/AppTheme">
         </activity>
 
         <activity
             android:name=".poorAuth_Reset"
-            android:label="@string/app_name"
+            android:label="@string/pa"
             android:theme="@style/AppTheme">
         <intent-filter>
             <action android:name="com.mobshep.mobileshepherd.poorAuth_Reset" />
@@ -136,25 +136,31 @@
 
         <activity
             android:name=".PoorAuth_Main"
-            android:label="@string/app_name"
+            android:label="@string/pa"
             android:theme="@style/AppTheme">
         </activity>
 
         <activity
             android:name=".poorAuth2_Main"
-            android:label="@string/app_name"
+            android:label="@string/pa"
             android:theme="@style/AppTheme">
         </activity>
 
         <activity
             android:name=".poorAuth2_LoggedIn"
-            android:label="@string/app_name"
+            android:label="@string/pa"
             android:theme="@style/AppTheme">
         </activity>
 
         <activity
             android:name=".UnintendedDataLeakage2"
             android:label="@string/app_name"
+            android:theme="@style/AppTheme">
+        </activity>
+
+        <activity
+            android:name=".reverseEngineer"
+            android:label="@string/re"
             android:theme="@style/AppTheme">
         </activity>
 

@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="What is your favourite food?"
-        android:textColor="#DA70D6" />
+        android:textColor="#FFF0F0F0" />
 
     <Button
         android:id="@+id/bReset"
@@ -33,7 +33,7 @@
         android:background="@drawable/edittext"
         android:ems="10"
         android:hint="Enter Answer"
-        android:textColor="#DA70D6" />
+        android:textColor="#FFF0F0F0" />
 
     <EditText
         android:id="@+id/etQuestion1"
@@ -45,7 +45,7 @@
         android:background="@drawable/edittext"
         android:ems="10"
         android:hint="Enter Answer"
-        android:textColor="#DA70D6" />
+        android:textColor="#FFF0F0F0" />
 
     <Button
         android:id="@+id/bCancel"
@@ -68,7 +68,7 @@
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="29dp"
         android:text="What is your Mother&apos;s maiden name?"
-        android:textColor="#DA70D6" />
+        android:textColor="#FFF0F0F0" />
 
     <TextView
         android:id="@+id/tempPass"
@@ -78,7 +78,7 @@
         android:layout_marginLeft="92dp"
         android:layout_toRightOf="@+id/tvQuestion2"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#DA70D6" />
+        android:textColor="#FFF0F0F0" />
 
 
 </RelativeLayout>

@@ -34,7 +34,7 @@
                 android:layout_marginTop="20dp"
                 android:gravity="center"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="#DA70D6"
+                android:textColor="#FFF0F0F0"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true" />
 
@@ -51,7 +51,7 @@
                 android:gravity="center"
                 android:background="@xml/edittext"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="#DA70D6"
+                android:textColor="#FFF0F0F0"
                 android:layout_below="@+id/etName"
                 android:layout_centerHorizontal="true" />
 
@@ -78,7 +78,7 @@
                 android:hint="Validation Code"
                 android:gravity="center"
                 android:layout_marginTop="20dp"
-                android:textColor="#DA70D6"
+                android:textColor="#FFF0F0F0"
                 android:inputType="number"
                 android:id="@+id/etCode"
                 android:background="@xml/edittext"

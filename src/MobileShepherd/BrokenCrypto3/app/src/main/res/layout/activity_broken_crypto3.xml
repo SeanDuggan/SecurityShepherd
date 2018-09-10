@@ -27,7 +27,7 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:textColor="#DA70D6"
+                android:textColor="#FFF0F0F0"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="The Key can be found in the encrypted database."

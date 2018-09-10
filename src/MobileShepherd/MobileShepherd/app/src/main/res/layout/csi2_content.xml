@@ -42,7 +42,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:textColor="#DA70D6" >
+                    android:textColor="#FFF0F0F0" >
                     <RelativeLayout android:id="@+id/RelativeLayout01"
                         android:layout_width="fill_parent"
                         android:layout_height="800dp"
@@ -51,7 +51,7 @@
 
                         <RelativeLayout android:id="@+id/innerBox"
                             android:layout_width="500dip"
-                            android:background="@xml/box"
+                            android:background="@xml/tab"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true">
                             <requestFocus />
@@ -68,7 +68,7 @@
                                 android:background="@xml/edittext"
                                 android:hint="Username"
                                 android:textAppearance="?android:attr/textAppearanceLarge"
-                                android:textColor="#DA70D6" />
+                                android:textColor="#FFF0F0F0" />
 
                             <EditText
                                 android:id="@+id/etPass"
@@ -82,7 +82,7 @@
                                 android:inputType="textPassword"
                                 android:background="@xml/edittext"
                                 android:textAppearance="?android:attr/textAppearanceLarge"
-                                android:textColor="#DA70D6" >
+                                android:textColor="#FFF0F0F0" >
 
                                 <requestFocus />
                             </EditText>
@@ -108,7 +108,7 @@
                                 android:layout_marginTop="32dp"
                                 android:text="Login"
                                 android:textAppearance="?android:attr/textAppearanceLarge"
-                                android:textColor="#DA70D6" />
+                                android:textColor="#FFF0F0F0" />
 
                         </RelativeLayout>
 
@@ -123,7 +123,7 @@
                     android:id="@+id/tab2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textColor="#DA70D6" >
+                    android:textColor="#FFF0F0F0" >
 
                     <TextView
                         android:id="@+id/tvWarning"
@@ -146,7 +146,7 @@
                         android:layout_marginTop="58dp"
                         android:hint="The key is only shown to authenticated users."
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="#DA70D6" />
+                        android:textColor="#FFF0F0F0" />
                 </RelativeLayout>
             </FrameLayout>
         </LinearLayout>

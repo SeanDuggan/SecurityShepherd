@@ -10,7 +10,7 @@
         android:id="@+id/tabhost"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textColor="#DA70D6" >
+        android:textColor="#FFF0F0F0" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,7 +33,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:textColor="#DA70D6" >
+                    android:textColor="#FFF0F0F0" >
 
                     <Button
                         android:id="@+id/bLogin"
@@ -57,7 +57,7 @@
                          android:layout_marginTop="36dp"
                          android:text="@string/login"
                          android:textAppearance="?android:attr/textAppearanceLarge"
-                         android:textColor="#DA70D6" />
+                         android:textColor="#FFF0F0F0" />
 
                      <EditText
                          android:id="@+id/etName"
@@ -70,7 +70,7 @@
                          android:ems="10"
                          android:hint="Username"
                          android:textAppearance="?android:attr/textAppearanceLarge"
-                         android:textColor="#DA70D6" >
+                         android:textColor="#FFF0F0F0" >
 
                          <requestFocus />
                      </EditText>
@@ -87,7 +87,7 @@
                          android:hint="Password"
                          android:inputType="textPassword"
                          android:textAppearance="?android:attr/textAppearanceLarge"
-                         android:textColor="#DA70D6" />
+                         android:textColor="#FFF0F0F0" />
                     
                 </RelativeLayout>
 
@@ -95,7 +95,7 @@
                     android:id="@+id/tab2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textColor="#DA70D6" >
+                    android:textColor="#FFF0F0F0" >
 
                     <EditText
                         android:id="@+id/etKey"
@@ -107,7 +107,7 @@
                         android:layout_marginTop="58dp"
                         android:hint="The key is only shown to authenticated users."
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="#DA70D6" />
+                        android:textColor="#FFF0F0F0" />
                 </RelativeLayout>
 
                 <LinearLayout
@@ -126,13 +126,13 @@
                         android:ems="10"
                         android:hint="New Mini Note"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="#DA70D6" />
+                        android:textColor="#FFF0F0F0" />
 
                     <ListView
                         android:id="@+id/noteList"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="#DA70D6"
+                        android:textColor="#FFF0F0F0"
                         android:background="@drawable/button"
                         >
                     </ListView>

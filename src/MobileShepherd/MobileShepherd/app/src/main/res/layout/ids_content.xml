@@ -63,7 +63,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="108dp"
-            android:textColor="#DA70D6"
+            android:textColor="#FFF0F0F0"
             android:id="@+id/textView3" />
 
         <Button

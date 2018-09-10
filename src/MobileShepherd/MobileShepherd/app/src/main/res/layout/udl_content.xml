@@ -19,13 +19,13 @@
         android:ems="10"
         android:hint="New Mini Note"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#DA70D6" />
+        android:textColor="#FFF0F0F0" />
 
     <ListView
         android:id="@+id/noteList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#DA70D6" 
+        android:textColor="#FFF0F0F0" 
         android:background="@xml/button"
          >
     </ListView>

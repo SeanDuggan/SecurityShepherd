@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        layout="@layout/toolbar_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/bDeploy1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@xml/button"
+        android:text="@string/deploy1" />
+
+    <Button
+        android:id="@+id/bDeploy2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@xml/button"
+        android:text="@string/deploy2" />
+
+    <Button
+        android:id="@+id/bDeploy3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@xml/button"
+        android:text="@string/deploy3" />
+
+    <Button
+        android:id="@+id/bDeploy4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@xml/button"
+        android:text="@string/deploy4" />
+
+    <TextView
+        android:id="@+id/tvReverse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/reverseOverview"/>
+
+</LinearLayout>

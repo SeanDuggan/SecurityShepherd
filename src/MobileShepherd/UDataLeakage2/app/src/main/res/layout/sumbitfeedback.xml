@@ -30,7 +30,7 @@
                 android:id="@+id/etFeedback"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:inputType="textMultiLine"
-                android:textColor="#DA70D6"
+                android:textColor="#FFF0F0F0"
                 android:background="@drawable/edittext"
                 android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"

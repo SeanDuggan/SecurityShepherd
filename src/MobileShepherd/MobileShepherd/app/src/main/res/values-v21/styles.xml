@@ -18,7 +18,7 @@
     <style name="ShepherdTabWidgetText" parent="@android:style/TextAppearance.Widget.TabWidget">
         <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">#DA70D6</item>
+        <item name="android:textColor">#0f0f0f</item>
     </style>
 
 
