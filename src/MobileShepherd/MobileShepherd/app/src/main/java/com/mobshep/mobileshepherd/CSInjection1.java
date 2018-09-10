@@ -51,7 +51,7 @@ public class CSInjection1 extends MainActivity implements OnClickListener, Navig
 	EditText username;
 	EditText password;
 	EditText key;
-	String dbPassword = "P93Eid3D33DE0ZanbffGpo101Sirjw2";
+	private String dbPassword = "P93Eid3D33DE0ZanbffGpo101Sirjw2";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
