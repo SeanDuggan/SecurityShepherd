@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">reverser</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Reverser</string>
+    <string name="nav_header_subtitle">Break Everything</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_license">License</string>
+    <string name="action_exit">Exit</string>
+
+    <string name="menu_lesson">Lesson</string>
+    <string name="menu_challenge1">Challenge 1</string>
+    <string name="menu_challenge2">Challenge 2</string>
+    <string name="menu_challenge3">Challenge 3</string>
+    <string name="menu_animations">Animations</string>
+</resources>

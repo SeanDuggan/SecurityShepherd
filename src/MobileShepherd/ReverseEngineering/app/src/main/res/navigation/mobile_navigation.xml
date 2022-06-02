@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.owasp.reverser.ui.home.HomeFragment"
+        android:label="@string/menu_lesson"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_challenge1"
+        android:name="com.owasp.reverser.ui.gallery.GalleryFragment"
+        android:label="@string/menu_challenge1"
+        tools:layout="@layout/fragment_gallery" />
+
+    <fragment
+        android:id="@+id/nav_challenge_1"
+        android:name="com.owasp.reverser.ui.challenges.Challenge1Fragment"
+        android:label="@string/menu_challenge1"
+        tools:layout="@layout/challenge1_fragment" />
+
+    <fragment
+        android:id="@+id/nav_challenge_2"
+        android:name="com.owasp.reverser.ui.challenges.Challenge2Fragment"
+        android:label="@string/menu_challenge2"
+        tools:layout="@layout/fragment_challenge2" />
+
+    <fragment
+        android:id="@+id/nav_challenge_3"
+        android:name="com.owasp.reverser.ui.challenges.Challenge3Fragment"
+        android:label="@string/menu_challenge3"
+        tools:layout="@layout/fragment_challenge3" />
+
+    <fragment
+        android:id="@+id/nav_challenge2"
+        android:name="com.owasp.reverser.ui.challenges.Challenge2Fragment"
+        android:label="@string/menu_challenge2"
+        tools:layout="@layout/fragment_challenge2" />
+
+    <fragment
+        android:id="@+id/nav_challenge3"
+        android:name="com.owasp.reverser.ui.challenges.Challenge3Fragment"
+        android:label="@string/menu_challenge3"
+        tools:layout="@layout/fragment_challenge3" />
+</navigation>
