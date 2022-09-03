@@ -10,22 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.owasp.reverser.databinding.FragmentHomeBinding;
+import com.owasp.reverser.databinding.FragmentChallenge3Binding;
 import com.owasp.reverser.ui.challenges.Challenge_3_Model;
 
 public class Challenge3Fragment extends Fragment {
 
-    private FragmentHomeBinding binding;
+    private FragmentChallenge3Binding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         Challenge_3_Model challengeViewModel =
                 new ViewModelProvider(this).get(Challenge_3_Model.class);
 
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        binding = FragmentChallenge3Binding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textHome;
+        final TextView textView = binding.textSlideshow;
         challengeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }

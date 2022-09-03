@@ -1,15 +1,16 @@
 package com.owasp.reverser;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Menu;
+import android.view.View;
 import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -17,6 +18,7 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.owasp.reverser.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,19 +35,40 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(binding.appBarMain.toolbar);
         binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //create alert dialogue for floating "help" action button.
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+
+                //set the message
+                builder.setMessage("This App is part of the Security Shepherd project. " +
+                "In order to complete the Reverse Engineering Lesson and Challenges, " +
+                "the player must extract the keys from this app.");
+
+                builder.setTitle("Info");
+                builder.setCancelable(false);
+                builder.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which)
+                                    {
+                                        //default to cancel as alert box provides
+                                        // context for player and no functionality
+                                        dialog.cancel();
+                                    }
+                                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
             }
         });
+
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_challenge1, R.id.nav_challenge2)
-                .setOpenableLayout(drawer)
+                R.id.nav_lesson, R.id.nav_challenge_1, R.id.nav_challenge_2, R.id.nav_challenge_3
+        ).setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
