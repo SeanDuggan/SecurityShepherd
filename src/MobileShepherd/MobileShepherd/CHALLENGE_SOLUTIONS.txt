@@ -1,0 +1,488 @@
+# Mobile Security Shepherd - Challenge Solutions & Keys
+
+## Overview
+This document contains all challenge solutions, keys, and flags for the Mobile Security Shepherd Android application.
+This is for instructor/administrator reference only.
+
+---
+
+## REVERSE ENGINEERING CHALLENGES
+
+### Challenge 1: Reverse Engineering 1 (Easy)
+**Difficulty**: Easy  
+**Vulnerability Type**: Simple hardcoded flag  
+**Flag Location**: `Challenge_1_Model.java` - validateFlag() method  
+
+**FLAG**: `OWASP{Simple_Flag_Easy_To_Find}`
+
+**Solution Steps**:
+1. Decompile the APK using jadx or apktool
+2. Navigate to `com.owasp.reverser.ui.challenges.Challenge_1_Model`
+3. Read the validateFlag() method
+4. The flag is stored as a plain string constant
+
+**Tools Required**:
+- jadx-gui or apktool
+- Text editor
+
+---
+
+### Challenge 2: Reverse Engineering 2 (Medium)
+**Difficulty**: Medium  
+**Vulnerability Type**: Base64 encoded flag  
+**Flag Location**: `Challenge_2_Model.java` - validateFlag() method  
+
+**Encoded Value**: `T1dBU1B7QmFzZTY0X0lzTm90X0VuY3J5cHRpb259`  
+**FLAG**: `OWASP{Base64_IsNot_Encryption}`
+
+**Solution Steps**:
+1. Decompile the APK using jadx or apktool
+2. Navigate to `com.owasp.reverser.ui.challenges.Challenge_2_Model`
+3. Find the Base64 encoded string
+4. Decode using Base64 decoder:
+   ```
+   echo "T1dBU1B7QmFzZTY0X0lzTm90X0VuY3J5cHRpb259" | base64 -d
+   ```
+5. Or use online Base64 decoder
+
+**Tools Required**:
+- jadx-gui or apktool
+- Base64 decoder (command line or online)
+
+---
+
+### Challenge 3: Reverse Engineering 3 (Hard)
+**Difficulty**: Hard  
+**Vulnerability Type**: Obfuscated string manipulation  
+**Flag Location**: `Challenge_3_Model.java` - validateFlag() method  
+
+**FLAG**: `OWASP{0bfusc4t10n_M4k3s_1t_H4rd3r}`
+
+**Obfuscation Method**:
+```java
+String part1 = "OWASP{";
+String part2 = "0bfusc4";
+String part3 = "t10n_M4";
+String part4 = "k3s_1t_";
+String part5 = "H4rd3r}";
+String correctFlag = part1 + part2 + part3 + part4 + part5;
+```
+
+**Solution Steps**:
+1. Decompile the APK using jadx or apktool
+2. Navigate to `com.owasp.reverser.ui.challenges.Challenge_3_Model`
+3. Find the validateFlag() method
+4. Reconstruct the flag from the concatenated string parts
+5. Or use a debugger to inspect the correctFlag variable at runtime
+
+**Tools Required**:
+- jadx-gui or apktool
+- Text editor
+- Optional: Android debugger (Android Studio)
+
+---
+
+## INSECURE DATA STORAGE CHALLENGES
+
+### Challenge 4: Insecure Data Storage 1 (Easy)
+**Difficulty**: Easy  
+**Vulnerability Type**: SQLite database with Base64 encoded passwords  
+**Database Name**: `Users.db`  
+**Database Location**: `/data/data/com.owasp.reverser/databases/Users.db`  
+
+**FLAG**: `WarshipsAndWrenches`
+
+**Database Contents**:
+| Username   | Password (Base64)              | Decoded Password       |
+|------------|--------------------------------|------------------------|
+| Tyrkyr     | ZG9jaGRvY2hkb2No               | dochdochdoch           |
+| ToothBrush | MmNvb2w0dWxvbD8=               | 2cool4ulol?            |
+| TroolMann  | QnJpZGdlcw==                   | Bridges                |
+| Patrick    | ZGlub3NhdXI=                   | dinosaur               |
+| bottles    | cGFzc3dvcmQxMjM0               | password1234           |
+| Root       | V2Fyc2hpcHNBbmRXcmVuY2hlcw==   | **WarshipsAndWrenches** ← FLAG |
+
+**Solution Steps**:
+1. Extract the database using ADB:
+   ```
+   adb pull /data/data/com.owasp.reverser/databases/Users.db
+   ```
+2. Open the database with sqlite3:
+   ```
+   sqlite3 Users.db
+   SELECT * FROM Users;
+   ```
+3. Decode all Base64 passwords:
+   ```
+   echo "V2Fyc2hpcHNBbmRXcmVuY2hlcw==" | base64 -d
+   ```
+4. The Root user's decoded password is the flag
+
+**Tools Required**:
+- ADB (Android Debug Bridge)
+- sqlite3 or DB Browser for SQLite
+- Base64 decoder
+
+---
+
+### Challenge 5: Insecure Data Storage 2 (Medium)
+**Difficulty**: Medium  
+**Vulnerability Type**: SQLite database with MD5 hashed password  
+**Database Name**: `passwordDB.db`  
+**Database Location**: `/data/data/com.owasp.reverser/databases/passwordDB.db`  
+
+**MD5 Hash**: `0e3a0c8c3a571a855c958813d9b851a1`  
+**FLAG**: `letmein2024`
+
+**Database Contents**:
+| Username | Password (MD5 Hash)                |
+|----------|------------------------------------|
+| Admin    | 0e3a0c8c3a571a855c958813d9b851a1   |
+
+**Solution Steps**:
+1. Extract the database using ADB:
+   ```
+   adb pull /data/data/com.owasp.reverser/databases/passwordDB.db
+   ```
+2. Open the database with sqlite3:
+   ```
+   sqlite3 passwordDB.db
+   SELECT * FROM passwordDB;
+   ```
+3. Crack the MD5 hash using:
+   - Online rainbow tables (CrackStation, MD5Online, etc.)
+   - hashcat: `hashcat -m 0 -a 0 hash.txt wordlist.txt`
+   - John the Ripper: `john --format=raw-md5 hash.txt`
+
+**Hash Cracking**:
+```
+Hash: 0e3a0c8c3a571a855c958813d9b851a1
+Plaintext: letmein2024
+```
+
+**Tools Required**:
+- ADB (Android Debug Bridge)
+- sqlite3 or DB Browser for SQLite
+- MD5 cracking tools (hashcat, john, or online services)
+
+---
+
+### Challenge 6: Insecure Data Storage 3 (Medium)
+**Difficulty**: Medium  
+**Vulnerability Type**: SharedPreferences storing sensitive data in plain text XML  
+**Preferences Name**: `UserCredentials`  
+**File Location**: `/data/data/com.owasp.reverser/shared_prefs/UserCredentials.xml`  
+
+**FLAG**: `MobileSh3ph3rd_Pr3fs_Vu1n`
+
+**SharedPreferences Contents**:
+```xml
+<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
+<map>
+    <string name="username">admin</string>
+    <string name="password">SuperSecret2024!</string>
+    <string name="api_key">sk_live_51HyperSecureApiKey789</string>
+    <string name="auth_token">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9</string>
+    <string name="encryption_key">AES256-MyVerySecretKey-DoNotShare</string>
+    <string name="secret_flag">MobileSh3ph3rd_Pr3fs_Vu1n</string>
+    <boolean name="is_admin" value="true" />
+    <int name="user_id" value="1337" />
+</map>
+```
+
+**Solution Steps**:
+1. Extract the SharedPreferences XML file using ADB:
+   ```
+   adb pull /data/data/com.owasp.reverser/shared_prefs/UserCredentials.xml
+   ```
+2. Open the XML file in a text editor
+3. Find the "secret_flag" key
+4. The flag is stored in plain text
+
+**Alternative Method**:
+```bash
+# View directly via ADB shell
+adb shell
+cat /data/data/com.owasp.reverser/shared_prefs/UserCredentials.xml
+```
+
+**Tools Required**:
+- ADB (Android Debug Bridge)
+- Text editor or XML viewer
+
+---
+
+### Challenge 7: Insecure Data Storage 4 (Hard)
+**Difficulty**: Hard  
+**Vulnerability Type**: Weak custom XOR encryption with hardcoded key  
+**Encryption Algorithm**: XOR cipher (symmetric)  
+**Encryption Key**: `SHEPHERD`  
+
+**FLAG**: `SecureFlag{WeakXOR_Crypto_2024}`
+
+**Encrypted Data (Hex)**: Will be displayed in the app when "Show Encrypted Data" button is pressed
+
+**XOR Encryption Details**:
+```java
+// Encryption/Decryption method (same due to XOR symmetry)
+private String xorEncrypt(String data, String key) {
+    StringBuilder result = new StringBuilder();
+    for (int i = 0; i < data.length(); i++) {
+        result.append((char) (data.charAt(i) ^ key.charAt(i % key.length())));
+    }
+    return result.toString();
+}
+
+Key: "SHEPHERD"
+Plaintext: "SecureFlag{WeakXOR_Crypto_2024}"
+```
+
+**Solution Steps**:
+
+**Method 1: Decompile and Find Key**
+1. Decompile APK using jadx:
+   ```
+   jadx-gui app-debug.apk
+   ```
+2. Navigate to `com.owasp.reverser.ui.insecuredata4.InsecureData4Fragment`
+3. Find the hardcoded XOR_KEY constant: `"SHEPHERD"`
+4. Find the xorEncrypt() method
+5. Get encrypted data from the app's "Show Encrypted Data" button
+6. Write a script to decrypt:
+   ```python
+   def xor_decrypt(encrypted_hex, key):
+       encrypted_bytes = bytes.fromhex(encrypted_hex)
+       key_bytes = key.encode()
+       result = ""
+       for i, byte in enumerate(encrypted_bytes):
+           result += chr(byte ^ key_bytes[i % len(key_bytes)])
+       return result
+   
+   encrypted = "..." # Hex from app
+   key = "SHEPHERD"
+   flag = xor_decrypt(encrypted, key)
+   print(flag)
+   ```
+
+**Method 2: Runtime Inspection**
+1. Use Frida to hook the xorEncrypt/xorDecrypt methods
+2. Intercept the decrypted flag value
+3. Or hook the validateFlag method to see the comparison
+
+**Method 3: Brute Force Analysis**
+1. XOR is weak - can be broken with frequency analysis
+2. Key length is revealed in code (7 characters)
+3. Use XOR cracking tools
+
+**Decryption Script (Python)**:
+```python
+def xor_cipher(data, key):
+    result = ""
+    for i in range(len(data)):
+        result += chr(ord(data[i]) ^ ord(key[i % len(key)]))
+    return result
+
+# Convert hex to string first
+encrypted_hex = "..."  # Get from app
+encrypted = bytes.fromhex(encrypted_hex).decode('latin-1')
+key = "SHEPHERD"
+plaintext = xor_cipher(encrypted, key)
+print(plaintext)  # Output: SecureFlag{WeakXOR_Crypto_2024}
+```
+
+**Tools Required**:
+- jadx-gui or apktool (for decompilation)
+- Python or any programming language for XOR decryption
+- Optional: Frida for runtime hooking
+
+---
+
+## PREVENTION STRATEGIES FOR HARDCODED KEYS
+
+### Current Implementation
+All keys are currently hardcoded for educational purposes. Here are strategies to make them harder to find:
+
+### 1. String Obfuscation (Recommended for Education)
+```java
+// Instead of: String key = "SHEPHERD";
+private String getObfuscatedKey() {
+    return new StringBuilder()
+        .append((char)83)  // S
+        .append((char)72)  // H
+        .append((char)69)  // E
+        .append((char)80)  // P
+        .append((char)72)  // H
+        .append((char)69)  // E
+        .append((char)82)  // R
+        .append((char)68)  // D
+        .toString();
+}
+```
+
+### 2. ProGuard/R8 Obfuscation
+Enable in `build.gradle`:
+```gradle
+buildTypes {
+    release {
+        minifyEnabled true
+        shrinkResources true
+        proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+    }
+}
+```
+
+### 3. Native Code (JNI) - Most Secure
+Store keys in native C/C++ libraries:
+```c
+extern "C" JNIEXPORT jstring JNICALL
+Java_com_owasp_reverser_getSecretKey(JNIEnv* env, jobject) {
+    return env->NewStringUTF("SHEPHERD");
+}
+```
+
+### 4. Split Keys Across Methods
+```java
+private String getPart1() { return "SHEP"; }
+private String getPart2() { return "HERD"; }
+private String getFullKey() { return getPart1() + getPart2(); }
+```
+
+### 5. Runtime Generation
+```java
+private String generateKey() {
+    char[] chars = {'S','H','E','P','H','E','R','D'};
+    return new String(chars);
+}
+```
+
+### 6. Base64 Encoding (Minimal Security)
+```java
+private static final String B64_KEY = "U0hFUEhFUkQ=";
+private String getKey() {
+    return new String(Base64.decode(B64_KEY, Base64.DEFAULT));
+}
+```
+
+---
+
+## EDUCATIONAL NOTES
+
+### Why These Vulnerabilities Matter
+
+1. **SQLite Databases**: Many apps store sensitive data in unencrypted SQLite databases
+2. **SharedPreferences**: Developers often mistakenly believe this is secure storage
+3. **Weak Hashing**: MD5 is cryptographically broken and should never be used for passwords
+4. **Base64 ≠ Encryption**: Base64 is encoding, not encryption, and provides no security
+5. **Custom Crypto**: Never implement your own cryptography - use proven libraries
+6. **Hardcoded Secrets**: Keys in code can always be extracted through reverse engineering
+
+### Secure Alternatives
+
+1. **Android Keystore**: Hardware-backed key storage
+2. **EncryptedSharedPreferences**: Built-in encrypted preferences (Android 6.0+)
+3. **SQLCipher**: Encrypted SQLite database
+4. **bcrypt/Argon2**: Modern password hashing algorithms
+5. **Server-side secrets**: Never store production secrets in mobile apps
+
+---
+
+## TESTING COMMANDS
+
+### ADB Commands
+```bash
+# List connected devices
+adb devices
+
+# Pull database files
+adb pull /data/data/com.owasp.reverser/databases/Users.db
+adb pull /data/data/com.owasp.reverser/databases/passwordDB.db
+
+# Pull SharedPreferences
+adb pull /data/data/com.owasp.reverser/shared_prefs/UserCredentials.xml
+
+# Shell into device
+adb shell
+
+# View files directly
+adb shell cat /data/data/com.owasp.reverser/shared_prefs/UserCredentials.xml
+
+# Enable ADB on non-rooted device (requires developer mode)
+# Settings → About Phone → Tap Build Number 7 times
+# Settings → Developer Options → Enable USB Debugging
+```
+
+### Decompilation Commands
+```bash
+# Using jadx-gui (GUI)
+jadx-gui app-debug.apk
+
+# Using jadx (CLI)
+jadx -d output_dir app-debug.apk
+
+# Using apktool
+apktool d app-debug.apk -o output_dir
+```
+
+### SQLite Commands
+```bash
+# Open database
+sqlite3 Users.db
+
+# List tables
+.tables
+
+# View table schema
+.schema Users
+
+# Query data
+SELECT * FROM Users;
+
+# Exit
+.quit
+```
+
+---
+
+## SUMMARY TABLE
+
+| Challenge | Difficulty | Type | Flag/Key | Location |
+|-----------|-----------|------|----------|----------|
+| RE 1 | Easy | Hardcoded | `OWASP{Simple_Flag_Easy_To_Find}` | Challenge_1_Model.java |
+| RE 2 | Medium | Base64 | `OWASP{Base64_IsNot_Encryption}` | Challenge_2_Model.java |
+| RE 3 | Hard | Obfuscated | `OWASP{0bfusc4t10n_M4k3s_1t_H4rd3r}` | Challenge_3_Model.java |
+| IDS 1 | Easy | SQLite + Base64 | `WarshipsAndWrenches` | Users.db (Root user) |
+| IDS 2 | Medium | SQLite + MD5 | `letmein2024` | passwordDB.db (Admin user) |
+| IDS 3 | Medium | SharedPreferences | `MobileSh3ph3rd_Pr3fs_Vu1n` | UserCredentials.xml |
+| IDS 4 | Hard | XOR Encryption | `SecureFlag{WeakXOR_Crypto_2024}` | InsecureData4Fragment.java |
+
+**Encryption Key for IDS 4**: `SHEPHERD`
+
+---
+
+## CHANGELOG
+
+**Version 1.0** - December 10, 2025
+- Initial documentation
+- 7 total challenges (3 RE + 4 IDS)
+- 2 educational lessons
+- Complete solution guide
+
+---
+
+## SECURITY NOTICE
+
+⚠️ **WARNING**: This application contains intentional security vulnerabilities for educational purposes only.
+
+- Do NOT install on devices with sensitive data
+- Do NOT use these techniques on production applications
+- Do NOT use real credentials or secrets
+- This is for security training and CTF events only
+
+---
+
+## LICENSE
+
+This application is part of the OWASP Security Shepherd Project.
+Licensed under GNU General Public License v3.0
+
+For more information: https://www.owasp.org/index.php/OWASP_Security_Shepherd
