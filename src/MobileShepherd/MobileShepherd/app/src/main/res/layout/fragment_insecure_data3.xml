@@ -26,7 +26,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Insecure Data Storage 3"
+                    android:text="Insecure Data Storage 4"
                     android:textSize="24sp"
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
@@ -60,7 +60,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="💡 Hint"
+                    android:text="Hint"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="#856404"
@@ -101,10 +101,19 @@
                     android:textColor="?android:attr/textColorPrimary"
                     android:layout_marginBottom="12dp" />
 
+                <Button
+                    android:id="@+id/show_encrypted_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Show Encrypted Data"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="12dp"
+                    style="?attr/materialButtonOutlinedStyle" />
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter flag"
+                    android:hint="Enter decrypted flag"
                     android:layout_marginBottom="12dp"
                     app:boxBackgroundMode="outline">
 
@@ -153,7 +162,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="SharedPreferences stores data in plain XML files that can be easily extracted. Many developers mistakenly believe this is secure storage. Extract the preferences file to find API keys, tokens, and the secret flag."
+                    android:text="This challenge uses a custom encryption algorithm to protect sensitive data. However, implementing your own cryptography is dangerous. You'll need to reverse engineer the code to understand the encryption scheme and decrypt the flag."
                     android:textSize="13sp"
                     android:textColor="#1565C0"
                     android:lineSpacingMultiplier="1.2" />

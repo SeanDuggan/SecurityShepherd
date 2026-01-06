@@ -17,7 +17,7 @@ This is for instructor/administrator reference only.
 
 **Solution Steps**:
 1. Decompile the APK using jadx or apktool
-2. Navigate to `com.owasp.reverser.ui.challenges.Challenge_1_Model`
+2. Navigate to `com.owasp.app.ui.challenges.Challenge_1_Model`
 3. Read the validateFlag() method
 4. The flag is stored as a plain string constant
 
@@ -37,7 +37,7 @@ This is for instructor/administrator reference only.
 
 **Solution Steps**:
 1. Decompile the APK using jadx or apktool
-2. Navigate to `com.owasp.reverser.ui.challenges.Challenge_2_Model`
+2. Navigate to `com.owasp.app.ui.challenges.Challenge_2_Model`
 3. Find the Base64 encoded string
 4. Decode using Base64 decoder:
    ```
@@ -70,7 +70,7 @@ String correctFlag = part1 + part2 + part3 + part4 + part5;
 
 **Solution Steps**:
 1. Decompile the APK using jadx or apktool
-2. Navigate to `com.owasp.reverser.ui.challenges.Challenge_3_Model`
+2. Navigate to `com.owasp.app.ui.challenges.Challenge_3_Model`
 3. Find the validateFlag() method
 4. Reconstruct the flag from the concatenated string parts
 5. Or use a debugger to inspect the correctFlag variable at runtime
@@ -88,7 +88,7 @@ String correctFlag = part1 + part2 + part3 + part4 + part5;
 **Difficulty**: Easy  
 **Vulnerability Type**: SQLite database with Base64 encoded passwords  
 **Database Name**: `Users.db`  
-**Database Location**: `/data/data/com.owasp.reverser/databases/Users.db`  
+**Database Location**: `/data/data/com.owasp.app/databases/Users.db`  
 
 **FLAG**: `WarshipsAndWrenches`
 
@@ -105,7 +105,7 @@ String correctFlag = part1 + part2 + part3 + part4 + part5;
 **Solution Steps**:
 1. Extract the database using ADB:
    ```
-   adb pull /data/data/com.owasp.reverser/databases/Users.db
+   adb pull /data/data/com.owasp.app/databases/Users.db
    ```
 2. Open the database with sqlite3:
    ```
@@ -129,7 +129,7 @@ String correctFlag = part1 + part2 + part3 + part4 + part5;
 **Difficulty**: Medium  
 **Vulnerability Type**: SQLite database with MD5 hashed password  
 **Database Name**: `passwordDB.db`  
-**Database Location**: `/data/data/com.owasp.reverser/databases/passwordDB.db`  
+**Database Location**: `/data/data/com.owasp.app/databases/passwordDB.db`  
 
 **MD5 Hash**: `0e3a0c8c3a571a855c958813d9b851a1`  
 **FLAG**: `letmein2024`
@@ -142,7 +142,7 @@ String correctFlag = part1 + part2 + part3 + part4 + part5;
 **Solution Steps**:
 1. Extract the database using ADB:
    ```
-   adb pull /data/data/com.owasp.reverser/databases/passwordDB.db
+   adb pull /data/data/com.owasp.app/databases/passwordDB.db
    ```
 2. Open the database with sqlite3:
    ```
@@ -171,7 +171,7 @@ Plaintext: letmein2024
 **Difficulty**: Medium  
 **Vulnerability Type**: SharedPreferences storing sensitive data in plain text XML  
 **Preferences Name**: `UserCredentials`  
-**File Location**: `/data/data/com.owasp.reverser/shared_prefs/UserCredentials.xml`  
+**File Location**: `/data/data/com.owasp.app/shared_prefs/UserCredentials.xml`  
 
 **FLAG**: `MobileSh3ph3rd_Pr3fs_Vu1n`
 
@@ -193,7 +193,7 @@ Plaintext: letmein2024
 **Solution Steps**:
 1. Extract the SharedPreferences XML file using ADB:
    ```
-   adb pull /data/data/com.owasp.reverser/shared_prefs/UserCredentials.xml
+   adb pull /data/data/com.owasp.app/shared_prefs/UserCredentials.xml
    ```
 2. Open the XML file in a text editor
 3. Find the "secret_flag" key
@@ -203,7 +203,7 @@ Plaintext: letmein2024
 ```bash
 # View directly via ADB shell
 adb shell
-cat /data/data/com.owasp.reverser/shared_prefs/UserCredentials.xml
+cat /data/data/com.owasp.app/shared_prefs/UserCredentials.xml
 ```
 
 **Tools Required**:
@@ -244,7 +244,7 @@ Plaintext: "SecureFlag{WeakXOR_Crypto_2024}"
    ```
    jadx-gui app-debug.apk
    ```
-2. Navigate to `com.owasp.reverser.ui.insecuredata4.InsecureData4Fragment`
+2. Navigate to `com.owasp.app.ui.insecuredata4.InsecureData4Fragment`
 3. Find the hardcoded XOR_KEY constant: `"SHEPHERD"`
 4. Find the xorEncrypt() method
 5. Get encrypted data from the app's "Show Encrypted Data" button
@@ -394,17 +394,17 @@ private String getKey() {
 adb devices
 
 # Pull database files
-adb pull /data/data/com.owasp.reverser/databases/Users.db
-adb pull /data/data/com.owasp.reverser/databases/passwordDB.db
+adb pull /data/data/com.owasp.app/databases/Users.db
+adb pull /data/data/com.owasp.app/databases/passwordDB.db
 
 # Pull SharedPreferences
-adb pull /data/data/com.owasp.reverser/shared_prefs/UserCredentials.xml
+adb pull /data/data/com.owasp.app/shared_prefs/UserCredentials.xml
 
 # Shell into device
 adb shell
 
 # View files directly
-adb shell cat /data/data/com.owasp.reverser/shared_prefs/UserCredentials.xml
+adb shell cat /data/data/com.owasp.app/shared_prefs/UserCredentials.xml
 
 # Enable ADB on non-rooted device (requires developer mode)
 # Settings → About Phone → Tap Build Number 7 times

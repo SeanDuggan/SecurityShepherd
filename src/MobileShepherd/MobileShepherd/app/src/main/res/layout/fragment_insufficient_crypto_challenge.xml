@@ -29,7 +29,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="🔐 Insufficient Cryptography Challenge"
+                    android:text="Insufficient Cryptography Challenge"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="#C62828"
@@ -271,7 +271,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="This challenge demonstrates:\n\n✓ ECB mode pattern vulnerabilities\n✓ Weak key derivation with MD5\n✓ Insecure random number generation\n✓ Static IV reuse attacks\n✓ Importance of using SecureRandom\n✓ Why to use PBKDF2/bcrypt for keys\n✓ Benefits of authenticated encryption (GCM mode)"
+                    android:text="This challenge covers:\n\n✓ ECB mode pattern vulnerabilities\n✓ Weak key derivation with MD5\n✓ Insecure random number generation\n✓ Static IV reuse attacks\n✓ Importance of using SecureRandom\n✓ Why to use PBKDF2/bcrypt for keys\n✓ Benefits of authenticated encryption (GCM mode)"
                     android:textSize="14sp"
                     android:lineSpacingMultiplier="1.4" />
 

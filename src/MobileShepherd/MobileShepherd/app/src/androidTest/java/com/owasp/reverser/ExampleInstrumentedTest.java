@@ -1,4 +1,4 @@
-package com.owasp.reverser;
+package com.owasp.app;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.owasp.reverser", appContext.getPackageName());
+        assertEquals("com.owasp.app", appContext.getPackageName());
     }
 }

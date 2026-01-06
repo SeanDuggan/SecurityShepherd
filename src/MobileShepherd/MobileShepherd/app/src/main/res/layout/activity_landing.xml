@@ -69,27 +69,6 @@
             android:textAlignment="center"
             android:textColor="#333333"
             android:lineSpacingExtra="4dp"
-            android:layout_marginBottom="16dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="It contains intentional security vulnerabilities to help you learn about mobile application security through hands-on practice."
-            android:textSize="16sp"
-            android:textAlignment="center"
-            android:textColor="#333333"
-            android:lineSpacingExtra="4dp"
-            android:layout_marginBottom="24dp" />
-
-        <!-- Disclaimer -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="DO NOT use these techniques on applications without permission."
-            android:textSize="12sp"
-            android:textAlignment="center"
-            android:textColor="#DC3545"
-            android:textStyle="italic"
             android:layout_marginBottom="24dp" />
 
         <!-- Continue Button -->

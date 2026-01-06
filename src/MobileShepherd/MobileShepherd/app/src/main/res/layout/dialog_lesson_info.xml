@@ -64,7 +64,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="⚠️ Common Vulnerabilities"
+                    android:text="Common Vulnerabilities"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="#C62828"
@@ -82,8 +82,47 @@
 
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- Hints Section -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/hints_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:visibility="gone"
+            app:cardElevation="2dp"
+            app:cardCornerRadius="8dp"
+            app:cardBackgroundColor="#FFF3E0">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hints"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#E65100"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/hints_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:lineSpacingMultiplier="1.3"
+                    android:textColor="#424242" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
         <!-- Best Practices Section -->
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/best_practices_section"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"

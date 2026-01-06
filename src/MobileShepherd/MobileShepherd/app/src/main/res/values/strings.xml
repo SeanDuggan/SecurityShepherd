@@ -6,7 +6,7 @@
     <string name="nav_header_subtitle">Break Everything</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-    <string name="action_license">License</string>
+    <string name="action_owasp_top10">OWASP Mobile Top 10 2024</string>
     <string name="action_adb_reference">ADB Commands</string>
     <string name="action_exit">Exit</string>
 
@@ -135,29 +135,30 @@
 
     <!-- Landing Activity -->
     <string name="landing_title">Mobile Security Shepherd</string>
-    <string name="landing_warning">⚠️ WARNING: This is an intentionally vulnerable mobile application!</string>
+    <string name="landing_warning">WARNING: This is an intentionally vulnerable mobile application!</string>
     <string name="landing_description">This app is part of the OWASP Security Shepherd Project - a web and mobile application security training platform.\n\nSecurity Shepherd is designed to foster and improve security awareness among a varied skill-set demographic. The aim is to educate users about application security through hands-on challenges.\n\nThis mobile app contains intentional security vulnerabilities for educational purposes. Do NOT install this on a device with sensitive data.</string>
     <string name="landing_button">Enter App</string>
 
     <!-- Insecure Data Storage Challenge 1 -->
     <string name="menu_insecure_data1">Insecure Data 1</string>
-    <string name="insecure_data1_description">This challenge contains a SQLite database with multiple user accounts. The passwords are stored in an encoded format. Your mission is to extract the database, decode the passwords, and find the flag.\n\nThe key is not in the UI - it\'s hidden in the database!</string>
-    <string name="insecure_data1_hint">1. Use ADB to pull the app\'s database files\n2. The database is named "Users.db"\n3. Passwords appear to be encoded\n4. Look for Base64 encoding\n5. One of the decoded passwords is the flag</string>
+    <string name="insecure_data1_description">This challenge stores a password hash in a SQLite database. Unlike simple encoding, this password has been hashed using MD5. Your task is to crack the hash and recover the original password.\n\nThe key is not in the UI - crack the hash!</string>
+    <string name="insecure_data1_hint">1. Extract the passwordDB.db database using ADB\n2. The password is stored as an MD5 hash\n3. MD5 is a weak hashing algorithm\n4. Use online rainbow tables or tools like hashcat\n5. Hash: 0e3a0c8c3a571a855c958813d9b851a1</string>
+
+    <!-- Lesson Hints -->
+    <string name="lesson_hint">Step-by-Step Guide:\n\n1. EXTRACT THE APK\n   • Connect device via ADB\n   • Run: adb shell pm list packages | grep reverser\n   • Run: adb shell pm path com.owasp.app\n   • Run: adb pull /data/app/[path]/base.apk\n\n2. DECOMPILE WITH JADX\n   • Download JADX from GitHub\n   • Run: jadx base.apk\n   • Or use JADX-GUI for visual interface\n\n3. NAVIGATE TO TARGET FILE\n   • Open: sources/com/owasp/reverser/ui/lessons/LessonFragment.java\n   • Look in the class body for string variables\n   • Search for keywords: flag, key, secret, password\n\n4. ALTERNATIVE TOOLS\n   • APKTool: apktool d base.apk (produces smali)\n   • dex2jar + JD-GUI: For JAR decompilation\n   • Ghidra: Advanced static analysis\n   • Frida: Dynamic runtime inspection\n\n5. WHAT TO LOOK FOR\n   • Hardcoded strings in class fields\n   • Static final String variables\n   • Suspicious base64 or hex strings\n   • Comments or debug messages\n\nTarget: LessonFragment.java in package com.owasp.app.ui.lessons</string>
+    <string name="poor_auth_lesson_hint">Check logcat for debugging information about hardcoded credentials and authentication logic.</string>
+    <string name="supply_chain_lesson_hint">Check logcat for third-party library initialization messages that may reveal hardcoded credentials or API keys.</string>
+    <string name="insecure_comm_lesson_hint">Monitor logcat with tag \'NetworkTraffic\' while clicking Send to see plaintext HTTP traffic including credentials.</string>
 
     <!-- Insecure Data Storage Challenge 2 -->
     <string name="menu_insecure_data2">Insecure Data 2</string>
-    <string name="insecure_data2_description">This challenge stores a password hash in a SQLite database. Unlike simple encoding, this password has been hashed using MD5. Your task is to crack the hash and recover the original password.\n\nThe key is not in the UI - crack the hash!</string>
-    <string name="insecure_data2_hint">1. Extract the passwordDB.db database using ADB\n2. The password is stored as an MD5 hash\n3. MD5 is a weak hashing algorithm\n4. Use online rainbow tables or tools like hashcat\n5. Hash: 0e3a0c8c3a571a855c958813d9b851a1</string>
+    <string name="insecure_data2_description">This challenge stores sensitive credentials in Android SharedPreferences. Many developers think this is secure, but SharedPreferences files are stored as plain XML and can be easily extracted.\n\nYour mission: Extract the SharedPreferences XML file and find the secret flag among the stored credentials.</string>
+    <string name="insecure_data2_hint">1. Use ADB to pull SharedPreferences files\n2. Location: /data/data/com.owasp.app/shared_prefs/\n3. File name: UserCredentials.xml\n4. SharedPreferences stores everything in plain text XML\n5. Look for a key named "secret_flag"\n6. Command: adb pull /data/data/com.owasp.app/shared_prefs/UserCredentials.xml</string>
 
     <!-- Insecure Data Storage Challenge 3 -->
     <string name="menu_insecure_data3">Insecure Data 3</string>
-    <string name="insecure_data3_description">This challenge stores sensitive credentials in Android SharedPreferences. Many developers think this is secure, but SharedPreferences files are stored as plain XML and can be easily extracted.\n\nYour mission: Extract the SharedPreferences XML file and find the secret flag among the stored credentials.</string>
-    <string name="insecure_data3_hint">1. Use ADB to pull SharedPreferences files\n2. Location: /data/data/com.owasp.reverser/shared_prefs/\n3. File name: UserCredentials.xml\n4. SharedPreferences stores everything in plain text XML\n5. Look for a key named "secret_flag"\n6. Command: adb pull /data/data/com.owasp.reverser/shared_prefs/UserCredentials.xml</string>
-
-    <!-- Insecure Data Storage Challenge 4 -->
-    <string name="menu_insecure_data4">Insecure Data 4</string>
-    <string name="insecure_data4_description">This challenge implements custom encryption using a XOR cipher. While the data appears encrypted, the encryption scheme is weak and can be reverse engineered.\n\nYour mission: Decompile the APK, analyze the encryption algorithm, and decrypt the flag. This challenge requires understanding of cryptographic weaknesses.</string>
-    <string name="insecure_data4_hint">1. Decompile the APK using jadx or apktool\n2. Find the InsecureData4Fragment class\n3. Analyze the xorEncrypt() method\n4. The XOR key is hardcoded as "SHEPHERD"\n5. XOR is symmetric - encryption and decryption are identical\n6. Use the encrypted hex data shown in the app\n7. Decrypt: ciphertext XOR key = plaintext</string>
+    <string name="insecure_data3_description">This challenge implements custom encryption using a XOR cipher. While the data appears encrypted, the encryption scheme is weak and can be reverse engineered.\n\nYour mission: Decompile the APK, analyze the encryption algorithm, and decrypt the flag. This challenge requires understanding of cryptographic weaknesses.</string>
+    <string name="insecure_data3_hint">1. Decompile the APK using jadx or apktool\n2. Find the InsecureData3Fragment class\n3. Analyze the xorEncrypt() method\n4. The XOR key is hardcoded as "SHEPHERD"\n5. XOR is symmetric - encryption and decryption are identical\n6. Use the encrypted hex data shown in the app\n7. Decrypt: ciphertext XOR key = plaintext</string>
 
     <!-- Poor Authentication Lesson -->
     <string name="menu_poor_auth_lesson">Poor Authentication Lesson</string>
@@ -169,7 +170,11 @@
 
     <!-- Poor Authentication Challenge -->
     <string name="menu_poor_auth_challenge">Poor Authentication Challenge</string>
-    <string name="poor_auth_challenge_description">This challenge demonstrates multiple poor authentication vulnerabilities:\n\n• Weak security questions with easily discoverable answers\n• Sensitive information logged to logcat\n• Personal details written to files\n• Weak temporary password generation\n\nYour mission: The account is locked, but you can use the password reset feature. Find the security question answers by examining logs and files, reset the password, login, and capture the flag!\n\nHint: Start by checking logcat for interesting information...</string>
+    <string name="poor_auth_challenge_description">This challenge covers multiple poor authentication vulnerabilities:\n\n• Weak security questions with easily discoverable answers\n• Sensitive information logged to logcat\n• Personal details written to files\n• Weak temporary password generation\n\nYour mission: The account is locked, but you can use the password reset feature. Find the security question answers by examining logs and files, reset the password, login, and capture the flag!\n\nHint: Start by checking logcat for interesting information...</string>
+
+    <!-- Insecure Authorization Lesson -->
+    <string name="menu_insecure_authorization_lesson">Insecure Authorization Lesson</string>
+    <string name="insecure_authorization_intro">Insecure authorization occurs when apps fail to properly enforce access controls after authentication. Even if users authenticate correctly, improper authorization checks allow privilege escalation, accessing other users\' data, or performing unauthorized actions. This lesson demonstrates client-side authorization flaws where role/permission checks can be manipulated.</string>
 
     <!-- Supply Chain Security Lesson -->
     <string name="menu_supply_chain_lesson">Supply Chain Security Lesson</string>
@@ -203,5 +208,29 @@
     <!-- Insufficient Cryptography Challenge -->
     <string name="menu_insufficient_crypto_challenge">Insufficient Cryptography Challenge</string>
     <string name="insufficient_crypto_challenge_desc">This app implements cryptographic operations with multiple severe vulnerabilities:\n\n• ECB Mode: Electronic Codebook mode reveals patterns in encrypted data\n• MD5 Key Derivation: Using broken MD5 hash to generate encryption keys\n• Insecure Random: Predictable Random() with fixed seed instead of SecureRandom\n• Static IV: Reusing the same Initialization Vector for all encryptions\n\nYour mission: Analyze the cryptographic implementation by monitoring logcat logs, decompile the APK to examine the crypto code, identify all vulnerabilities, and extract the hidden flag!\n\nHints:\n• Filter logcat with tag: InsufficientCryptoChallenge\n• Look for cipher suite, key derivation method, IV usage\n• Use jadx to decompile and search for crypto-related classes\n• The flag is obfuscated in byte arrays in the source code</string>
+
+    <!-- Security Misconfiguration Lesson -->
+    <string name="menu_security_misconfig_lesson">Security Misconfiguration Lesson</string>
+    <string name="security_misconfig_intro">Security misconfiguration occurs when security settings are not properly defined, implemented, maintained, or enforced. This is one of the most common vulnerabilities in mobile applications, often resulting from default configurations, incomplete setups, or overly permissive settings that expose the app to various attack vectors.</string>
+    <string name="security_misconfig_vulnerabilities">Common Security Misconfigurations:\n\n• Debug Mode Enabled: android:debuggable=true allows JDWP debugging in production\n• Backup Allowed: android:allowBackup=true enables ADB backup extraction of app data\n• Exported Components: Activities/Services/Receivers without proper permission checks\n• Cleartext Traffic: Allowing unencrypted HTTP connections\n• Excessive Permissions: Requesting unnecessary dangerous permissions\n• Verbose Error Messages: Leaking sensitive information in production logs\n• Default Credentials: Unchanged API keys, passwords in configuration files\n• Insecure File Permissions: World-readable/writable files\n• Missing Certificate Pinning: Vulnerable to MITM attacks\n• WebView Misconfigurations: JavaScript enabled, file access allowed</string>
+    <string name="security_misconfig_best_practices">Secure Configuration Best Practices:\n\n• Always set android:debuggable=false for production builds\n• Disable backup or use encrypted backups (android:allowBackup=false)\n• Require permissions for all exported components\n• Enforce HTTPS-only with Network Security Config\n• Follow principle of least privilege for permissions\n• Disable verbose logging in production builds\n• Remove or secure default credentials and test accounts\n• Use proper file permissions (MODE_PRIVATE)\n• Implement certificate pinning for sensitive connections\n• Regular security audits and configuration reviews\n• Use build variants to manage debug vs release configurations\n• Implement ProGuard/R8 obfuscation\n• Sign APKs with strong keys and store securely</string>
+    <string name="security_misconfig_common">Attack Scenarios:\n\n• Debug Mode: Attacker debugs app, inspects memory, modifies runtime behavior\n• Backup Extraction: Use adb backup to extract SharedPreferences, databases with sensitive data\n• Exported Components: Launch activities/services via ADB intents to bypass authentication\n• Cleartext Traffic: MITM attack intercepts HTTP API calls, steals tokens\n• Verbose Logs: Logcat reveals API keys, user credentials, session tokens\n• Default Credentials: Access admin panels, internal APIs with known credentials\n\nReal Impact: In 2020, a popular banking app had debuggable=true in production, allowing attackers to extract encryption keys from memory and decrypt user data.</string>
+
+    <!-- Security Misconfiguration Challenge 2 -->
+    <string name="menu_security_misconfig_challenge2">Security Misconfiguration 1</string>
+    <string name="security_misconfig_challenge2_description">This application has backup enabled (android:allowBackup="true"), allowing app data to be extracted using Android Debug Bridge.\n\nYour mission: Use ADB to create a backup of this app\'s data, extract the backup file, and find the flag stored in SharedPreferences.\n\nSteps:\n1. Create backup: adb backup -f backup.ab -noapk com.owasp.app\n2. Convert .ab to .tar: Use abe.jar or android-backup-extractor\n3. Extract tar: tar -xvf backup.tar\n4. Find SharedPreferences XML files\n5. Locate the flag in the preferences\n\nThe flag is stored in plain text in the SharedPreferences!</string>
+
+    <!-- Security Misconfiguration Challenge 3 -->
+    <string name="menu_security_misconfig_challenge3">Security Misconfiguration 2</string>
+    <string name="security_misconfig_challenge3_description">This application has a SecretActivity that is exported without proper permission checks, allowing it to be launched directly via ADB or by other applications.\n\nYour mission: Find the exported activity in AndroidManifest.xml and launch it with the correct intent extras to reveal the flag.\n\nSteps:\n1. Decompile APK or read AndroidManifest.xml\n2. Find the exported activity (android:exported="true")\n3. Identify required intent extras from challenge hints\n4. Launch via ADB: adb shell am start -n com.owasp.app/.SecretActivity -e unlock_code shepherd2023\n5. The activity will display the flag when launched correctly\n\nThis shows how exported components without authentication can be exploited!</string>
+
+    <!-- Input Validation Lesson (M7) -->
+    <string name="menu_input_validation_lesson">Input Validation Lesson</string>
+    <string name="input_validation_lesson_intro">Input/Output validation vulnerabilities occur when applications fail to properly validate, sanitize, or encode data at trust boundaries. This includes both data coming into the app (user input, API responses, intents) and data going out (WebView content, logs, broadcasts). Insufficient validation can lead to injection attacks, data corruption, security bypasses, and unintended application behavior.</string>
+    <string name="input_validation_lesson_vulnerabilities">Common Input/Output Validation Issues:\n\n• SQL Injection: Unsanitized input in database queries allows data extraction\n• Path Traversal: Unvalidated file paths enable access to unauthorized files\n• WebView XSS: Unescaped user data rendered in WebViews enables script injection\n• Intent Injection: Malicious data in Android Intents bypasses security checks\n• Command Injection: User input passed to system commands enables arbitrary execution\n• XML/JSON Injection: Malformed data breaks parsers and logic\n• Log Injection: Unvalidated data in logs creates fake entries or leaks data\n• URL Validation Bypass: Weak URL checks allow access to unauthorized resources\n• Format String Attacks: User input in format strings causes crashes or leaks\n• Deep Link Exploits: Improperly validated deep link parameters bypass authentication</string>
+    <string name="input_validation_lesson_hint">URL Validation Bypass Techniques:\n\nThe lesson demonstrates a common URL validation flaw where the app checks if a trusted domain appears ANYWHERE in the URL using contains().\n\nBypass Methods:\n1. Subdomain: https://example.com.evil.com\n2. Parameter: https://evil.com?redirect=example.com\n3. Fragment: https://evil.com#example.com\n4. Path: https://evil.com/example.com\n5. Username: https://example.com@evil.com\n\nProper Validation:\n• Use startsWith() for protocol + domain\n• Parse URL and check host property\n• Use allowlist of exact domains\n• Validate scheme (https only)\n• Check against URL.getHost() not full URL string\n\nTry these payloads:\n• https://evil.com?trusted=example.com\n• https://example.com.attacker.com\n• https://malicious.com#example.com\n\nThe flag reveals when you successfully bypass the validation!</string>
+
+    <!-- XSS WebView Challenge (M7) -->
+    <string name="menu_xss_challenge">XSS WebView Challenge</string>
 
 </resources>

@@ -26,6 +26,10 @@
                     android:icon="@drawable/ic_menu_camera"
                     android:title="@string/menu_poor_auth_lesson" />
                 <item
+                    android:id="@+id/nav_insecure_authorization_lesson"
+                    android:icon="@drawable/ic_menu_camera"
+                    android:title="@string/menu_insecure_authorization_lesson" />
+                <item
                     android:id="@+id/nav_supply_chain_lesson"
                     android:icon="@drawable/ic_menu_camera"
                     android:title="@string/menu_supply_chain_lesson" />
@@ -37,6 +41,14 @@
                     android:id="@+id/nav_insufficient_crypto_lesson"
                     android:icon="@drawable/ic_menu_camera"
                     android:title="@string/menu_insufficient_crypto_lesson" />
+                <item
+                    android:id="@+id/nav_security_misconfig_lesson"
+                    android:icon="@drawable/ic_menu_camera"
+                    android:title="@string/menu_security_misconfig_lesson" />
+                <item
+                    android:id="@+id/nav_input_validation_lesson"
+                    android:icon="@drawable/ic_menu_camera"
+                    android:title="@string/menu_input_validation_lesson" />
             </group>
         </menu>
     </item>
@@ -69,10 +81,6 @@
                 android:icon="@drawable/ic_menu_lock"
                 android:title="@string/menu_insecure_data3" />
             <item
-                android:id="@+id/nav_insecure_data4"
-                android:icon="@drawable/ic_menu_lock"
-                android:title="@string/menu_insecure_data4" />
-            <item
                 android:id="@+id/nav_poor_auth_challenge"
                 android:icon="@drawable/ic_menu_lock"
                 android:title="@string/menu_poor_auth_challenge" />
@@ -88,6 +96,18 @@
                 android:id="@+id/nav_insufficient_crypto_challenge"
                 android:icon="@drawable/ic_menu_lock"
                 android:title="@string/menu_insufficient_crypto_challenge" />
+            <item
+                android:id="@+id/nav_security_misconfig_challenge2"
+                android:icon="@drawable/ic_menu_warning"
+                android:title="@string/menu_security_misconfig_challenge2" />
+            <item
+                android:id="@+id/nav_security_misconfig_challenge3"
+                android:icon="@drawable/ic_menu_alert"
+                android:title="@string/menu_security_misconfig_challenge3" />
+            <item
+                android:id="@+id/nav_xss_challenge"
+                android:icon="@drawable/ic_menu_warning"
+                android:title="@string/menu_xss_challenge" />
         </group>
     </menu>
     </item>

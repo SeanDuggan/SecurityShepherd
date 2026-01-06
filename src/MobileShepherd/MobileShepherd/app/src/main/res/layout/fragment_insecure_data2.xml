@@ -26,7 +26,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Insecure Data Storage 2"
+                    android:text="Insecure Data Storage 3"
                     android:textSize="24sp"
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
@@ -35,7 +35,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/insecure_data2_description"
+                    android:text="@string/insecure_data3_description"
                     android:textSize="14sp"
                     android:lineSpacingMultiplier="1.3" />
 
@@ -60,7 +60,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="💡 Hint"
+                    android:text="Hint"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="#856404"
@@ -69,7 +69,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/insecure_data2_hint"
+                    android:text="@string/insecure_data3_hint"
                     android:textSize="14sp"
                     android:textColor="#856404"
                     android:lineSpacingMultiplier="1.2" />
@@ -153,7 +153,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="This challenge demonstrates password hash cracking. The app stores a password hash in a database - your goal is to crack the hash and find the original password."
+                    android:text="SharedPreferences stores data in plain XML files that can be easily extracted. Many developers mistakenly believe this is secure storage. Extract the preferences file to find API keys, tokens, and the secret flag."
                     android:textSize="13sp"
                     android:textColor="#1565C0"
                     android:lineSpacingMultiplier="1.2" />
