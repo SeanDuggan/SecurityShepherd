@@ -46,6 +46,10 @@ jobs:
         run: |
           sed -i "s/'@'localhost'/'@'%'/g" ${GITHUB_WORKSPACE}/src/main/resources/database/moduleSchemas.sql
           sed -i 's/TEST_MYSQL_PORT=3306/TEST_MYSQL_PORT=8888/g' ${GITHUB_WORKSPACE}/.env
+      - name: Initialize Database Schema
+        run: |
+          mysql -h 127.0.0.1 -P 8888 -u root -ppassword core < ${GITHUB_WORKSPACE}/src/main/resources/database/coreSchema.sql
+          mysql -h 127.0.0.1 -P 8888 -u root -ppassword < ${GITHUB_WORKSPACE}/src/main/resources/database/moduleSchemas.sql
       - name: Run Unit Tests
         run: mvn test -B -e -X
 
@@ -73,6 +77,10 @@ jobs:
         run: |
           sed -i "s/'@'localhost'/'@'%'/g" ${GITHUB_WORKSPACE}/src/main/resources/database/moduleSchemas.sql
           sed -i 's/TEST_MYSQL_PORT=3306/TEST_MYSQL_PORT=8888/g' ${GITHUB_WORKSPACE}/.env
+      - name: Initialize Database Schema
+        run: |
+          mysql -h 127.0.0.1 -P 8888 -u root -ppassword core < ${GITHUB_WORKSPACE}/src/main/resources/database/coreSchema.sql
+          mysql -h 127.0.0.1 -P 8888 -u root -ppassword < ${GITHUB_WORKSPACE}/src/main/resources/database/moduleSchemas.sql
       - name: Prepare Intergration Tests
         run: |
           sudo apt-get -y install libargon2-0
