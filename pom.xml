@@ -425,7 +425,7 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
-				<version>3.2.0</version>
+				<version>3.1.0</version>
 				<executions>
 					<execution>
 						<id>copy-resources</id>
@@ -433,19 +433,26 @@
 						<goals>
 							<goal>copy-resources</goal>
 						</goals>
-						<configuration>
-							<outputDirectory>${basedir}/target/test-classes/WEB-INF/classes</outputDirectory>
-							<resources>
-								<resource>
-									<directory>src/main/resources</directory>
-									<filtering>true</filtering>
-								</resource>
-								<resource>
-									<directory>src/it/resources</directory>
-									<filtering>true</filtering>
-								</resource>
-							</resources>
-						</configuration>
+					<configuration>
+						<outputDirectory>${basedir}/target/test-classes/WEB-INF/classes</outputDirectory>
+						<encoding>UTF-8</encoding>
+						<nonFilteredFileExtensions>
+							<nonFilteredFileExtension>jks</nonFilteredFileExtension>
+							<nonFilteredFileExtension>p12</nonFilteredFileExtension>
+							<nonFilteredFileExtension>pfx</nonFilteredFileExtension>
+							<nonFilteredFileExtension>dat</nonFilteredFileExtension>
+						</nonFilteredFileExtensions>
+						<resources>
+							<resource>
+								<directory>src/main/resources</directory>
+								<filtering>true</filtering>
+							</resource>
+							<resource>
+								<directory>src/it/resources</directory>
+								<filtering>true</filtering>
+							</resource>
+						</resources>
+					</configuration>
 					</execution>
 				</executions>
 			</plugin>
