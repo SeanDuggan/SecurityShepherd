@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Theme-aware colors for dark mode -->
+    <color name="background_primary">#FF121212</color>
+    <color name="background_secondary">#FF1E1E1E</color>
+    <color name="text_primary">#FFFFFFFF</color>
+    <color name="text_secondary">#FFE0E0E0</color>
+    <color name="text_on_button">#FFFFFFFF</color>
+    
+    <!-- Card background colors for dark mode -->
+    <color name="card_info_bg">#1E3A5F</color>
+    <color name="card_info_text">#90CAF9</color>
+    <color name="card_error_bg">#4A1A1A</color>
+    <color name="card_error_text">#EF9A9A</color>
+    <color name="card_warning_bg">#4A3A1A</color>
+    <color name="card_warning_text">#FFB74D</color>
+    <color name="card_success_bg">#1A3A1A</color>
+    <color name="card_success_text">#81C784</color>
+    <color name="card_background">#FF2C2C2C</color>
+    
+    <!-- Button colors (same as light mode) -->
+    <color name="colorPrimary">#2196F3</color>
+    <color name="colorAccent">#FF9800</color>
+    <color name="colorSecondary">#4CAF50</color>
+</resources>

@@ -7,4 +7,34 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    
+    <!-- Theme-aware colors for light mode -->
+    <color name="background_primary">#FFFFFFFF</color>
+    <color name="background_secondary">#FFF5F5F5</color>
+    <color name="text_primary">#FF212121</color>
+    <color name="text_secondary">#FF424242</color>
+    <color name="text_on_button">#FFFFFFFF</color>
+    
+    <!-- Card background colors for light mode -->
+    <color name="card_info_bg">#E3F2FD</color>
+    <color name="card_info_text">#1565C0</color>
+    <color name="card_error_bg">#FFEBEE</color>
+    <color name="card_error_text">#C62828</color>
+    <color name="card_warning_bg">#FFF3E0</color>
+    <color name="card_warning_text">#E65100</color>
+    <color name="card_success_bg">#E8F5E9</color>
+    <color name="card_success_text">#2E7D32</color>
+    <color name="card_background">#FFFFFFFF</color>
+    
+    <!-- Button colors -->
+    <color name="colorPrimary">#2196F3</color>
+    <color name="colorAccent">#FF9800</color>
+    <color name="colorSecondary">#4CAF50</color>
+    
+    <!-- Progress tracking colors -->
+    <color name="success_green">#4CAF50</color>
+    <color name="success_background">#E8F5E9</color>
+    <color name="progress_background">#E0E0E0</color>
+    <color name="challenge_badge">#FF5722</color>
+    <color name="lesson_badge">#2196F3</color>
 </resources>

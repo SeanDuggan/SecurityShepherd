@@ -6,13 +6,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.owasp.app.R;
 import com.owasp.app.databinding.FragmentSupplyChainChallengeBinding;
+import com.owasp.app.utils.FlagValidator;
+import com.owasp.app.utils.ProgressTracker;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -24,6 +30,7 @@ public class SupplyChainChallengeFragment extends Fragment {
     private FragmentSupplyChainChallengeBinding binding;
     private SupplyChainChallengeModel viewModel;
     private static final String TAG = "SupplyChainChallenge";
+    private ProgressTracker progressTracker;
 
     // Simulated vulnerable SDK with multiple supply chain issues
     private static final String VENDOR_SDK_VERSION = "VulnSDK-1.2.3";
@@ -37,6 +44,13 @@ public class SupplyChainChallengeFragment extends Fragment {
         View root = binding.getRoot();
 
         viewModel = new ViewModelProvider(this).get(SupplyChainChallengeModel.class);
+        progressTracker = new ProgressTracker(requireContext());
+
+        // Setup FAB for vulnerability information
+        FloatingActionButton fab = requireActivity().findViewById(R.id.fab);
+        if (fab != null) {
+            fab.setOnClickListener(v -> showVulnerabilityInfo());
+        }
 
         // Initialize vulnerable SDK
         initializeVulnerableSDK();
@@ -46,6 +60,35 @@ public class SupplyChainChallengeFragment extends Fragment {
         binding.submitFlagButton.setOnClickListener(v -> submitFlag());
 
         return root;
+    }
+
+    private void showVulnerabilityInfo() {
+        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_lesson_info, null);
+        
+        TextView introText = dialogView.findViewById(R.id.intro_text);
+        TextView vulnerabilitiesText = dialogView.findViewById(R.id.vulnerabilities_text);
+        View hintsSection = dialogView.findViewById(R.id.hints_section);
+        TextView hintsText = dialogView.findViewById(R.id.hints_text);
+        View bestPracticesSection = dialogView.findViewById(R.id.best_practices_section);
+        TextView bestPracticesText = dialogView.findViewById(R.id.best_practices_text);
+        View additionalSection = dialogView.findViewById(R.id.additional_section);
+        
+        introText.setText(R.string.supply_chain_intro);
+        vulnerabilitiesText.setText(R.string.supply_chain_vulnerabilities);
+        
+        hintsSection.setVisibility(View.VISIBLE);
+        hintsText.setText("Challenge Hints:\n\n• Use logcat filtering with tag: SupplyChainChallenge\n• SDK is 16 months outdated with known CVEs\n• Check for hardcoded backdoor tokens\n• Explore app's data directory using ADB or Device File Explorer\n• Look for telemetry data files\n• Check for base64-encoded credentials in logs");
+        
+        bestPracticesSection.setVisibility(View.VISIBLE);
+        bestPracticesText.setText(R.string.supply_chain_best_practices);
+        
+        additionalSection.setVisibility(View.GONE);
+        
+        new AlertDialog.Builder(requireContext())
+                .setTitle("Supply Chain Security Challenge")
+                .setView(dialogView)
+                .setPositiveButton("Close", null)
+                .show();
     }
 
     private void initializeVulnerableSDK() {
@@ -97,12 +140,12 @@ public class SupplyChainChallengeFragment extends Fragment {
         analysis.append("SDK Name: ").append(VENDOR_SDK_VERSION).append("\n");
         analysis.append("Status: VULNERABLE\n");
         analysis.append("Last Updated: 16 months ago\n\n");
-        analysis.append("🔍 Findings:\n");
+        analysis.append("Findings:\n");
         analysis.append("• Outdated dependency with known CVEs\n");
         analysis.append("• Hardcoded credentials detected\n");
         analysis.append("• Insecure data storage in telemetry logs\n");
         analysis.append("• Base64-encoded backdoor token found\n\n");
-        analysis.append("💡 Hint: Check logcat verbose logs and app files directory");
+        analysis.append("Hint: Check logcat verbose logs and app files directory");
         
         binding.analysisResults.setText(analysis.toString());
         
@@ -123,12 +166,22 @@ public class SupplyChainChallengeFragment extends Fragment {
         boolean isValid = viewModel.validateFlag(enteredFlag);
 
         if (isValid) {
+            progressTracker.markCompleted(FlagValidator.Module.SUPPLY_CHAIN_CHALLENGE);
+            int completionCount = progressTracker.getCompletionCount(FlagValidator.Module.SUPPLY_CHAIN_CHALLENGE);
+            String completionText = completionCount > 1 ? " (Completed " + completionCount + " times)" : "";
+            
             binding.flagValidationCard.setCardBackgroundColor(getResources().getColor(android.R.color.holo_green_light));
             binding.resultText.setText("✓ Correct Flag!\n\nYou successfully identified and exploited the supply chain vulnerability!");
             binding.resultText.setVisibility(View.VISIBLE);
             
             Toast.makeText(getContext(), "Challenge Complete!", Toast.LENGTH_LONG).show();
             Log.d(TAG, "Challenge solved! Supply chain vulnerability successfully exploited.");
+            
+            new AlertDialog.Builder(requireContext())
+                .setTitle("🎉 Success!")
+                .setMessage("Congratulations! You exploited the supply chain vulnerability.\n\nFlag: " + enteredFlag + completionText + "\n\nProgress: " + progressTracker.getCompletedChallengesCount() + "/" + progressTracker.getTotalChallengesCount() + " challenges completed")
+                .setPositiveButton("OK", null)
+                .show();
             
             binding.submitFlagButton.setEnabled(false);
             binding.flagInput.setEnabled(false);

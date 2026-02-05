@@ -92,8 +92,8 @@
                     android:textSize="14sp"
                     android:fontFamily="monospace"
                     android:padding="12dp"
-                    android:background="#F5F5F5"
-                    android:textColor="#424242" />
+                    android:background="@color/background_secondary"
+                    android:textColor="@color/text_secondary" />
 
             </LinearLayout>
 

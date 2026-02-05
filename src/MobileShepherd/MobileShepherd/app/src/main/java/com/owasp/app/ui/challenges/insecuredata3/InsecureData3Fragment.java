@@ -6,19 +6,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.owasp.app.R;
 import com.owasp.app.databinding.FragmentInsecureData3Binding;
+import com.owasp.app.utils.FlagValidator;
+import com.owasp.app.utils.ProgressTracker;
 
 public class InsecureData3Fragment extends Fragment {
 
     private FragmentInsecureData3Binding binding;
     private InsecureData3Model viewModel;
+    private ProgressTracker progressTracker;
 
     // Weak "encryption" implementation - XOR cipher with fixed key
     private static final String XOR_KEY = "SHEPHERD";
@@ -32,6 +38,14 @@ public class InsecureData3Fragment extends Fragment {
 
         binding = FragmentInsecureData3Binding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        
+        progressTracker = new ProgressTracker(requireContext());
+
+        // Setup FAB for vulnerability information
+        FloatingActionButton fab = requireActivity().findViewById(R.id.fab);
+        if (fab != null) {
+            fab.setOnClickListener(v -> showVulnerabilityInfo());
+        }
 
         // "Encrypt" the secret data using weak XOR cipher
         String secretData = "SecureFlag{WeakXOR_Crypto_2024}";
@@ -52,12 +66,22 @@ public class InsecureData3Fragment extends Fragment {
             boolean isValid = viewModel.validateFlag(enteredFlag);
 
             if (isValid) {
+                progressTracker.markCompleted(FlagValidator.Module.IDS_CHALLENGE_3);
+                int completionCount = progressTracker.getCompletionCount(FlagValidator.Module.IDS_CHALLENGE_3);
+                String completionText = completionCount > 1 ? " (Completed " + completionCount + " times)" : "";
+                
                 Toast.makeText(getContext(), "Correct! You cracked the encryption!", Toast.LENGTH_LONG).show();
                 binding.resultCard.setCardBackgroundColor(getResources().getColor(android.R.color.holo_green_light));
                 
                 // Show the decrypted value
                 String decrypted = xorDecrypt(encryptedFlag, XOR_KEY);
                 Toast.makeText(getContext(), "Decrypted value: " + decrypted, Toast.LENGTH_LONG).show();
+                
+                new AlertDialog.Builder(requireContext())
+                    .setTitle("🎉 Success!")
+                    .setMessage("Congratulations! You broke the weak XOR encryption.\n\nFlag: " + enteredFlag + completionText + "\n\nProgress: " + progressTracker.getCompletedChallengesCount() + "/" + progressTracker.getTotalChallengesCount() + " challenges completed")
+                    .setPositiveButton("OK", null)
+                    .show();
             } else {
                 Toast.makeText(getContext(), "Incorrect flag. Analyze the encryption!", Toast.LENGTH_SHORT).show();
                 binding.resultCard.setCardBackgroundColor(getResources().getColor(android.R.color.holo_red_light));
@@ -72,6 +96,32 @@ public class InsecureData3Fragment extends Fragment {
         });
 
         return root;
+    }
+
+    private void showVulnerabilityInfo() {
+        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_lesson_info, null);
+        
+        TextView introText = dialogView.findViewById(R.id.intro_text);
+        TextView vulnerabilitiesText = dialogView.findViewById(R.id.vulnerabilities_text);
+        View hintsSection = dialogView.findViewById(R.id.hints_section);
+        TextView hintsText = dialogView.findViewById(R.id.hints_text);
+        View bestPracticesSection = dialogView.findViewById(R.id.best_practices_section);
+        View additionalSection = dialogView.findViewById(R.id.additional_section);
+        
+        introText.setText(R.string.insufficient_crypto_intro);
+        vulnerabilitiesText.setText(R.string.insufficient_crypto_vulnerabilities);
+        
+        hintsSection.setVisibility(View.VISIBLE);
+        hintsText.setText(R.string.insecure_data3_hint);
+        
+        bestPracticesSection.setVisibility(View.GONE);
+        additionalSection.setVisibility(View.GONE);
+        
+        new AlertDialog.Builder(requireContext())
+                .setTitle("Insecure Data Storage - Weak Encryption")
+                .setView(dialogView)
+                .setPositiveButton("Close", null)
+                .show();
     }
 
     /**

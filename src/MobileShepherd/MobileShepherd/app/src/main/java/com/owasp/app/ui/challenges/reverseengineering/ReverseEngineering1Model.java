@@ -4,14 +4,13 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class Challenge_1_Model extends ViewModel {
+import com.owasp.app.utils.FlagValidator;
+
+public class ReverseEngineering1Model extends ViewModel {
 
     private final MutableLiveData<String> mText;
-    
-    // TODO: Replace this with your actual flag
-    private static final String FLAG = "OWASP{Simple_Flag_Easy_To_Find}";
 
-    public Challenge_1_Model() {
+    public ReverseEngineering1Model() {
         mText = new MutableLiveData<>();
         mText.setValue("Challenge 1");
     }
@@ -21,6 +20,6 @@ public class Challenge_1_Model extends ViewModel {
     }
     
     public boolean validateFlag(String input) {
-        return FLAG.equals(input);
+        return FlagValidator.validateFlag(FlagValidator.Module.RE_CHALLENGE_1, input);
     }
 }

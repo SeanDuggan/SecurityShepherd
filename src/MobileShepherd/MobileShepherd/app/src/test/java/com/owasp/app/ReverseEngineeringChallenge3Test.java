@@ -1,6 +1,6 @@
 package com.owasp.app;
 
-import com.owasp.app.ui.challenges.reverseengineering.Challenge_3_Model;
+import com.owasp.app.ui.challenges.reverseengineering.ReverseEngineering3Model;
 import org.junit.Test;
 
 import java.lang.reflect.Field;
@@ -18,18 +18,18 @@ public class ReverseEngineeringChallenge3Test {
     @Test
     public void challenge3_ValidateFlagMethodExists() throws Exception {
         // Verify the validation method exists
-        Method validateMethod = Challenge_3_Model.class.getDeclaredMethod("validateFlag", String.class);
+        Method validateMethod = ReverseEngineering3Model.class.getDeclaredMethod("validateFlag", String.class);
         assertNotNull("validateFlag method should exist", validateMethod);
     }
 
     @Test
     public void challenge3_AllFlagPartsExist() throws Exception {
         // Verify all 5 parts exist as separate constants
-        Field part1 = Challenge_3_Model.class.getDeclaredField("PART_1");
-        Field part2 = Challenge_3_Model.class.getDeclaredField("PART_2");
-        Field part3 = Challenge_3_Model.class.getDeclaredField("PART_3");
-        Field part4 = Challenge_3_Model.class.getDeclaredField("PART_4");
-        Field part5 = Challenge_3_Model.class.getDeclaredField("PART_5");
+        Field part1 = ReverseEngineering3Model.class.getDeclaredField("PART_1");
+        Field part2 = ReverseEngineering3Model.class.getDeclaredField("PART_2");
+        Field part3 = ReverseEngineering3Model.class.getDeclaredField("PART_3");
+        Field part4 = ReverseEngineering3Model.class.getDeclaredField("PART_4");
+        Field part5 = ReverseEngineering3Model.class.getDeclaredField("PART_5");
         
         assertNotNull("PART_1 should exist", part1);
         assertNotNull("PART_2 should exist", part2);
@@ -41,11 +41,11 @@ public class ReverseEngineeringChallenge3Test {
     @Test
     public void challenge3_CanAccessFlagParts() throws Exception {
         // Access each part via reflection
-        Field part1 = Challenge_3_Model.class.getDeclaredField("PART_1");
-        Field part2 = Challenge_3_Model.class.getDeclaredField("PART_2");
-        Field part3 = Challenge_3_Model.class.getDeclaredField("PART_3");
-        Field part4 = Challenge_3_Model.class.getDeclaredField("PART_4");
-        Field part5 = Challenge_3_Model.class.getDeclaredField("PART_5");
+        Field part1 = ReverseEngineering3Model.class.getDeclaredField("PART_1");
+        Field part2 = ReverseEngineering3Model.class.getDeclaredField("PART_2");
+        Field part3 = ReverseEngineering3Model.class.getDeclaredField("PART_3");
+        Field part4 = ReverseEngineering3Model.class.getDeclaredField("PART_4");
+        Field part5 = ReverseEngineering3Model.class.getDeclaredField("PART_5");
         
         part1.setAccessible(true);
         part2.setAccessible(true);
@@ -64,7 +64,7 @@ public class ReverseEngineeringChallenge3Test {
     public void challenge3_FlagPartsAreStatic() throws Exception {
         // Verify all parts are static constants
         for (int i = 1; i <= 5; i++) {
-            Field part = Challenge_3_Model.class.getDeclaredField("PART_" + i);
+            Field part = ReverseEngineering3Model.class.getDeclaredField("PART_" + i);
             assertTrue("PART_" + i + " should be static", 
                 java.lang.reflect.Modifier.isStatic(part.getModifiers()));
             assertTrue("PART_" + i + " should be final", 
@@ -75,7 +75,7 @@ public class ReverseEngineeringChallenge3Test {
     @Test
     public void challenge3_ConstructFlagMethodExists() throws Exception {
         // Verify the private constructFlag method exists
-        Method constructFlagMethod = Challenge_3_Model.class.getDeclaredMethod("constructFlag");
+        Method constructFlagMethod = ReverseEngineering3Model.class.getDeclaredMethod("constructFlag");
         assertNotNull("constructFlag method should exist", constructFlagMethod);
         
         assertTrue("constructFlag should be private", 
@@ -85,7 +85,7 @@ public class ReverseEngineeringChallenge3Test {
     @Test
     public void challenge3_ConstructFlagMethodIsPrivate() throws Exception {
         // Verify method exists and is private
-        Method constructFlagMethod = Challenge_3_Model.class.getDeclaredMethod("constructFlag");
+        Method constructFlagMethod = ReverseEngineering3Model.class.getDeclaredMethod("constructFlag");
         assertTrue("constructFlag should be private", 
             java.lang.reflect.Modifier.isPrivate(constructFlagMethod.getModifiers()));
     }
@@ -93,11 +93,11 @@ public class ReverseEngineeringChallenge3Test {
     @Test
     public void challenge3_ReconstructFlagFromParts() throws Exception {
         // Simulate reverse engineering: find all parts and reconstruct
-        Field part1 = Challenge_3_Model.class.getDeclaredField("PART_1");
-        Field part2 = Challenge_3_Model.class.getDeclaredField("PART_2");
-        Field part3 = Challenge_3_Model.class.getDeclaredField("PART_3");
-        Field part4 = Challenge_3_Model.class.getDeclaredField("PART_4");
-        Field part5 = Challenge_3_Model.class.getDeclaredField("PART_5");
+        Field part1 = ReverseEngineering3Model.class.getDeclaredField("PART_1");
+        Field part2 = ReverseEngineering3Model.class.getDeclaredField("PART_2");
+        Field part3 = ReverseEngineering3Model.class.getDeclaredField("PART_3");
+        Field part4 = ReverseEngineering3Model.class.getDeclaredField("PART_4");
+        Field part5 = ReverseEngineering3Model.class.getDeclaredField("PART_5");
         
         part1.setAccessible(true);
         part2.setAccessible(true);
@@ -123,7 +123,7 @@ public class ReverseEngineeringChallenge3Test {
     public void challenge3_DiscoverFlagThroughFieldEnumeration() {
         // Complete reverse engineering simulation
         try {
-            Field[] fields = Challenge_3_Model.class.getDeclaredFields();
+            Field[] fields = ReverseEngineering3Model.class.getDeclaredFields();
             StringBuilder flagBuilder = new StringBuilder();
             
             // Find and sort PART_ fields
@@ -149,7 +149,7 @@ public class ReverseEngineeringChallenge3Test {
 
     @Test
     public void challenge3_FirstPartStartsWithOWASP() throws Exception {
-        Field part1 = Challenge_3_Model.class.getDeclaredField("PART_1");
+        Field part1 = ReverseEngineering3Model.class.getDeclaredField("PART_1");
         part1.setAccessible(true);
         String firstPart = (String) part1.get(null);
         
@@ -159,7 +159,7 @@ public class ReverseEngineeringChallenge3Test {
     @Test
     public void challenge3_XorDecodeMethodExists() throws Exception {
         // Verify XOR decode method exists (even if not currently used)
-        Method xorDecodeMethod = Challenge_3_Model.class.getDeclaredMethod("xorDecode", String.class);
+        Method xorDecodeMethod = ReverseEngineering3Model.class.getDeclaredMethod("xorDecode", String.class);
         assertNotNull("xorDecode method should exist", xorDecodeMethod);
         
         assertTrue("xorDecode should be private", 
@@ -172,7 +172,7 @@ public class ReverseEngineeringChallenge3Test {
         String completeFlag = "OWASP{Obfuscated_Hard_Challenge}";
         
         for (int i = 1; i <= 5; i++) {
-            Field field = Challenge_3_Model.class.getDeclaredField("PART_" + i);
+            Field field = ReverseEngineering3Model.class.getDeclaredField("PART_" + i);
             field.setAccessible(true);
             String value = (String) field.get(null);
             assertNotEquals("No single PART should contain complete flag", 

@@ -8,14 +8,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.owasp.app.R;
 import com.owasp.app.databinding.FragmentInsecureData2Binding;
+import com.owasp.app.utils.FlagValidator;
+import com.owasp.app.utils.ProgressTracker;
 
 import java.io.File;
 
@@ -24,6 +29,7 @@ public class InsecureData2Fragment extends Fragment {
     private FragmentInsecureData2Binding binding;
     private InsecureData2Model viewModel;
     private static final String PREFS_NAME = "UserCredentials";
+    private ProgressTracker progressTracker;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -31,6 +37,14 @@ public class InsecureData2Fragment extends Fragment {
 
         binding = FragmentInsecureData2Binding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        
+        progressTracker = new ProgressTracker(requireContext());
+
+        // Setup FAB for vulnerability information
+        FloatingActionButton fab = requireActivity().findViewById(R.id.fab);
+        if (fab != null) {
+            fab.setOnClickListener(v -> showVulnerabilityInfo());
+        }
 
         // Store sensitive data in SharedPreferences
         storeCredentialsInSharedPrefs();
@@ -44,8 +58,18 @@ public class InsecureData2Fragment extends Fragment {
             boolean isValid = viewModel.validateFlag(enteredFlag);
 
             if (isValid) {
+                progressTracker.markCompleted(FlagValidator.Module.IDS_CHALLENGE_2);
+                int completionCount = progressTracker.getCompletionCount(FlagValidator.Module.IDS_CHALLENGE_2);
+                String completionText = completionCount > 1 ? " (Completed " + completionCount + " times)" : "";
+                
                 Toast.makeText(getContext(), "Correct! Flag validated successfully!", Toast.LENGTH_LONG).show();
                 binding.resultCard.setCardBackgroundColor(getResources().getColor(android.R.color.holo_green_light));
+                
+                new AlertDialog.Builder(requireContext())
+                    .setTitle("🎉 Success!")
+                    .setMessage("Congratulations! You extracted data from SharedPreferences.\n\nFlag: " + enteredFlag + completionText + "\n\nProgress: " + progressTracker.getCompletedChallengesCount() + "/" + progressTracker.getTotalChallengesCount() + " challenges completed")
+                    .setPositiveButton("OK", null)
+                    .show();
             } else {
                 Toast.makeText(getContext(), "Incorrect flag. Keep looking!", Toast.LENGTH_SHORT).show();
                 binding.resultCard.setCardBackgroundColor(getResources().getColor(android.R.color.holo_red_light));
@@ -54,6 +78,32 @@ public class InsecureData2Fragment extends Fragment {
         });
 
         return root;
+    }
+
+    private void showVulnerabilityInfo() {
+        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_lesson_info, null);
+        
+        TextView introText = dialogView.findViewById(R.id.intro_text);
+        TextView vulnerabilitiesText = dialogView.findViewById(R.id.vulnerabilities_text);
+        View hintsSection = dialogView.findViewById(R.id.hints_section);
+        TextView hintsText = dialogView.findViewById(R.id.hints_text);
+        View bestPracticesSection = dialogView.findViewById(R.id.best_practices_section);
+        View additionalSection = dialogView.findViewById(R.id.additional_section);
+        
+        introText.setText(R.string.insecure_data_intro);
+        vulnerabilitiesText.setText(R.string.insecure_data_locations);
+        
+        hintsSection.setVisibility(View.VISIBLE);
+        hintsText.setText(R.string.insecure_data2_hint);
+        
+        bestPracticesSection.setVisibility(View.GONE);
+        additionalSection.setVisibility(View.GONE);
+        
+        new AlertDialog.Builder(requireContext())
+                .setTitle("Insecure Data Storage - SharedPreferences")
+                .setView(dialogView)
+                .setPositiveButton("Close", null)
+                .show();
     }
 
     private void storeCredentialsInSharedPrefs() {

@@ -6,13 +6,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.owasp.app.R;
 import com.owasp.app.databinding.FragmentInsecureCommChallengeBinding;
+import com.owasp.app.utils.FlagValidator;
+import com.owasp.app.utils.ProgressTracker;
 
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -25,6 +31,7 @@ public class InsecureCommChallengeFragment extends Fragment {
     private FragmentInsecureCommChallengeBinding binding;
     private InsecureCommChallengeModel viewModel;
     private static final String TAG = "AppNetworkMonitor";
+    private ProgressTracker progressTracker;
     
     // Obfuscated flag components - split and encoded differently
     private static final byte[] ENC_PART1 = {79, 87, 65, 83, 80}; // OWASP
@@ -40,11 +47,47 @@ public class InsecureCommChallengeFragment extends Fragment {
         View root = binding.getRoot();
 
         viewModel = new ViewModelProvider(this).get(InsecureCommChallengeModel.class);
+        progressTracker = new ProgressTracker(requireContext());
+
+        // Setup FAB for vulnerability information
+        FloatingActionButton fab = requireActivity().findViewById(R.id.fab);
+        if (fab != null) {
+            fab.setOnClickListener(v -> showVulnerabilityInfo());
+        }
 
         binding.startAppButton.setOnClickListener(v -> simulateAppTraffic());
         binding.submitFlagButton.setOnClickListener(v -> submitFlag());
 
         return root;
+    }
+
+    private void showVulnerabilityInfo() {
+        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_lesson_info, null);
+        
+        TextView introText = dialogView.findViewById(R.id.intro_text);
+        TextView vulnerabilitiesText = dialogView.findViewById(R.id.vulnerabilities_text);
+        View hintsSection = dialogView.findViewById(R.id.hints_section);
+        TextView hintsText = dialogView.findViewById(R.id.hints_text);
+        View bestPracticesSection = dialogView.findViewById(R.id.best_practices_section);
+        TextView bestPracticesText = dialogView.findViewById(R.id.best_practices_text);
+        View additionalSection = dialogView.findViewById(R.id.additional_section);
+        
+        introText.setText(R.string.insecure_comm_intro);
+        vulnerabilitiesText.setText(R.string.insecure_comm_vulnerabilities);
+        
+        hintsSection.setVisibility(View.VISIBLE);
+        hintsText.setText("Challenge Hints:\n\n• Monitor logcat with tag: AppNetworkMonitor\n• Look for HTTP (not HTTPS) requests\n• The flag is in the X-Session-Token header\n• Pay attention to protocol warnings\n• Click 'Start App' to simulate network traffic");
+        
+        bestPracticesSection.setVisibility(View.VISIBLE);
+        bestPracticesText.setText(R.string.insecure_comm_best_practices);
+        
+        additionalSection.setVisibility(View.GONE);
+        
+        new AlertDialog.Builder(requireContext())
+                .setTitle("Insecure Communication Challenge")
+                .setView(dialogView)
+                .setPositiveButton("Close", null)
+                .show();
     }
 
     private void simulateAppTraffic() {
@@ -101,7 +144,7 @@ public class InsecureCommChallengeFragment extends Fragment {
         Log.d(TAG, "[Request #2] User Session Endpoint");
         Log.d(TAG, "───────────────────────────────────");
         Log.d(TAG, "GET http://api.legacy-backend.com/user/session");
-        Log.d(TAG, "Protocol: HTTP/1.1 ⚠️  PLAINTEXT");
+        Log.d(TAG, "Protocol: HTTP/1.1 WARNING: PLAINTEXT");
         Log.d(TAG, "");
         Log.d(TAG, "Headers:");
         Log.d(TAG, "  Host: api.legacy-backend.com");
@@ -110,7 +153,7 @@ public class InsecureCommChallengeFragment extends Fragment {
         Log.d(TAG, "  User-Agent: MobileApp/2.1.4");
         Log.d(TAG, "  Accept: application/json");
         Log.d(TAG, "");
-        Log.d(TAG, "⚠️  SECURITY WARNING: Sensitive token sent over HTTP!");
+        Log.d(TAG, "SECURITY WARNING: Sensitive token sent over HTTP!");
         Log.d(TAG, "");
         
         try {
@@ -148,14 +191,14 @@ public class InsecureCommChallengeFragment extends Fragment {
         Log.d(TAG, "[Request #4] Metrics Endpoint");
         Log.d(TAG, "───────────────────────────────────");
         Log.d(TAG, "POST http://metrics.old-service.com/collect");
-        Log.d(TAG, "Protocol: HTTP/1.1 ⚠️  PLAINTEXT");
+        Log.d(TAG, "Protocol: HTTP/1.1 WARNING: PLAINTEXT");
         Log.d(TAG, "");
         Log.d(TAG, "Headers:");
         Log.d(TAG, "  Content-Type: application/json");
         Log.d(TAG, "Body:");
         Log.d(TAG, "  {\"event\":\"app_open\",\"user_id\":\"u_847263\"}");
         Log.d(TAG, "");
-        Log.d(TAG, "⚠️  Non-sensitive data, but still unencrypted");
+        Log.d(TAG, "WARNING: Non-sensitive data, but still unencrypted");
         Log.d(TAG, "");
     }
 
@@ -206,11 +249,21 @@ public class InsecureCommChallengeFragment extends Fragment {
         boolean isValid = viewModel.validateFlag(enteredFlag);
 
         if (isValid) {
+            progressTracker.markCompleted(FlagValidator.Module.INSECURE_COMM_CHALLENGE);
+            int completionCount = progressTracker.getCompletionCount(FlagValidator.Module.INSECURE_COMM_CHALLENGE);
+            String completionText = completionCount > 1 ? " (Completed " + completionCount + " times)" : "";
+            
             binding.flagValidationCard.setCardBackgroundColor(getResources().getColor(android.R.color.holo_green_light));
             binding.resultText.setText("✓ Correct Flag!\n\nYou successfully intercepted the insecure HTTP traffic and found the session token!");
             binding.resultText.setVisibility(View.VISIBLE);
             
             Toast.makeText(getContext(), "Challenge Complete!", Toast.LENGTH_LONG).show();
+            
+            new AlertDialog.Builder(requireContext())
+                .setTitle("🎉 Success!")
+                .setMessage("Congratulations! You intercepted insecure network traffic.\n\nFlag: " + enteredFlag + completionText + "\n\nProgress: " + progressTracker.getCompletedChallengesCount() + "/" + progressTracker.getTotalChallengesCount() + " challenges completed")
+                .setPositiveButton("OK", null)
+                .show();
             
             binding.submitFlagButton.setEnabled(false);
             binding.flagInput.setEnabled(false);

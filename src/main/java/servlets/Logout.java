@@ -42,8 +42,6 @@ public class Logout extends HttpServlet {
   /**
    * Initiated in index.jsp. Invalidates session and Security Shepherd tokens are removed. The user
    * is logged out.
-   *
-   * @param csrfToken
    */
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {

@@ -85,8 +85,8 @@ public class InsecureCommLessonFragment extends Fragment {
                 Log.d(TAG, "  \"device_id\": \"android_12345\"");
                 Log.d(TAG, "}");
                 Log.d(TAG, "═══════════════════════════════════════");
-                Log.d(TAG, "⚠️  WARNING: Credentials sent in PLAINTEXT!");
-                Log.d(TAG, "⚠️  Any attacker on the network can read this!");
+                Log.d(TAG, "WARNING: Credentials sent in PLAINTEXT!");
+                Log.d(TAG, "WARNING: Any attacker on the network can read this!");
                 Log.d(TAG, "═══════════════════════════════════════");
                 
                 // Actually attempt the connection (will fail, but that's fine)

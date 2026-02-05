@@ -1,6 +1,6 @@
 package com.owasp.app;
 
-import com.owasp.app.ui.challenges.reverseengineering.Challenge_1_Model;
+import com.owasp.app.ui.challenges.reverseengineering.ReverseEngineering1Model;
 import org.junit.Test;
 
 import java.lang.reflect.Field;
@@ -18,7 +18,7 @@ public class ReverseEngineeringChallenge1Test {
     @Test
     public void challenge1_FlagIsAccessibleViaReflection() throws Exception {
         // Simulate reverse engineering via reflection
-        Field flagField = Challenge_1_Model.class.getDeclaredField("FLAG");
+        Field flagField = ReverseEngineering1Model.class.getDeclaredField("FLAG");
         flagField.setAccessible(true);
         String flag = (String) flagField.get(null);
         
@@ -29,13 +29,13 @@ public class ReverseEngineeringChallenge1Test {
     @Test
     public void challenge1_ValidateFlagMethodExists() throws Exception {
         // Verify the validateFlag method exists and can be called
-        Method validateMethod = Challenge_1_Model.class.getDeclaredMethod("validateFlag", String.class);
+        Method validateMethod = ReverseEngineering1Model.class.getDeclaredMethod("validateFlag", String.class);
         assertNotNull("validateFlag method should exist", validateMethod);
     }
 
     @Test
     public void challenge1_FlagHasCorrectFormat() throws Exception {
-        Field flagField = Challenge_1_Model.class.getDeclaredField("FLAG");
+        Field flagField = ReverseEngineering1Model.class.getDeclaredField("FLAG");
         flagField.setAccessible(true);
         String flag = (String) flagField.get(null);
         
@@ -46,7 +46,7 @@ public class ReverseEngineeringChallenge1Test {
     @Test
     public void challenge1_FlagIsStatic() throws Exception {
         // Verify the flag is a static constant (common reverse engineering target)
-        Field flagField = Challenge_1_Model.class.getDeclaredField("FLAG");
+        Field flagField = ReverseEngineering1Model.class.getDeclaredField("FLAG");
         
         assertTrue("Flag should be static", 
             java.lang.reflect.Modifier.isStatic(flagField.getModifiers()));
@@ -58,7 +58,7 @@ public class ReverseEngineeringChallenge1Test {
     public void challenge1_DiscoverFlagThroughFieldEnumeration() {
         // Simulate how a reverse engineer would find the flag
         try {
-            Field[] fields = Challenge_1_Model.class.getDeclaredFields();
+            Field[] fields = ReverseEngineering1Model.class.getDeclaredFields();
             String discoveredFlag = null;
             
             for (Field field : fields) {

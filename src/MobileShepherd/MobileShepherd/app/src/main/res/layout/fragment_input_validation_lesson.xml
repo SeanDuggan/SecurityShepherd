@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     android:padding="16dp"
-    android:background="#F5F5F5"
+    android:background="@color/background_secondary"
     tools:context=".ui.lessons.InputValidationLessonFragment">
 
     <LinearLayout
@@ -120,7 +120,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Test URL"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/text_on_button"
                     android:backgroundTint="#2196F3" />
 
             </LinearLayout>

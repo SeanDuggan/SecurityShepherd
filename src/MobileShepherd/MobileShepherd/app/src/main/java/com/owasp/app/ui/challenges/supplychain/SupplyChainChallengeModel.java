@@ -2,11 +2,11 @@ package com.owasp.app.ui.challenges.supplychain;
 
 import androidx.lifecycle.ViewModel;
 
+import com.owasp.app.utils.FlagValidator;
+
 public class SupplyChainChallengeModel extends ViewModel {
 
-    private static final String CORRECT_FLAG = "OWASP{Suppl7_Ch41n_C0mpr0m1s3d}";
-
     public boolean validateFlag(String flag) {
-        return CORRECT_FLAG.equals(flag.trim());
+        return FlagValidator.validateFlag(FlagValidator.Module.SUPPLY_CHAIN_CHALLENGE, flag.trim());
     }
 }

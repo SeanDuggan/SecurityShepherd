@@ -25,21 +25,21 @@
 
     <fragment
         android:id="@+id/nav_challenge_1"
-        android:name="com.owasp.app.ui.challenges.reverseengineering.Challenge1Fragment"
+        android:name="com.owasp.app.ui.challenges.reverseengineering.ReverseEngineering1Fragment"
         android:label="@string/menu_challenge1"
-        tools:layout="@layout/fragment_challenge1" />
+        tools:layout="@layout/fragment_reverse_engineering1" />
 
     <fragment
         android:id="@+id/nav_challenge_2"
-        android:name="com.owasp.app.ui.challenges.reverseengineering.Challenge2Fragment"
+        android:name="com.owasp.app.ui.challenges.reverseengineering.ReverseEngineering2Fragment"
         android:label="@string/menu_challenge2"
-        tools:layout="@layout/fragment_challenge2" />
+        tools:layout="@layout/fragment_reverse_engineering2" />
 
     <fragment
         android:id="@+id/nav_challenge_3"
-        android:name="com.owasp.app.ui.challenges.reverseengineering.Challenge3Fragment"
+        android:name="com.owasp.app.ui.challenges.reverseengineering.ReverseEngineering3Fragment"
         android:label="@string/menu_challenge3"
-        tools:layout="@layout/fragment_challenge3" />
+        tools:layout="@layout/fragment_reverse_engineering3" />
 
     <fragment
         android:id="@+id/nav_insecure_data1"
@@ -148,5 +148,29 @@
         android:name="com.owasp.app.ui.challenges.inputvalidation.XssWebViewChallengeFragment"
         android:label="@string/menu_xss_challenge"
         tools:layout="@layout/fragment_xss_challenge" />
+
+    <fragment
+        android:id="@+id/nav_privacy_lesson"
+        android:name="com.owasp.app.ui.lessons.privacycontrols.PrivacyControlsLessonFragment"
+        android:label="@string/menu_privacy_lesson"
+        tools:layout="@layout/fragment_privacy_controls_lesson" />
+
+    <fragment
+        android:id="@+id/nav_client_side_injection_lesson"
+        android:name="com.owasp.app.ui.lessons.clientsideinjection.ClientSideInjectionLessonFragment"
+        android:label="Client-Side Injection Lesson"
+        tools:layout="@layout/fragment_client_side_injection_lesson" />
+
+    <fragment
+        android:id="@+id/nav_client_side_injection_challenge1"
+        android:name="com.owasp.app.ui.challenges.clientsideinjection.ClientSideInjectionChallenge1Fragment"
+        android:label="Client-Side Injection Challenge 1"
+        tools:layout="@layout/fragment_client_side_injection_challenge1" />
+
+    <fragment
+        android:id="@+id/nav_client_side_injection_challenge2"
+        android:name="com.owasp.app.ui.challenges.clientsideinjection.ClientSideInjectionChallenge2Fragment"
+        android:label="Client-Side Injection Challenge 2"
+        tools:layout="@layout/fragment_client_side_injection_challenge2" />
 
 </navigation>

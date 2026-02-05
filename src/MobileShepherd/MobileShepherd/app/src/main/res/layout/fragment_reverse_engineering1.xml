@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context=".ui.reverseengineering.Challenge3Fragment">
+    tools:context=".ui.challenges.reverseengineering.ReverseEngineeringBasicChallengeFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,22 +16,14 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/challenge3_title"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="16dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/challenge3_description"
+            android:text="@string/challenge1_description"
             android:textSize="16sp"
             android:layout_marginBottom="16dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/challenge3_hint"
+            android:text="@string/challenge1_hint"
             android:textSize="14sp"
             android:textStyle="italic"
             android:layout_marginBottom="24dp" />
@@ -40,7 +32,7 @@
             android:id="@+id/input_flag"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/challenge3_input_hint"
+            android:hint="@string/challenge1_input_hint"
             android:inputType="text"
             android:layout_marginBottom="16dp" />
 

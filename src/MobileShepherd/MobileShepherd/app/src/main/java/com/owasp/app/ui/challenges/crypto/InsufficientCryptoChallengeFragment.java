@@ -6,13 +6,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.owasp.app.R;
 import com.owasp.app.databinding.FragmentInsufficientCryptoChallengeBinding;
+import com.owasp.app.utils.FlagValidator;
+import com.owasp.app.utils.ProgressTracker;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -27,6 +33,7 @@ public class InsufficientCryptoChallengeFragment extends Fragment {
     private FragmentInsufficientCryptoChallengeBinding binding;
     private InsufficientCryptoChallengeModel viewModel;
     private static final String TAG = "InsufficientCryptoChallenge";
+    private ProgressTracker progressTracker;
     
     // Multiple crypto vulnerabilities demonstrated
     
@@ -56,6 +63,13 @@ public class InsufficientCryptoChallengeFragment extends Fragment {
         View root = binding.getRoot();
         
         viewModel = new ViewModelProvider(this).get(InsufficientCryptoChallengeModel.class);
+        progressTracker = new ProgressTracker(requireContext());
+
+        // Setup FAB for vulnerability information
+        FloatingActionButton fab = requireActivity().findViewById(R.id.fab);
+        if (fab != null) {
+            fab.setOnClickListener(v -> showVulnerabilityInfo());
+        }
 
         // Log crypto implementation details
         Log.d(TAG, "=== Cryptographic Implementation Details ===");
@@ -202,6 +216,10 @@ public class InsufficientCryptoChallengeFragment extends Fragment {
         Log.d(TAG, "Flag validation attempt: " + enteredFlag);
 
         if (viewModel.validateFlag(enteredFlag)) {
+            progressTracker.markCompleted(FlagValidator.Module.INSUFFICIENT_CRYPTO_CHALLENGE);
+            int completionCount = progressTracker.getCompletionCount(FlagValidator.Module.INSUFFICIENT_CRYPTO_CHALLENGE);
+            String completionText = completionCount > 1 ? " (Completed " + completionCount + " times)" : "";
+            
             binding.resultCard.setCardBackgroundColor(getResources().getColor(android.R.color.holo_green_light));
             binding.resultText.setText("✓ SUCCESS!\n\nYou identified all the cryptographic vulnerabilities and extracted the hidden flag!");
             binding.resultText.setVisibility(View.VISIBLE);
@@ -211,6 +229,12 @@ public class InsufficientCryptoChallengeFragment extends Fragment {
             
             Toast.makeText(getContext(), "Congratulations! Challenge completed!", Toast.LENGTH_LONG).show();
             Log.d(TAG, "SUCCESS: Challenge solved! Flag validated.");
+            
+            new AlertDialog.Builder(requireContext())
+                .setTitle("🎉 Success!")
+                .setMessage("Congratulations! You identified cryptographic vulnerabilities.\n\nFlag: " + enteredFlag + completionText + "\n\nProgress: " + progressTracker.getCompletedChallengesCount() + "/" + progressTracker.getTotalChallengesCount() + " challenges completed")
+                .setPositiveButton("OK", null)
+                .show();
         } else {
             binding.resultCard.setCardBackgroundColor(getResources().getColor(android.R.color.holo_red_light));
             binding.resultText.setText("✗ Incorrect flag. Keep analyzing the crypto implementation!");
@@ -242,6 +266,32 @@ public class InsufficientCryptoChallengeFragment extends Fragment {
             sb.append(String.format("%02x", b));
         }
         return sb.toString();
+    }
+
+    private void showVulnerabilityInfo() {
+        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_lesson_info, null);
+        
+        TextView introText = dialogView.findViewById(R.id.intro_text);
+        TextView vulnerabilitiesText = dialogView.findViewById(R.id.vulnerabilities_text);
+        View hintsSection = dialogView.findViewById(R.id.hints_section);
+        TextView hintsText = dialogView.findViewById(R.id.hints_text);
+        TextView bestPracticesText = dialogView.findViewById(R.id.best_practices_text);
+        View additionalSection = dialogView.findViewById(R.id.additional_section);
+        
+        introText.setText("Insufficient Cryptography explores weak encryption implementations that expose sensitive data.");
+        vulnerabilitiesText.setText("• Using ECB mode (patterns visible)\n• Weak key derivation (MD5)\n• Insecure random number generation\n• Static initialization vectors\n• Predictable seeds");
+        
+        hintsSection.setVisibility(View.VISIBLE);
+        hintsText.setText("Check logcat for crypto implementation details. Analyze the cipher mode, key derivation method, and random number generation.");
+        
+        bestPracticesText.setText("• Use AES with CBC/GCM mode\n• Derive keys with PBKDF2/Argon2\n• Use SecureRandom for IV generation\n• Never reuse IVs\n• Use minimum 256-bit keys");
+        additionalSection.setVisibility(View.GONE);
+        
+        new AlertDialog.Builder(requireContext())
+                .setTitle("Insufficient Cryptography Challenge")
+                .setView(dialogView)
+                .setPositiveButton("Close", null)
+                .show();
     }
 
     @Override

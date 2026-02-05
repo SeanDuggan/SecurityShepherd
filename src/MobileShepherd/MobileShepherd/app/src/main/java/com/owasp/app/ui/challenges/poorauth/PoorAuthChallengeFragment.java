@@ -6,13 +6,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.owasp.app.R;
 import com.owasp.app.databinding.FragmentPoorAuthChallengeBinding;
+import com.owasp.app.utils.FlagValidator;
+import com.owasp.app.utils.ProgressTracker;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -28,6 +34,7 @@ public class PoorAuthChallengeFragment extends Fragment {
     private boolean passwordReset = false;
     private static final String TAG = "PoorAuthChallenge";
     private static final String USERNAME = "Jack";
+    private ProgressTracker progressTracker;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -35,6 +42,14 @@ public class PoorAuthChallengeFragment extends Fragment {
 
         binding = FragmentPoorAuthChallengeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        
+        progressTracker = new ProgressTracker(requireContext());
+
+        // Setup FAB for vulnerability information
+        FloatingActionButton fab = requireActivity().findViewById(R.id.fab);
+        if (fab != null) {
+            fab.setOnClickListener(v -> showVulnerabilityInfo());
+        }
 
         // Write insecure logs revealing security question answers
         writeInsecureLogs();
@@ -46,6 +61,35 @@ public class PoorAuthChallengeFragment extends Fragment {
         binding.loginButton.setOnClickListener(v -> handleLogin());
 
         return root;
+    }
+
+    private void showVulnerabilityInfo() {
+        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_lesson_info, null);
+        
+        TextView introText = dialogView.findViewById(R.id.intro_text);
+        TextView vulnerabilitiesText = dialogView.findViewById(R.id.vulnerabilities_text);
+        View hintsSection = dialogView.findViewById(R.id.hints_section);
+        TextView hintsText = dialogView.findViewById(R.id.hints_text);
+        View bestPracticesSection = dialogView.findViewById(R.id.best_practices_section);
+        View additionalSection = dialogView.findViewById(R.id.additional_section);
+        
+        introText.setText(R.string.poor_auth_intro);
+        vulnerabilitiesText.setText(R.string.poor_auth_vulnerabilities);
+        
+        hintsSection.setVisibility(View.VISIBLE);
+        hintsText.setText(R.string.poor_auth_lesson_hint);
+        
+        bestPracticesSection.setVisibility(View.VISIBLE);
+        TextView bestPracticesText = dialogView.findViewById(R.id.best_practices_text);
+        bestPracticesText.setText(R.string.poor_auth_best_practices);
+        
+        additionalSection.setVisibility(View.GONE);
+        
+        new AlertDialog.Builder(requireContext())
+                .setTitle("Poor Authentication Challenge")
+                .setView(dialogView)
+                .setPositiveButton("Close", null)
+                .show();
     }
 
     private void writeInsecureLogs() {
@@ -159,12 +203,12 @@ public class PoorAuthChallengeFragment extends Fragment {
         }
 
         if (username.equals(USERNAME) && password.equals(tempPassword)) {
-            // Successful login - validate flag
-            String flag = viewModel.getFlag();
+            // Successful login - show flag
+            String flagText = "OWASP{P00r_Auth_W34k_Qu3st10ns}";
             
             binding.loginSection.setVisibility(View.GONE);
             binding.successSection.setVisibility(View.VISIBLE);
-            binding.flagText.setText("Congratulations! Here's your flag:\n\n" + flag);
+            binding.flagText.setText("Congratulations! Here's your flag:\n\n" + flagText);
             
             Toast.makeText(getContext(), "Logged in successfully!", Toast.LENGTH_LONG).show();
             
@@ -182,10 +226,20 @@ public class PoorAuthChallengeFragment extends Fragment {
         boolean isValid = viewModel.validateFlag(enteredFlag);
 
         if (isValid) {
+            progressTracker.markCompleted(FlagValidator.Module.POOR_AUTH_CHALLENGE);
+            int completionCount = progressTracker.getCompletionCount(FlagValidator.Module.POOR_AUTH_CHALLENGE);
+            String completionText = completionCount > 1 ? " (Completed " + completionCount + " times)" : "";
+            
             Toast.makeText(getContext(), "Flag validated successfully! Challenge complete!", Toast.LENGTH_LONG).show();
             binding.flagValidationCard.setCardBackgroundColor(
                 getResources().getColor(android.R.color.holo_green_light)
             );
+            
+            new AlertDialog.Builder(requireContext())
+                .setTitle("🎉 Success!")
+                .setMessage("Congratulations! You exploited weak authentication.\n\nFlag: " + enteredFlag + completionText + "\n\nProgress: " + progressTracker.getCompletedChallengesCount() + "/" + progressTracker.getTotalChallengesCount() + " challenges completed")
+                .setPositiveButton("OK", null)
+                .show();
         } else {
             Toast.makeText(getContext(), "Incorrect flag!", Toast.LENGTH_SHORT).show();
             binding.flagValidationCard.setCardBackgroundColor(
