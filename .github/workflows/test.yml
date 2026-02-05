@@ -1,16 +1,13 @@
 name: Build and Test
 on:
-  workflow_dispatch:
-  # Disabled for fork - requires specific CI environment setup
-  # Uncomment to re-enable automated testing
-  # push:
-  #   branches: [master, dev]
-  #   paths-ignore:
-  #     - '**.md'
-  #     - '.github/ISSUE_TEMPLATE'
-  #     - '.gitignore'
-  #     - 'provisioning'
-  #     - '.sonarcloud.properties'
+  push:
+    branches: [master, dev]
+    paths-ignore:
+      - '**.md'
+      - '.github/ISSUE_TEMPLATE'
+      - '.gitignore'
+      - 'provisioning'
+      - '.sonarcloud.properties'
       - 'LICENSE'
       - 'Vagrantfile'
   pull_request:
@@ -46,7 +43,7 @@ jobs:
         with:
           java-version: 1.8
       - name: Build Maven Project
-        run: mvn clean install -DskipTests -B
+        run: mvn clean package -DskipTests -Dmaven.test.skip=true -B
 
   unit-tests:
     needs: [lint-java, build]
