@@ -1,13 +1,16 @@
 name: Build and Test
 on:
-  push:
-    branches: [master, dev]
-    paths-ignore:
-      - '**.md'
-      - '.github/ISSUE_TEMPLATE'
-      - '.gitignore'
-      - 'provisioning'
-      - '.sonarcloud.properties'
+  workflow_dispatch:
+  # Disabled for fork - requires specific CI environment setup
+  # Uncomment to re-enable automated testing
+  # push:
+  #   branches: [master, dev]
+  #   paths-ignore:
+  #     - '**.md'
+  #     - '.github/ISSUE_TEMPLATE'
+  #     - '.gitignore'
+  #     - 'provisioning'
+  #     - '.sonarcloud.properties'
       - 'LICENSE'
       - 'Vagrantfile'
   pull_request:
