@@ -1,8 +1,10 @@
 name: build-and-publish-dev
 on:
-  push:
-    branches:
-      - "dev"
+  workflow_dispatch:
+  # Disabled for fork - requires Google Cloud credentials
+  # push:
+  #   branches:
+  #     - "dev"
 
 permissions:
   contents: read
