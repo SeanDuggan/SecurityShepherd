@@ -64,6 +64,12 @@ public class Setup extends HttpServlet {
     String dbPort = request.getParameter("dbport");
     String dbUser = request.getParameter("dbuser");
     String dbPass = request.getParameter("dbpass");
+    
+    // Handle null parameters from form
+    if (dbHost == null) dbHost = "";
+    if (dbPort == null) dbPort = "";
+    if (dbUser == null) dbUser = "";
+    if (dbPass == null) dbPass = "";
 
     String dbOptions;
     String connectionURL;
@@ -78,14 +84,22 @@ public class Setup extends HttpServlet {
 
     if (hasDBFile) {
       // Db auth file exists, try to load from it
+      
+      // Load dbOptions and driverType from properties file first
+      dbOptions = mysql_props.getProperty("databaseOptions");
+      if (dbOptions == null) {
+        dbOptions = "useUnicode=true&character_set_server=utf8mb4";
+      }
+      driverType = mysql_props.getProperty("DriverType");
+      if (driverType == null) {
+        driverType = "com.mysql.jdbc.Driver";
+      }
 
-      if (!dbHost.isEmpty() || !dbPort.isEmpty()) {
-        // One of db host and db port are missing, we can't handle this situation!
-
-        htmlOutput += "If you override db host and db port, both must be entered!";
-        validateInput = false;
-        connectionURL = "";
-      } else if (dbHost.isEmpty() || dbPort.isEmpty()) {
+      if (!dbHost.isEmpty() && !dbPort.isEmpty()) {
+        // Both db host and db port provided, use them
+        connectionURL = "jdbc:mysql://" + dbHost + ":" + dbPort + "/";
+        saveMysqlProperties = true;
+      } else if (dbHost.isEmpty() && dbPort.isEmpty()) {
         // Both db host and db port are missing, good, load from props file instead
         connectionURL = mysql_props.getProperty("databaseConnectionURL");
         String databaseSchema = mysql_props.getProperty("databaseSchema");
@@ -101,15 +115,6 @@ public class Setup extends HttpServlet {
         // Store the overridden data in properties file
         saveMysqlProperties = true;
       }
-
-      dbOptions = mysql_props.getProperty("databaseOptions");
-      if (dbOptions == null) {
-        dbOptions = "useUnicode=true&character_set_server=utf8mb4";
-      }
-      driverType = mysql_props.getProperty("DriverType");
-      if (driverType == null) {
-        driverType = "org.gjt.mm.mysql.Driver";
-      }
       if (dbUser.isEmpty()) {
         dbUser = mysql_props.getProperty("databaseUsername");
         if (dbUser == null) {
@@ -124,7 +129,7 @@ public class Setup extends HttpServlet {
       }
     } else {
       connectionURL = "jdbc:mysql://" + dbHost + ":" + dbPort + "/";
-      driverType = "org.gjt.mm.mysql.Driver";
+      driverType = "com.mysql.jdbc.Driver";
       dbOptions = "useUnicode=true&character_set_server=utf8mb4";
       validateInput = true;
       saveMysqlProperties = true;
@@ -139,9 +144,15 @@ public class Setup extends HttpServlet {
 
       String mongodbHost = request.getParameter("mhost");
       String mongodbPort = request.getParameter("mport");
-      String nosqlprops =
-          new File(Database.class.getResource("/challenges/NoSqlInjection1.properties").getFile())
-              .getAbsolutePath();
+      String nosqlprops = null;
+      try {
+        nosqlprops =
+            new File(Database.class.getResource("/challenges/NoSqlInjection1.properties").toURI())
+                .getAbsolutePath();
+      } catch (Exception e) {
+        log.error("Failed to load NoSQL properties file", e);
+        throw new RuntimeException("Failed to load NoSQL properties file", e);
+      }
 
       try (InputStream mongo_input = new FileInputStream(nosqlprops)) {
 
@@ -205,6 +216,7 @@ public class Setup extends HttpServlet {
         // Test the user's entered database properties
         Boolean connectionSuccess = false;
         log.debug("Attempting to connect to database");
+        log.debug("driverType=" + driverType + ", connectionURL=" + connectionURL + ", dbOptions=" + dbOptions + ", dbUser=" + dbUser + ", dbPass=" + (dbPass != null ? "[PRESENT]" : "NULL"));
 
         try {
           Connection conn =
@@ -424,8 +436,12 @@ public class Setup extends HttpServlet {
 
   private synchronized void executeSqlScript() throws IOException, SQLException {
 
-    File file =
-        new File(getClass().getClassLoader().getResource("/database/coreSchema.sql").getFile());
+    File file;
+    try {
+      file = new File(getClass().getClassLoader().getResource("/database/coreSchema.sql").toURI());
+    } catch (Exception e) {
+      throw new IOException("Failed to load coreSchema.sql", e);
+    }
     String data = FileUtils.readFileToString(file, Charset.defaultCharset());
 
     log.debug("Initializing core database");
@@ -433,8 +449,11 @@ public class Setup extends HttpServlet {
     Statement psProcToexecute = databaseConnection.createStatement();
     psProcToexecute.executeUpdate(data);
 
-    file =
-        new File(getClass().getClassLoader().getResource("/database/moduleSchemas.sql").getFile());
+    try {
+      file = new File(getClass().getClassLoader().getResource("/database/moduleSchemas.sql").toURI());
+    } catch (Exception e) {
+      throw new IOException("Failed to load moduleSchemas.sql", e);
+    }
     data = FileUtils.readFileToString(file, Charset.defaultCharset());
     log.debug("Initializing module database");
 
@@ -447,8 +466,12 @@ public class Setup extends HttpServlet {
     MongoClient mongoConnection = null;
 
     try {
-      File file =
-          new File(getClass().getClassLoader().getResource("/mongodb/moduleSchemas.js").getFile());
+      File file;
+      try {
+        file = new File(getClass().getClassLoader().getResource("/mongodb/moduleSchemas.js").toURI());
+      } catch (Exception e) {
+        throw new IOException("Failed to load moduleSchemas.js", e);
+      }
       mongoConnection = MongoDatabase.getMongoDbConnection(null);
       MongoDatabase.executeMongoScript(file, mongoConnection);
     } catch (IOException e) {
@@ -460,9 +483,13 @@ public class Setup extends HttpServlet {
 
   private synchronized void executeUpdateScript() throws IOException, SQLException {
 
-    File file =
-        new File(
-            getClass().getClassLoader().getResource("/database/updatev3_0tov3_1.sql").getFile());
+    File file;
+    try {
+      file = new File(
+          getClass().getClassLoader().getResource("/database/updatev3_0tov3_1.sql").toURI());
+    } catch (Exception e) {
+      throw new IOException("Failed to load updatev3_0tov3_1.sql", e);
+    }
 
     String data;
 

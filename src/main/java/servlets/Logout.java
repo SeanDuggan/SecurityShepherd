@@ -3,7 +3,6 @@ package servlets;
 import com.onelogin.saml2.Auth;
 import com.onelogin.saml2.exception.Error;
 import com.onelogin.saml2.exception.SettingsException;
-import com.onelogin.saml2.exception.XMLEntityException;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -119,8 +118,6 @@ public class Logout extends HttpServlet {
                 nameIdFormat,
                 nameidNameQualifier,
                 nameidSPNameQualifier);
-          } catch (XMLEntityException e) {
-            throw new RuntimeException("SAML XML error : " + e.toString());
           } catch (SettingsException e) {
             throw new RuntimeException("SAML settings error : " + e.toString());
           }
@@ -129,7 +126,6 @@ public class Logout extends HttpServlet {
 
           response.sendRedirect("login.jsp");
         }
-
       } else {
         log.error("CSRF Attack Detected");
         response.sendRedirect("index.jsp");
