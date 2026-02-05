@@ -401,7 +401,8 @@ public class TestProperties {
     bw.newLine();
     bw.write("DriverType=org.mariadb.jdbc.Driver");
     bw.newLine();
-    bw.write("databaseOptions=useUnicode=true&character_set_server=utf8mb4&allowPublicKeyRetrieval=true");
+    bw.write(
+        "databaseOptions=useUnicode=true&character_set_server=utf8mb4&allowPublicKeyRetrieval=true");
     bw.newLine();
     bw.write("databaseSchema=" + dbSchema);
     bw.newLine();
