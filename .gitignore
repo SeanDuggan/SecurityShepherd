@@ -19,6 +19,7 @@ TestDB*.class
 *.jar
 *.war
 *.ear
+**/target/
 
 # Log files
 *.log
@@ -29,3 +30,7 @@ TestDB*.class
 # OS files
 .DS_Store
 Thumbs.db
+
+# Working documentation (local notes only)
+COMMIT-NOTES.md
+CHANGELOG.md
