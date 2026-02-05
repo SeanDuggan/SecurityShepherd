@@ -64,7 +64,7 @@ public class Setup extends HttpServlet {
     String dbPort = request.getParameter("dbport");
     String dbUser = request.getParameter("dbuser");
     String dbPass = request.getParameter("dbpass");
-    
+
     // Handle null parameters from form
     if (dbHost == null) dbHost = "";
     if (dbPort == null) dbPort = "";
@@ -84,7 +84,7 @@ public class Setup extends HttpServlet {
 
     if (hasDBFile) {
       // Db auth file exists, try to load from it
-      
+
       // Load dbOptions and driverType from properties file first
       dbOptions = mysql_props.getProperty("databaseOptions");
       if (dbOptions == null) {
@@ -216,7 +216,17 @@ public class Setup extends HttpServlet {
         // Test the user's entered database properties
         Boolean connectionSuccess = false;
         log.debug("Attempting to connect to database");
-        log.debug("driverType=" + driverType + ", connectionURL=" + connectionURL + ", dbOptions=" + dbOptions + ", dbUser=" + dbUser + ", dbPass=" + (dbPass != null ? "[PRESENT]" : "NULL"));
+        log.debug(
+            "driverType="
+                + driverType
+                + ", connectionURL="
+                + connectionURL
+                + ", dbOptions="
+                + dbOptions
+                + ", dbUser="
+                + dbUser
+                + ", dbPass="
+                + (dbPass != null ? "[PRESENT]" : "NULL"));
 
         try {
           Connection conn =
@@ -450,7 +460,8 @@ public class Setup extends HttpServlet {
     psProcToexecute.executeUpdate(data);
 
     try {
-      file = new File(getClass().getClassLoader().getResource("/database/moduleSchemas.sql").toURI());
+      file =
+          new File(getClass().getClassLoader().getResource("/database/moduleSchemas.sql").toURI());
     } catch (Exception e) {
       throw new IOException("Failed to load moduleSchemas.sql", e);
     }
@@ -468,7 +479,8 @@ public class Setup extends HttpServlet {
     try {
       File file;
       try {
-        file = new File(getClass().getClassLoader().getResource("/mongodb/moduleSchemas.js").toURI());
+        file =
+            new File(getClass().getClassLoader().getResource("/mongodb/moduleSchemas.js").toURI());
       } catch (Exception e) {
         throw new IOException("Failed to load moduleSchemas.js", e);
       }
@@ -485,8 +497,9 @@ public class Setup extends HttpServlet {
 
     File file;
     try {
-      file = new File(
-          getClass().getClassLoader().getResource("/database/updatev3_0tov3_1.sql").toURI());
+      file =
+          new File(
+              getClass().getClassLoader().getResource("/database/updatev3_0tov3_1.sql").toURI());
     } catch (Exception e) {
       throw new IOException("Failed to load updatev3_0tov3_1.sql", e);
     }
