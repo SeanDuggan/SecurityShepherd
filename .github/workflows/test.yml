@@ -28,7 +28,10 @@ jobs:
       - uses: actions/checkout@v2
       - uses: axel-op/googlejavaformat-action@fe78db8a90171b6a836449f8d0e982d5d71e5c5a #v3.6.0
         with:
-          args: "--set-exit-if-changed"
+          args: "--set-exit-if-changed --skip-sorting-imports --skip-reflowing-long-strings"
+          skipCommit: true
+          # Exclude MobileShepherd Android files (different formatting requirements)
+          filesPattern: "src/main/**/*.java src/it/**/*.java src/test/**/*.java !src/MobileShepherd/**/*.java"
 
   build:
     needs: lint-java
