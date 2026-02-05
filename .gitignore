@@ -9,3 +9,23 @@ docker/*/*.sql-esrc
 src/main/resources/onelogin.saml.properties
 src/main/resources/sso.properties
 mobile-modules-list.txt
+
+# Test files
+TestDB*.java
+TestDB*.class
+
+# Build artifacts
+*.class
+*.jar
+*.war
+*.ear
+
+# Log files
+*.log
+
+# IDE metadata
+.metadata/
+
+# OS files
+.DS_Store
+Thumbs.db
