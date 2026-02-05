@@ -33,10 +33,12 @@ jobs:
           distribution: 'temurin'
       - name: Remove MobileShepherd before linting
         run: rm -rf src/MobileShepherd
-      - uses: axel-op/googlejavaformat-action@fe78db8a90171b6a836449f8d0e982d5d71e5c5a #v3.6.0
-        with:
-          args: "--set-exit-if-changed --skip-sorting-imports --skip-reflowing-long-strings"
-          skipCommit: true
+      - name: Download Google Java Format
+        run: |
+          curl -L -o google-java-format.jar https://github.com/google/google-java-format/releases/download/v1.23.0/google-java-format-1.23.0-all-deps.jar
+      - name: Run Google Java Format Check
+        run: |
+          java -jar google-java-format.jar --set-exit-if-changed --skip-sorting-imports --skip-reflowing-long-strings $(find src/main src/it src/test -name "*.java" 2>/dev/null)
 
   build:
     needs: lint-java
