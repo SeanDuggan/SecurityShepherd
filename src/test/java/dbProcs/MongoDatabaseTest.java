@@ -27,10 +27,11 @@ public class MongoDatabaseTest {
 
   @BeforeAll
   public static void initAll() throws IOException {
+    TestProperties.setTestPropertiesFileDirectory(log);
     TestProperties.createMysqlResource();
+    TestProperties.createMongoResource("localhost", 27017, "shepherdGames", 5000L, 5000L, 5000L);
 
     mongoClient = fongo.getMongo();
-    TestProperties.setTestPropertiesFileDirectory(log);
   }
 
   @Test

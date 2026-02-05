@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import utils.CountdownHandler;
 import utils.InvalidCountdownStateException;
@@ -20,7 +20,7 @@ public class TestCountdownHandler {
   private static final Logger log = LogManager.getLogger(TestCountdownHandler.class);
 
   /** Creates DB or Restores DB to Factory Defaults before running tests */
-  @BeforeClass
+  @BeforeAll
   public static void resetDatabase() throws IOException, SQLException {
     TestProperties.setTestPropertiesFileDirectory(log);
 
