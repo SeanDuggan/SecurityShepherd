@@ -279,8 +279,8 @@ public class CountdownHandler {
 
       if (isLoaded) {
 
-        Setter.setLockTime("", startTime);
-        Setter.setLockTimeStatus("", hasStartTime);
+        Setter.setStartTime("", startTime);
+        Setter.setStartTimeStatus("", hasStartTime);
         Setter.setLockTime("", lockTime);
         Setter.setLockTimeStatus("", hasLockTime);
         Setter.setEndTime("", endTime);
