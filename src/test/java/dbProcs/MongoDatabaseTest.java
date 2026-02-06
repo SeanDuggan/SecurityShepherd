@@ -4,6 +4,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsInstanceOf.instanceOf;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.github.fakemongo.Fongo;
 import com.mongodb.DB;
@@ -32,7 +33,9 @@ public class MongoDatabaseTest {
     TestProperties.createMongoResource(
         "localhost", 27017, "test_shepherdGames", 5000L, 5000L, 5000L);
 
+    fongo = new Fongo("Unit Test");
     mongoClient = fongo.getMongo();
+    assertNotNull(mongoClient, "Fongo did not return a valid MongoClient");
     // Ensure the test database exists in Fongo
     mongoClient.getDB("test_shepherdGames");
   }

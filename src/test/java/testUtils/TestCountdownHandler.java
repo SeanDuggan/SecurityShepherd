@@ -94,87 +94,91 @@ public class TestCountdownHandler {
 
   @Test
   public void countdownHandler_compareStartTime() {
-
-    LocalDateTime testTime = LocalDateTime.now().minusMinutes(5);
-
-    CountdownHandler.setStartTime(testTime);
-    assertTrue(CountdownHandler.isStarted());
-    CountdownHandler.disableStartTime();
-    assertFalse(CountdownHandler.isStarted());
-
-    testTime = LocalDateTime.now().minusYears(5);
+    // Use fixed base time for deterministic results
+    LocalDateTime base = LocalDateTime.parse("2020-01-01T12:00:00");
+    LocalDateTime testTime = base.minusMinutes(5);
 
     CountdownHandler.setStartTime(testTime);
     assertTrue(CountdownHandler.isStarted());
     CountdownHandler.disableStartTime();
     assertFalse(CountdownHandler.isStarted());
 
-    testTime = LocalDateTime.now().plusMinutes(5);
+    testTime = base.minusYears(5);
+
+    CountdownHandler.setStartTime(testTime);
+    assertTrue(CountdownHandler.isStarted());
+    CountdownHandler.disableStartTime();
+    assertFalse(CountdownHandler.isStarted());
+
+    testTime = base.plusMinutes(5);
 
     CountdownHandler.setStartTime(testTime);
     assertFalse(CountdownHandler.isStarted());
-    testTime = LocalDateTime.now().plusYears(5);
+    testTime = base.plusYears(5);
     CountdownHandler.setStartTime(testTime);
     assertFalse(CountdownHandler.isStarted());
   }
 
   @Test
   public void countdownHandler_compareLockTime() {
-
-    LocalDateTime testTime = LocalDateTime.now().minusMinutes(5);
+    // Use fixed base time for deterministic results
+    LocalDateTime base = LocalDateTime.parse("2020-01-01T12:00:00");
+    LocalDateTime testTime = base.minusMinutes(5);
 
     CountdownHandler.setLockTime(testTime);
     assertTrue(CountdownHandler.isLocked());
     CountdownHandler.disableLockTime();
     assertFalse(CountdownHandler.isLocked());
 
-    testTime = LocalDateTime.now().minusYears(5);
+    testTime = base.minusYears(5);
     CountdownHandler.setLockTime(testTime);
     assertTrue(CountdownHandler.isLocked());
     CountdownHandler.disableLockTime();
     assertFalse(CountdownHandler.isLocked());
 
-    testTime = LocalDateTime.now().plusMinutes(5);
+    testTime = base.plusMinutes(5);
 
     CountdownHandler.setLockTime(testTime);
     assertFalse(CountdownHandler.isLocked());
-    testTime = LocalDateTime.now().plusYears(5);
+    testTime = base.plusYears(5);
     CountdownHandler.setLockTime(testTime);
     assertFalse(CountdownHandler.isLocked());
   }
 
   @Test
   public void countdownHandler_compareEndTime() {
-
-    LocalDateTime testTime = LocalDateTime.now().minusMinutes(5);
+    // Use fixed base time for deterministic results
+    LocalDateTime base = LocalDateTime.parse("2020-01-01T12:00:00");
+    LocalDateTime testTime = base.minusMinutes(5);
 
     CountdownHandler.setEndTime(testTime);
     assertTrue(CountdownHandler.hasEnded());
     CountdownHandler.disableEndTime();
     assertFalse(CountdownHandler.hasEnded());
 
-    testTime = LocalDateTime.now().minusYears(5);
+    testTime = base.minusYears(5);
     CountdownHandler.setEndTime(testTime);
     assertTrue(CountdownHandler.hasEnded());
     CountdownHandler.disableEndTime();
     assertFalse(CountdownHandler.hasEnded());
 
-    testTime = LocalDateTime.now().plusMinutes(5);
+    testTime = base.plusMinutes(5);
 
     CountdownHandler.setEndTime(testTime);
     assertFalse(CountdownHandler.hasEnded());
-    testTime = LocalDateTime.now().plusYears(5);
+    testTime = base.plusYears(5);
     CountdownHandler.setEndTime(testTime);
     assertFalse(CountdownHandler.hasEnded());
   }
 
   @Test
   public void countdownHandler_TestIsOpen() throws InvalidCountdownStateException {
-
-    LocalDateTime longPastTime = LocalDateTime.now().minusMinutes(10);
-    LocalDateTime shortPastTime = LocalDateTime.now().minusMinutes(5);
-    LocalDateTime shortFutureTime = LocalDateTime.now().plusMinutes(5);
-    LocalDateTime longFutureTime = LocalDateTime.now().plusMinutes(10);
+    // Use fixed base time for deterministic results
+    LocalDateTime base = LocalDateTime.parse("2020-01-01T12:00:00");
+    LocalDateTime longPastTime = base.minusMinutes(10);
+    LocalDateTime shortPastTime = base.minusMinutes(5);
+    LocalDateTime shortFutureTime = base.plusMinutes(5);
+    LocalDateTime longFutureTime = base.plusMinutes(10);
 
     CountdownHandler.setStartTime(longPastTime);
     CountdownHandler.setLockTime(shortFutureTime);
@@ -252,11 +256,12 @@ public class TestCountdownHandler {
 
   @Test
   public void countdownHandler_TestIsRunning() throws InvalidCountdownStateException {
-
-    LocalDateTime longPastTime = LocalDateTime.now().minusMinutes(10);
-    LocalDateTime shortPastTime = LocalDateTime.now().minusMinutes(5);
-    LocalDateTime shortFutureTime = LocalDateTime.now().plusMinutes(5);
-    LocalDateTime longFutureTime = LocalDateTime.now().plusMinutes(10);
+    // Use fixed base time for deterministic results
+    LocalDateTime base = LocalDateTime.parse("2020-01-01T12:00:00");
+    LocalDateTime longPastTime = base.minusMinutes(10);
+    LocalDateTime shortPastTime = base.minusMinutes(5);
+    LocalDateTime shortFutureTime = base.plusMinutes(5);
+    LocalDateTime longFutureTime = base.plusMinutes(10);
 
     CountdownHandler.setStartTime(longPastTime);
     CountdownHandler.setLockTime(shortFutureTime);
@@ -330,13 +335,14 @@ public class TestCountdownHandler {
 
   @Test
   public void countdownHandler_TestIsRunningEqualTimes() throws InvalidCountdownStateException {
-
+    // Use fixed base time for deterministic results
     // These equal-time edge cases should work even though they don't make much
     // sense...
-    LocalDateTime longPastTime = LocalDateTime.now().minusMinutes(10);
-    LocalDateTime shortPastTime = LocalDateTime.now().minusMinutes(5);
-    LocalDateTime shortFutureTime = LocalDateTime.now().plusMinutes(5);
-    LocalDateTime longFutureTime = LocalDateTime.now().plusMinutes(10);
+    LocalDateTime base = LocalDateTime.parse("2020-01-01T12:00:00");
+    LocalDateTime longPastTime = base.minusMinutes(10);
+    LocalDateTime shortPastTime = base.minusMinutes(5);
+    LocalDateTime shortFutureTime = base.plusMinutes(5);
+    LocalDateTime longFutureTime = base.plusMinutes(10);
 
     CountdownHandler.setStartTime(longPastTime);
     CountdownHandler.setLockTime(longPastTime);
@@ -359,13 +365,14 @@ public class TestCountdownHandler {
 
   @Test
   public void countdownHandler_TestIsOpenEqualTimes() throws InvalidCountdownStateException {
-
+    // Use fixed base time for deterministic results
     // These equal-time edge cases should work even though they don't make much
     // sense...
-    LocalDateTime longPastTime = LocalDateTime.now().minusMinutes(10);
-    LocalDateTime shortPastTime = LocalDateTime.now().minusMinutes(5);
-    LocalDateTime shortFutureTime = LocalDateTime.now().plusMinutes(5);
-    LocalDateTime longFutureTime = LocalDateTime.now().plusMinutes(10);
+    LocalDateTime base = LocalDateTime.parse("2020-01-01T12:00:00");
+    LocalDateTime longPastTime = base.minusMinutes(10);
+    LocalDateTime shortPastTime = base.minusMinutes(5);
+    LocalDateTime shortFutureTime = base.plusMinutes(5);
+    LocalDateTime longFutureTime = base.plusMinutes(10);
 
     CountdownHandler.setStartTime(longPastTime);
     CountdownHandler.setLockTime(longPastTime);
