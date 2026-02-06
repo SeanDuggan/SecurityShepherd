@@ -29,7 +29,8 @@ public class MongoDatabaseTest {
   public static void initAll() throws IOException {
     TestProperties.setTestPropertiesFileDirectory(log);
     TestProperties.createMysqlResource();
-    TestProperties.createMongoResource("localhost", 27017, "shepherdGames", 5000L, 5000L, 5000L);
+    TestProperties.createMongoResource(
+        "localhost", 27017, "test_shepherdGames", 5000L, 5000L, 5000L);
 
     mongoClient = fongo.getMongo();
   }
