@@ -102,18 +102,18 @@ public class TestCountdownHandler {
     CountdownHandler.disableStartTime();
     assertFalse(CountdownHandler.isStarted());
 
-    testTime = base.minusYears(5);
+    testTime = LocalDateTime.now().minusYears(5);
 
     CountdownHandler.setStartTime(testTime);
     assertTrue(CountdownHandler.isStarted());
     CountdownHandler.disableStartTime();
     assertFalse(CountdownHandler.isStarted());
 
-    testTime = base.plusMinutes(5);
+    testTime = LocalDateTime.now().plusMinutes(5);
 
     CountdownHandler.setStartTime(testTime);
     assertFalse(CountdownHandler.isStarted());
-    testTime = base.plusYears(5);
+    testTime = LocalDateTime.now().plusYears(5);
     CountdownHandler.setStartTime(testTime);
     assertFalse(CountdownHandler.isStarted());
   }
@@ -128,17 +128,17 @@ public class TestCountdownHandler {
     CountdownHandler.disableLockTime();
     assertFalse(CountdownHandler.isLocked());
 
-    testTime = base.minusYears(5);
+    testTime = LocalDateTime.now().minusYears(5);
     CountdownHandler.setLockTime(testTime);
     assertTrue(CountdownHandler.isLocked());
     CountdownHandler.disableLockTime();
     assertFalse(CountdownHandler.isLocked());
 
-    testTime = base.plusMinutes(5);
+    testTime = LocalDateTime.now().plusMinutes(5);
 
     CountdownHandler.setLockTime(testTime);
     assertFalse(CountdownHandler.isLocked());
-    testTime = base.plusYears(5);
+    testTime = LocalDateTime.now().plusYears(5);
     CountdownHandler.setLockTime(testTime);
     assertFalse(CountdownHandler.isLocked());
   }
@@ -153,17 +153,17 @@ public class TestCountdownHandler {
     CountdownHandler.disableEndTime();
     assertFalse(CountdownHandler.hasEnded());
 
-    testTime = base.minusYears(5);
+    testTime = LocalDateTime.now().minusYears(5);
     CountdownHandler.setEndTime(testTime);
     assertTrue(CountdownHandler.hasEnded());
     CountdownHandler.disableEndTime();
     assertFalse(CountdownHandler.hasEnded());
 
-    testTime = base.plusMinutes(5);
+    testTime = LocalDateTime.now().plusMinutes(5);
 
     CountdownHandler.setEndTime(testTime);
     assertFalse(CountdownHandler.hasEnded());
-    testTime = base.plusYears(5);
+    testTime = LocalDateTime.now().plusYears(5);
     CountdownHandler.setEndTime(testTime);
     assertFalse(CountdownHandler.hasEnded());
   }
