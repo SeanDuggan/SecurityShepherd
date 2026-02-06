@@ -163,7 +163,7 @@
 		<dependency>
 			<groupId>com.github.fakemongo</groupId>
 			<artifactId>fongo</artifactId>
-			<version>2.1.1</version>
+			<version>2.2.0-RC2</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -194,6 +194,14 @@
 			<groupId>org.hamcrest</groupId>
 			<artifactId>hamcrest</artifactId>
 			<version>2.2</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- SLF4J binding for test logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>1.7.36</version>
 			<scope>test</scope>
 		</dependency>
 
