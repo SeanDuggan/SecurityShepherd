@@ -344,12 +344,17 @@ public class MongoDatabase {
       mongoDb = mongoClient.getDB(dbname);
     } catch (MongoSocketException | MongoTimeoutException e) {
       log.fatal("Unable to get Mongodb connection (Is it on?): " + e);
+      throw new RuntimeException("MongoDB connection failed", e);
     } catch (MongoException e) {
       log.fatal("Something went wrong with Mongo: " + e);
-      e.printStackTrace();
+      throw new RuntimeException("MongoDB error", e);
     } catch (Exception e) {
       log.fatal("Something went wrong: " + e);
-      e.printStackTrace();
+      throw new RuntimeException("Unexpected error getting MongoDB database", e);
+    }
+
+    if (mongoDb == null) {
+      throw new RuntimeException("MongoDB database is null after getDB call");
     }
 
     return mongoDb;
