@@ -38,7 +38,7 @@ jobs:
       
       - name: Upload Lint Results
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: android-lint-report
           path: src/MobileShepherd/MobileShepherd/app/build/reports/lint-results-debug.html
