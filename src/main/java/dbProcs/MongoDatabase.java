@@ -347,14 +347,14 @@ public class MongoDatabase {
       throw new RuntimeException("MongoDB connection failed", e);
     } catch (MongoException e) {
       log.fatal("Something went wrong with Mongo: " + e);
-      throw new RuntimeException("MongoDB error", e);
+      e.printStackTrace();
     } catch (Exception e) {
       log.fatal("Something went wrong: " + e);
-      throw new RuntimeException("Unexpected error getting MongoDB database", e);
+      e.printStackTrace();
     }
 
     if (mongoDb == null) {
-      throw new RuntimeException("MongoDB database is null after getDB call");
+      throw new RuntimeException("MongoDB database is null - check MongoDB connection and properties");
     }
 
     return mongoDb;
