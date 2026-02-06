@@ -354,7 +354,8 @@ public class MongoDatabase {
     }
 
     if (mongoDb == null) {
-      throw new RuntimeException("MongoDB database is null - check MongoDB connection and properties");
+      throw new RuntimeException(
+          "MongoDB database is null - check MongoDB connection and properties");
     }
 
     return mongoDb;
