@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:background="@color/background_primary">
+    android:background="@drawable/shepherd_background">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,19 +12,12 @@
         android:padding="24dp"
         android:gravity="center_horizontal">
 
-        <!-- App Icon/Logo -->
-        <ImageView
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:src="@drawable/icon"
-            android:layout_marginTop="40dp"
-            android:layout_marginBottom="24dp" />
-
         <!-- Welcome Title -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/landing_title"
+            android:layout_marginTop="240dp"
             android:textSize="28sp"
             android:textStyle="bold"
             android:textAlignment="center"

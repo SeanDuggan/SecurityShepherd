@@ -48,21 +48,40 @@ public class MainActivity extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 
                 //set the message
-                builder.setMessage("This App is part of the Security Shepherd project. " +
-                "In order to complete the Reverse Engineering Lesson and Challenges, " +
-                "the player must extract the keys from this app.");
+                String message = "Mobile Shepherd - Security Training Platform\n\n" +
+                        "This application is designed to teach mobile application security through " +
+                        "hands-on lessons and challenges based on the OWASP Mobile Top 10.\n\n" +
+                        "Part of the OWASP Security Shepherd project.";
 
-                builder.setTitle("Info");
-                builder.setCancelable(false);
-                builder.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which)
-                                    {
-                                        //default to cancel as alert box provides
-                                        // context for player and no functionality
-                                        dialog.cancel();
-                                    }
-                                });
+                builder.setMessage(message);
+                builder.setTitle("About Mobile Shepherd");
+                builder.setCancelable(true);
+                
+                builder.setPositiveButton("OWASP Mobile Top 10", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, 
+                            android.net.Uri.parse("https://owasp.org/www-project-mobile-top-10/"));
+                        startActivity(browserIntent);
+                    }
+                });
+                
+                builder.setNeutralButton("Security Shepherd", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, 
+                            android.net.Uri.parse("https://owasp.org/www-project-security-shepherd/"));
+                        startActivity(browserIntent);
+                    }
+                });
+                
+                builder.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
             }
