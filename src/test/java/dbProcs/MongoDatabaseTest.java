@@ -33,11 +33,18 @@ public class MongoDatabaseTest {
     TestProperties.createMongoResource(
         "localhost", 27017, "test_shepherdGames", 5000L, 5000L, 5000L);
 
-    fongo = new Fongo("Unit Test");
-    mongoClient = fongo.getMongo();
-    assertNotNull(mongoClient, "Fongo did not return a valid MongoClient");
-    // Ensure the test database exists in Fongo
-    mongoClient.getDB("test_shepherdGames");
+    try {
+      fongo = new Fongo("Unit Test");
+      mongoClient = fongo.getMongo();
+      assertNotNull(mongoClient, "Fongo did not return a valid MongoClient");
+      // Ensure the test database exists in Fongo
+      if (mongoClient != null) {
+        mongoClient.getDB("test_shepherdGames");
+      }
+    } catch (Exception e) {
+      log.error("Failed to initialize Fongo: " + e.getMessage(), e);
+      throw e;
+    }
   }
 
   @Test

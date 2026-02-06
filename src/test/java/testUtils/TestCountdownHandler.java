@@ -94,8 +94,8 @@ public class TestCountdownHandler {
 
   @Test
   public void countdownHandler_compareStartTime() {
-    // Use fixed base time for deterministic results
-    LocalDateTime base = LocalDateTime.parse("2020-01-01T12:00:00");
+    // Use future base time so tests work correctly with LocalDateTime.now() comparisons
+    LocalDateTime base = LocalDateTime.parse("2030-01-01T12:00:00");
     LocalDateTime testTime = base.minusMinutes(5);
 
     CountdownHandler.setStartTime(testTime);
@@ -121,8 +121,8 @@ public class TestCountdownHandler {
 
   @Test
   public void countdownHandler_compareLockTime() {
-    // Use fixed base time for deterministic results
-    LocalDateTime base = LocalDateTime.parse("2020-01-01T12:00:00");
+    // Use future base time so tests work correctly with LocalDateTime.now() comparisons
+    LocalDateTime base = LocalDateTime.parse("2030-01-01T12:00:00");
     LocalDateTime testTime = base.minusMinutes(5);
 
     CountdownHandler.setLockTime(testTime);
@@ -147,8 +147,8 @@ public class TestCountdownHandler {
 
   @Test
   public void countdownHandler_compareEndTime() {
-    // Use fixed base time for deterministic results
-    LocalDateTime base = LocalDateTime.parse("2020-01-01T12:00:00");
+    // Use future base time so tests work correctly with LocalDateTime.now() comparisons
+    LocalDateTime base = LocalDateTime.parse("2030-01-01T12:00:00");
     LocalDateTime testTime = base.minusMinutes(5);
 
     CountdownHandler.setEndTime(testTime);
@@ -173,8 +173,8 @@ public class TestCountdownHandler {
 
   @Test
   public void countdownHandler_TestIsOpen() throws InvalidCountdownStateException {
-    // Use fixed base time for deterministic results
-    LocalDateTime base = LocalDateTime.parse("2020-01-01T12:00:00");
+    // Use future base time so tests work correctly with LocalDateTime.now() comparisons
+    LocalDateTime base = LocalDateTime.parse("2030-01-01T12:00:00");
     LocalDateTime longPastTime = base.minusMinutes(10);
     LocalDateTime shortPastTime = base.minusMinutes(5);
     LocalDateTime shortFutureTime = base.plusMinutes(5);
@@ -256,8 +256,8 @@ public class TestCountdownHandler {
 
   @Test
   public void countdownHandler_TestIsRunning() throws InvalidCountdownStateException {
-    // Use fixed base time for deterministic results
-    LocalDateTime base = LocalDateTime.parse("2020-01-01T12:00:00");
+    // Use future base time so tests work correctly with LocalDateTime.now() comparisons
+    LocalDateTime base = LocalDateTime.parse("2030-01-01T12:00:00");
     LocalDateTime longPastTime = base.minusMinutes(10);
     LocalDateTime shortPastTime = base.minusMinutes(5);
     LocalDateTime shortFutureTime = base.plusMinutes(5);
@@ -335,10 +335,10 @@ public class TestCountdownHandler {
 
   @Test
   public void countdownHandler_TestIsRunningEqualTimes() throws InvalidCountdownStateException {
-    // Use fixed base time for deterministic results
+    // Use future base time so tests work correctly with LocalDateTime.now() comparisons
     // These equal-time edge cases should work even though they don't make much
     // sense...
-    LocalDateTime base = LocalDateTime.parse("2020-01-01T12:00:00");
+    LocalDateTime base = LocalDateTime.parse("2030-01-01T12:00:00");
     LocalDateTime longPastTime = base.minusMinutes(10);
     LocalDateTime shortPastTime = base.minusMinutes(5);
     LocalDateTime shortFutureTime = base.plusMinutes(5);
@@ -365,10 +365,10 @@ public class TestCountdownHandler {
 
   @Test
   public void countdownHandler_TestIsOpenEqualTimes() throws InvalidCountdownStateException {
-    // Use fixed base time for deterministic results
+    // Use future base time so tests work correctly with LocalDateTime.now() comparisons
     // These equal-time edge cases should work even though they don't make much
     // sense...
-    LocalDateTime base = LocalDateTime.parse("2020-01-01T12:00:00");
+    LocalDateTime base = LocalDateTime.parse("2030-01-01T12:00:00");
     LocalDateTime longPastTime = base.minusMinutes(10);
     LocalDateTime shortPastTime = base.minusMinutes(5);
     LocalDateTime shortFutureTime = base.plusMinutes(5);
