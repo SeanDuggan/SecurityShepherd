@@ -34,3 +34,12 @@ Thumbs.db
 # Working documentation (local notes only)
 COMMIT-NOTES.md
 CHANGELOG.md
+
+# MobileShepherd challenge solutions and flags (NEVER commit these!)
+**/CHALLENGE_SOLUTIONS.txt
+**/UPDATED_FLAGS_REFERENCE.txt
+**/flag_hash_generator.py
+**/updated_flag_generator.py
+**/missing_challenges.txt
+**/HASH_VALIDATION_UPDATE_SUMMARY.md
+**/PROGRESS_TRACKING_GUIDE.md
