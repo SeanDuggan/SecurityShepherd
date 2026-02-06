@@ -33,6 +33,8 @@ public class MongoDatabaseTest {
         "localhost", 27017, "test_shepherdGames", 5000L, 5000L, 5000L);
 
     mongoClient = fongo.getMongo();
+    // Ensure the test database exists in Fongo
+    mongoClient.getDB("test_shepherdGames");
   }
 
   @Test
