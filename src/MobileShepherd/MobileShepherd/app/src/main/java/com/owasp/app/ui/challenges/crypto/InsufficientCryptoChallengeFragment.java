@@ -82,15 +82,7 @@ public class InsufficientCryptoChallengeFragment extends Fragment {
         // Simulate app initialization
         initializeCryptoSystem();
         
-        binding.analyzeButton.setOnClickListener(v -> analyzeCryptoVulnerabilities());
         binding.validateButton.setOnClickListener(v -> validateFlag());
-        
-        binding.showHintButton.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Analyze logcat for crypto implementation flaws", Toast.LENGTH_LONG).show();
-            Log.d(TAG, "HINT: Check encryption mode, key derivation, and IV usage");
-            Log.d(TAG, "HINT: Password used for key derivation: " + WEAK_PASSWORD);
-            Log.d(TAG, "HINT: Random seed: 12345 (predictable!)");
-        });
 
         return root;
     }
@@ -196,13 +188,10 @@ public class InsufficientCryptoChallengeFragment extends Fragment {
         analysis.append("Total: ").append(vulnCount).append(" critical vulnerabilities\n");
         analysis.append("\nRecommendation: Migrate to AES-256-GCM with proper key management");
         
-        binding.analysisResult.setText(analysis.toString());
-        binding.analysisResult.setVisibility(View.VISIBLE);
-        binding.analysisCard.setCardBackgroundColor(getResources().getColor(android.R.color.holo_red_light));
-        
         Log.d(TAG, "Analysis complete: " + vulnCount + " vulnerabilities identified");
+        Log.d(TAG, analysis.toString());
         
-        Toast.makeText(getContext(), vulnCount + " crypto vulnerabilities found! Check details above.", Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), vulnCount + " crypto vulnerabilities found! Check logcat for details.", Toast.LENGTH_LONG).show();
     }
 
     private void validateFlag() {

@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:background="#F5F5F5">
+    android:background="?attr/colorSurface"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,10 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
             app:cardElevation="4dp"
-            app:cardCornerRadius="12dp"
-            app:cardBackgroundColor="#FFF3E0"
-            app:strokeColor="#FFC107"
-            app:strokeWidth="2dp">
+            app:cardCornerRadius="12dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -43,7 +40,7 @@
                     android:text="Objective"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="#F57C00"
+                    android:textColor="?android:attr/textColorPrimary"
                     android:layout_marginBottom="8dp" />
 
                 <TextView
@@ -51,6 +48,7 @@
                     android:layout_height="wrap_content"
                     android:text="Identify security misconfigurations in the app's manifest and settings. Common issues include debug mode enabled in production, backup allowed, exported components, and weak network security."
                     android:textSize="14sp"
+                    android:textColor="?android:attr/textColorSecondary"
                     android:layout_marginBottom="16dp" />
 
                 <TextView
@@ -59,7 +57,7 @@
                     android:text="Where to Find Misconfigurations"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="#F57C00"
+                    android:textColor="?android:attr/textColorPrimary"
                     android:layout_marginBottom="8dp" />
 
                 <TextView
@@ -67,6 +65,7 @@
                     android:layout_height="wrap_content"
                     android:text="Misconfigurations are found in:\n\nFile: AndroidManifest.xml\nLocations:\n  - android:debuggable=true\n  - android:allowBackup=true\n  - exported=true components\n  - usesCleartextTraffic=true"
                     android:textSize="14sp"
+                    android:textColor="?android:attr/textColorSecondary"
                     android:fontFamily="monospace"
                     android:layout_marginBottom="16dp" />
 
@@ -76,7 +75,7 @@
                     android:text="How to Extract"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="#F57C00"
+                    android:textColor="?android:attr/textColorPrimary"
                     android:layout_marginBottom="8dp" />
 
                 <TextView
@@ -84,6 +83,7 @@
                     android:layout_height="wrap_content"
                     android:text="1. Decompile APK with apktool or jadx\n2. Open AndroidManifest.xml\n3. Check for insecure settings\n4. Click 'Check Configuration' below\n5. Find all misconfigurations to get the flag"
                     android:textSize="14sp"
+                    android:textColor="?android:attr/textColorSecondary"
                     android:fontFamily="monospace" />
 
             </LinearLayout>

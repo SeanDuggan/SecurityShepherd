@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5">
+    android:background="?attr/colorSurface">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,10 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
             app:cardElevation="4dp"
-            app:cardCornerRadius="12dp"
-            app:cardBackgroundColor="#FFF3E0"
-            app:strokeColor="#FF9800"
-            app:strokeWidth="2dp">
+            app:cardCornerRadius="12dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -42,7 +39,7 @@
                     android:text="Objective"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="#E65100"
+                    android:textColor="?android:attr/textColorPrimary"
                     android:layout_marginBottom="8dp" />
 
                 <TextView
@@ -50,6 +47,7 @@
                     android:layout_height="wrap_content"
                     android:text="Discover hardcoded credentials and authentication bypasses. Poor authentication is one of the most critical mobile vulnerabilities where authentication can be completely bypassed."
                     android:textSize="14sp"
+                    android:textColor="?android:attr/textColorSecondary"
                     android:layout_marginBottom="16dp" />
 
                 <TextView
@@ -58,7 +56,7 @@
                     android:text="Where to Find the Credentials"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="#E65100"
+                    android:textColor="?android:attr/textColorPrimary"
                     android:layout_marginBottom="8dp" />
 
                 <TextView
@@ -66,6 +64,7 @@
                     android:layout_height="wrap_content"
                     android:text="The authentication credentials are hardcoded in the app and logged:\n\nMethod 1: Check Android logcat for leaked credentials\nMethod 2: Decompile and find hardcoded PIN in source\nFile: PoorAuthLessonFragment.java"
                     android:textSize="14sp"
+                    android:textColor="?android:attr/textColorSecondary"
                     android:fontFamily="monospace"
                     android:layout_marginBottom="16dp" />
 
@@ -75,7 +74,7 @@
                     android:text="How to Extract"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="#E65100"
+                    android:textColor="?android:attr/textColorPrimary"
                     android:layout_marginBottom="8dp" />
 
                 <TextView
@@ -83,6 +82,7 @@
                     android:layout_height="wrap_content"
                     android:text="1. Run: adb logcat | grep -i auth\n2. Or decompile with jadx\n3. Find hardcoded PIN in source code\n4. Enter the PIN to retrieve the flag"
                     android:textSize="14sp"
+                    android:textColor="?android:attr/textColorSecondary"
                     android:fontFamily="monospace" />
 
             </LinearLayout>
@@ -96,8 +96,6 @@
             android:layout_height="wrap_content"
             app:cardElevation="4dp"
             app:cardCornerRadius="12dp"
-            app:cardBackgroundColor="#FFFFFF"
-            app:strokeColor="#FF9800"
             app:strokeWidth="4dp">
 
             <LinearLayout

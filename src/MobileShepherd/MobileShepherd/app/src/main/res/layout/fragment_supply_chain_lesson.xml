@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:background="#F5F5F5">
+    android:background="?attr/colorSurface"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -43,7 +43,7 @@
                     android:text="Objective"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="#6A1B9A"
+                    android:textColor="@color/card_warning_text"
                     android:layout_marginBottom="8dp" />
 
                 <TextView
@@ -59,7 +59,7 @@
                     android:text="Where to Find the Vulnerability"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="#6A1B9A"
+                    android:textColor="@color/card_warning_text"
                     android:layout_marginBottom="8dp" />
 
                 <TextView
@@ -76,7 +76,7 @@
                     android:text="How to Extract"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="#6A1B9A"
+                    android:textColor="@color/card_warning_text"
                     android:layout_marginBottom="8dp" />
 
                 <TextView
@@ -121,7 +121,7 @@
                     android:layout_height="wrap_content"
                     android:text="This demo shows a vulnerable third-party SDK with hardcoded credentials. Exploit this dependency to find the API key!"
                     android:textSize="14sp"
-                    android:textColor="#E65100"
+                    android:textColor="@color/card_warning_text"
                     android:layout_marginBottom="16dp" />
 
                 <com.google.android.material.textfield.TextInputLayout

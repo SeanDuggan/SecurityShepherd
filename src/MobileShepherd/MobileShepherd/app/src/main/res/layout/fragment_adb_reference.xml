@@ -18,7 +18,7 @@
             android:layout_marginBottom="16dp"
             app:cardElevation="4dp"
             app:cardCornerRadius="8dp"
-            app:cardBackgroundColor="#E3F2FD">
+            app:cardBackgroundColor="@color/card_info_bg">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -96,7 +96,7 @@
                             android:text="adb logcat"
                             android:textSize="12sp"
                             android:fontFamily="monospace"
-                            android:background="#F5F5F5"
+                            android:background="@color/code_bg"
                             android:padding="8dp" />
                     </LinearLayout>
 
@@ -136,7 +136,7 @@
                             android:text="adb logcat -s TAG_NAME"
                             android:textSize="12sp"
                             android:fontFamily="monospace"
-                            android:background="#F5F5F5"
+                            android:background="@color/code_bg"
                             android:padding="8dp" />
                     </LinearLayout>
 
@@ -176,7 +176,7 @@
                             android:text="adb logcat | grep &quot;search_term&quot;"
                             android:textSize="12sp"
                             android:fontFamily="monospace"
-                            android:background="#F5F5F5"
+                            android:background="@color/code_bg"
                             android:padding="8dp" />
                     </LinearLayout>
 
@@ -215,7 +215,7 @@
                             android:text="adb logcat -c"
                             android:textSize="12sp"
                             android:fontFamily="monospace"
-                            android:background="#F5F5F5"
+                            android:background="@color/code_bg"
                             android:padding="8dp" />
                     </LinearLayout>
 
@@ -282,7 +282,7 @@
                             android:text="adb devices"
                             android:textSize="12sp"
                             android:fontFamily="monospace"
-                            android:background="#F5F5F5"
+                            android:background="@color/code_bg"
                             android:padding="8dp" />
                     </LinearLayout>
 
@@ -322,7 +322,7 @@
                             android:text="adb shell"
                             android:textSize="12sp"
                             android:fontFamily="monospace"
-                            android:background="#F5F5F5"
+                            android:background="@color/code_bg"
                             android:padding="8dp" />
                     </LinearLayout>
 
@@ -362,7 +362,7 @@
                             android:text="adb install app.apk"
                             android:textSize="12sp"
                             android:fontFamily="monospace"
-                            android:background="#F5F5F5"
+                            android:background="@color/code_bg"
                             android:padding="8dp" />
                     </LinearLayout>
 
@@ -401,7 +401,7 @@
                             android:text="adb uninstall com.package.name"
                             android:textSize="12sp"
                             android:fontFamily="monospace"
-                            android:background="#F5F5F5"
+                            android:background="@color/code_bg"
                             android:padding="8dp" />
                     </LinearLayout>
 
@@ -468,7 +468,7 @@
                             android:text="adb pull /data/data/com.owasp.app/databases/Users.db"
                             android:textSize="12sp"
                             android:fontFamily="monospace"
-                            android:background="#F5F5F5"
+                            android:background="@color/code_bg"
                             android:padding="8dp" />
                     </LinearLayout>
 
@@ -508,7 +508,7 @@
                             android:text="adb pull /data/data/com.owasp.app/shared_prefs/"
                             android:textSize="12sp"
                             android:fontFamily="monospace"
-                            android:background="#F5F5F5"
+                            android:background="@color/code_bg"
                             android:padding="8dp" />
                     </LinearLayout>
 
@@ -548,7 +548,7 @@
                             android:text="adb shell ls /data/data/com.owasp.app/"
                             android:textSize="12sp"
                             android:fontFamily="monospace"
-                            android:background="#F5F5F5"
+                            android:background="@color/code_bg"
                             android:padding="8dp" />
                     </LinearLayout>
 
@@ -587,7 +587,7 @@
                             android:text="adb shell ls /data/data/com.owasp.app/databases/"
                             android:textSize="12sp"
                             android:fontFamily="monospace"
-                            android:background="#F5F5F5"
+                            android:background="@color/code_bg"
                             android:padding="8dp" />
                     </LinearLayout>
 
@@ -654,7 +654,7 @@
                             android:text="adb shell sqlite3 /data/data/com.owasp.app/databases/Users.db"
                             android:textSize="12sp"
                             android:fontFamily="monospace"
-                            android:background="#F5F5F5"
+                            android:background="@color/code_bg"
                             android:padding="8dp" />
                     </LinearLayout>
 
@@ -694,7 +694,7 @@
                             android:text="sqlite> SELECT * FROM users;"
                             android:textSize="12sp"
                             android:fontFamily="monospace"
-                            android:background="#F5F5F5"
+                            android:background="@color/code_bg"
                             android:padding="8dp" />
                     </LinearLayout>
 
@@ -733,7 +733,7 @@
                             android:text="adb shell cat /data/data/com.owasp.app/shared_prefs/UserCredentials.xml"
                             android:textSize="12sp"
                             android:fontFamily="monospace"
-                            android:background="#F5F5F5"
+                            android:background="@color/code_bg"
                             android:padding="8dp" />
                     </LinearLayout>
 
@@ -800,7 +800,7 @@
                             android:text="adb shell pm list packages | grep reverser"
                             android:textSize="12sp"
                             android:fontFamily="monospace"
-                            android:background="#F5F5F5"
+                            android:background="@color/code_bg"
                             android:padding="8dp" />
                     </LinearLayout>
 
@@ -840,7 +840,7 @@
                             android:text="adb shell pm path com.owasp.app"
                             android:textSize="12sp"
                             android:fontFamily="monospace"
-                            android:background="#F5F5F5"
+                            android:background="@color/code_bg"
                             android:padding="8dp" />
                     </LinearLayout>
 
@@ -880,7 +880,7 @@
                             android:text="adb pull /data/app/com.owasp.app-*/base.apk"
                             android:textSize="12sp"
                             android:fontFamily="monospace"
-                            android:background="#F5F5F5"
+                            android:background="@color/code_bg"
                             android:padding="8dp" />
                     </LinearLayout>
 
@@ -919,7 +919,7 @@
                             android:text="adb shell pm clear com.owasp.app"
                             android:textSize="12sp"
                             android:fontFamily="monospace"
-                            android:background="#F5F5F5"
+                            android:background="@color/code_bg"
                             android:padding="8dp" />
                     </LinearLayout>
 

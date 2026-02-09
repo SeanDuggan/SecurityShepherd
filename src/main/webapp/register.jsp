@@ -115,7 +115,7 @@ if(ses.getAttribute("errorMessage") != null)
 					<form id="leForm" action="javascript:;">
 						<div align="center">
 							<br />
-							<h3>Please supply your <a>elastic.co</a> email address to be eligible for swag.</h3>
+							<h3>Please register to get started.</h3>
 							<table>
 								<tr>
 									<td><p>
@@ -222,14 +222,10 @@ if(ses.getAttribute("errorMessage") != null)
 		var theEmailAgain = $("#userAddressCnf").val();
 		//Validation
 		var theError = "";
-		let elasticEmailPattern = /^[^@]*[^@]@elastic\.co$/i;
 
 		if (thePass != thePassAgain)
 		{
 			theError = "Passwords do not match";
-		}
-		else if (!theEmail.match(elasticEmailPattern)){
-			theError = "You must use your elastic email address";
 		}
 		else if (theEmail.length !== 0 && theEmail !== theEmailAgain)
 		{

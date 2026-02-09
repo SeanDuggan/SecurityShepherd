@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     android:padding="16dp"
-    android:background="#F5F5F5"
+    android:background="?attr/colorSurface"
     tools:context=".ui.inputvalidation.XssWebViewChallengeFragment">
 
     <LinearLayout
@@ -18,7 +18,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="WebView XSS Challenge"
+            android:text="WebView XSS"
             android:textSize="20sp"
             android:textStyle="bold"
             android:layout_marginBottom="8dp" />
@@ -28,10 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
             app:cardElevation="4dp"
-            app:cardCornerRadius="12dp"
-            app:cardBackgroundColor="#FFEBEE"
-            app:strokeColor="#F44336"
-            app:strokeWidth="2dp">
+            app:cardCornerRadius="12dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -45,14 +42,15 @@
                     android:text="Challenge"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="#C62828"
+                    android:textColor="?android:attr/textColorPrimary"
                     android:layout_marginBottom="8dp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="This app displays your profile information in a WebView. The flag is stored in the WebView's JavaScript context. Use Cross-Site Scripting (XSS) to extract it.\n\nObjective: Inject JavaScript to access and display the hidden flag."
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:textColor="?android:attr/textColorSecondary" />
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
+    android:background="?attr/colorSurface"
     android:padding="16dp"
-    android:background="#F5F5F5"
     tools:context=".ui.insecuredata.InsecureDataLessonFragment">
 
     <LinearLayout
@@ -28,10 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
             app:cardElevation="4dp"
-            app:cardCornerRadius="12dp"
-            app:cardBackgroundColor="#FFF3E0"
-            app:strokeColor="#FF9800"
-            app:strokeWidth="2dp">
+            app:cardCornerRadius="12dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -45,7 +42,7 @@
                     android:text="Objective"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="#E65100"
+                    android:textColor="?android:attr/textColorPrimary"
                     android:layout_marginBottom="8dp" />
 
                 <TextView
@@ -53,6 +50,7 @@
                     android:layout_height="wrap_content"
                     android:text="Extract sensitive data stored insecurely in the app's SQLite database. Apps often store credentials, API keys, and personal information without proper encryption."
                     android:textSize="14sp"
+                    android:textColor="?android:attr/textColorSecondary"
                     android:layout_marginBottom="16dp" />
 
                 <TextView
@@ -61,7 +59,7 @@
                     android:text="Where to Find the Data"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="#E65100"
+                    android:textColor="?android:attr/textColorPrimary"
                     android:layout_marginBottom="8dp" />
 
                 <TextView
@@ -69,6 +67,7 @@
                     android:layout_height="wrap_content"
                     android:text="The sensitive data is stored in an unencrypted SQLite database:\n\nDatabase: Members.db\nPath: /data/data/com.owasp.app/databases/\nTable: Contains user credentials and API keys"
                     android:textSize="14sp"
+                    android:textColor="?android:attr/textColorSecondary"
                     android:fontFamily="monospace"
                     android:layout_marginBottom="16dp" />
 
@@ -78,14 +77,15 @@
                     android:text="How to Extract"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="#E65100"
+                    android:textColor="?android:attr/textColorPrimary"
                     android:layout_marginBottom="8dp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="1. Connect device via ADB\n2. Pull the database file from app directory\n3. Open database with SQLite browser/viewer\n4. Query tables to find sensitive data\n5. Extract the hidden key\n\nTap the info button for detailed commands and additional hints."
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:textColor="?android:attr/textColorSecondary" />
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -103,10 +103,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardElevation="4dp"
-            app:cardCornerRadius="12dp"
-            app:cardBackgroundColor="#FFFFFF"
-            app:strokeColor="#F44336"
-            app:strokeWidth="4dp">
+            app:cardCornerRadius="12dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -121,7 +118,7 @@
                 android:text="The Key is not here."
                 android:textSize="18sp"
                 android:textAlignment="center"
-                android:textColor="#DA70D6"
+                android:textColor="@color/card_warning_text"
                 android:layout_marginBottom="16dp" />
 
             <TextView

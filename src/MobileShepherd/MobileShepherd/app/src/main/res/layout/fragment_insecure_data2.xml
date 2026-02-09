@@ -2,7 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="?attr/colorSurface">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,7 +27,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Insecure Data Storage 3"
+                    android:text="Insecure Data Storage 2"
                     android:textSize="24sp"
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
@@ -35,44 +36,9 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/insecure_data3_description"
+                    android:text="@string/insecure_data2_description"
                     android:textSize="14sp"
                     android:lineSpacingMultiplier="1.3" />
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardElevation="4dp"
-            app:cardCornerRadius="8dp"
-            app:cardBackgroundColor="#FFF3CD">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Hint"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="#856404"
-                    android:layout_marginBottom="8dp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/insecure_data3_hint"
-                    android:textSize="14sp"
-                    android:textColor="#856404"
-                    android:lineSpacingMultiplier="1.2" />
 
             </LinearLayout>
 
@@ -95,7 +61,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="🚩 Submit Flag"
+                    android:text="Submit Flag"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
@@ -147,7 +113,7 @@
                     android:text="Challenge Info"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="#1565C0"
+                    android:textColor="@color/card_info_text"
                     android:layout_marginBottom="8dp" />
 
                 <TextView
@@ -155,7 +121,7 @@
                     android:layout_height="wrap_content"
                     android:text="SharedPreferences stores data in plain XML files that can be easily extracted. Many developers mistakenly believe this is secure storage. Extract the preferences file to find API keys, tokens, and the secret flag."
                     android:textSize="13sp"
-                    android:textColor="#1565C0"
+                    android:textColor="@color/card_info_text"
                     android:lineSpacingMultiplier="1.2" />
 
             </LinearLayout>

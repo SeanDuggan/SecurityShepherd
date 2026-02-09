@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     android:padding="16dp"
-    android:background="@color/background_secondary"
+    android:background="?attr/colorSurface"
     tools:context=".ui.lessons.InputValidationLessonFragment">
 
     <LinearLayout
@@ -29,8 +29,8 @@
             android:layout_marginBottom="24dp"
             app:cardElevation="4dp"
             app:cardCornerRadius="12dp"
-            app:cardBackgroundColor="#E3F2FD"
-            app:strokeColor="#2196F3"
+            app:cardBackgroundColor="@color/card_info_bg"
+            app:strokeColor="@color/card_info_stroke"
             app:strokeWidth="2dp">
 
             <LinearLayout
@@ -45,7 +45,7 @@
                     android:text="Objective"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="#1565C0"
+                    android:textColor="@color/card_info_accent"
                     android:layout_marginBottom="8dp" />
 
                 <TextView
@@ -61,7 +61,7 @@
                     android:text="Deep Link Format"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="#1565C0"
+                    android:textColor="@color/card_info_accent"
                     android:layout_marginBottom="8dp" />
 
                 <TextView
@@ -89,8 +89,8 @@
             android:layout_marginBottom="16dp"
             app:cardElevation="4dp"
             app:cardCornerRadius="12dp"
-            app:cardBackgroundColor="#FFFFFF"
-            app:strokeColor="#9E9E9E"
+            app:cardBackgroundColor="@color/card_bg"
+            app:strokeColor="@color/card_stroke"
             app:strokeWidth="1dp">
 
             <LinearLayout
@@ -120,8 +120,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Test URL"
-                    android:textColor="@color/text_on_button"
-                    android:backgroundTint="#2196F3" />
+                    android:textColor="@color/text_on_button" />
 
             </LinearLayout>
 
@@ -141,8 +140,8 @@
             android:layout_height="wrap_content"
             app:cardElevation="4dp"
             app:cardCornerRadius="12dp"
-            app:cardBackgroundColor="#FFFFFF"
-            app:strokeColor="#9E9E9E"
+            app:cardBackgroundColor="@color/card_bg"
+            app:strokeColor="@color/card_stroke"
             app:strokeWidth="1dp">
 
             <LinearLayout

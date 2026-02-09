@@ -58,7 +58,7 @@
 %>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>Elastic CTF - Powered by OWASP Security Shepherd - Login</title>
+<title>Security Shepherd - Login</title>
 
 <link href="css/theCss.css" rel="stylesheet" type="text/css"
 	media="screen" />
@@ -176,7 +176,7 @@
 					</li>
 					<li><b>Exploiting</b> - automated tools are forbidden where the platform will deduct points for multiple
 						wrongly submitted result keys</li>
-					<li><b>Collaborate</b> - If you're super helpful to your fellow Elasticians and they nominate you there's
+					<li><b>Collaborate</b> - If you're super helpful to your fellow participants and they nominate you there's
 					bonus points up for grabs</li>
 					<li><b>They're out there</b> - post on the #capture-the-flag channel, reach out to a colleague or use
 					Google to understand a concept, don't just look up the answer</li>

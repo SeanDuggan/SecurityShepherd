@@ -61,7 +61,7 @@ if (request.getSession() != null)
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<title>Elastic CTF - Powered by OWASP Security Shepherd</title>
+<title>Security Shepherd</title>
 
 <!-- 
 			<fmt:message key="generic.text.commentMessage.1" /> 

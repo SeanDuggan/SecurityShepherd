@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:background="#F5F5F5">
+    android:background="?attr/colorSurface">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,8 +27,8 @@
             android:layout_marginBottom="24dp"
             app:cardElevation="4dp"
             app:cardCornerRadius="12dp"
-            app:cardBackgroundColor="#E8F5E9"
-            app:strokeColor="#4CAF50"
+            app:cardBackgroundColor="@color/card_success_bg"
+            app:strokeColor="@color/card_success_stroke"
             app:strokeWidth="2dp">
 
             <LinearLayout
@@ -43,7 +43,7 @@
                     android:text="Objective"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="#2E7D32"
+                    android:textColor="@color/card_success_accent"
                     android:layout_marginBottom="8dp" />
 
                 <TextView
@@ -59,7 +59,7 @@
                     android:text="Where to Find the Data"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="#2E7D32"
+                    android:textColor="@color/card_success_accent"
                     android:layout_marginBottom="8dp" />
 
                 <TextView
@@ -76,7 +76,7 @@
                     android:text="How to Intercept"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="#2E7D32"
+                    android:textColor="@color/card_success_accent"
                     android:layout_marginBottom="8dp" />
 
                 <TextView
@@ -97,8 +97,8 @@
             android:layout_height="wrap_content"
             app:cardElevation="4dp"
             app:cardCornerRadius="12dp"
-            app:cardBackgroundColor="#FFFFFF"
-            app:strokeColor="#4CAF50"
+            app:cardBackgroundColor="@color/card_bg"
+            app:strokeColor="@color/card_success_stroke"
             app:strokeWidth="4dp">
 
             <LinearLayout

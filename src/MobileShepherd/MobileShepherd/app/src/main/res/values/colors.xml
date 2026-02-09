@@ -18,13 +18,35 @@
     <!-- Card background colors for light mode -->
     <color name="card_info_bg">#E3F2FD</color>
     <color name="card_info_text">#1565C0</color>
+    <color name="card_info_stroke">#2196F3</color>
+    <color name="card_info_accent">#1565C0</color>
+    
     <color name="card_error_bg">#FFEBEE</color>
     <color name="card_error_text">#C62828</color>
+    
     <color name="card_warning_bg">#FFF3E0</color>
     <color name="card_warning_text">#E65100</color>
+    <color name="card_warning_stroke">#FF9800</color>
+    <color name="card_warning_accent">#E65100</color>
+    
     <color name="card_success_bg">#E8F5E9</color>
     <color name="card_success_text">#2E7D32</color>
+    <color name="card_success_stroke">#4CAF50</color>
+    <color name="card_success_accent">#2E7D32</color>
+    
+    <color name="card_danger_bg">#FCE4EC</color>
+    <color name="card_danger_stroke">#E91E63</color>
+    <color name="card_danger_accent">#C2185B</color>
+    
     <color name="card_background">#FFFFFFFF</color>
+    <color name="card_bg">#FFFFFFFF</color>
+    <color name="card_stroke">#9E9E9E</color>
+    
+    <color name="code_bg">#F5F5F5</color>
+    <color name="error_bg">#FFEBEE</color>
+    <color name="error_text">#D32F2F</color>
+    <color name="success_bg">#C8E6C9</color>
+    <color name="success_text">#1B5E20</color>
     
     <!-- Button colors -->
     <color name="colorPrimary">#2196F3</color>

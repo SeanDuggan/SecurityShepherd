@@ -97,6 +97,9 @@ public class MainActivity extends AppCompatActivity {
                 R.id.nav_insecure_data1, R.id.nav_insecure_data2, R.id.nav_insecure_data3,
                 R.id.nav_poor_auth_challenge, R.id.nav_supply_chain_challenge, R.id.nav_insecure_comm_challenge, R.id.nav_insufficient_crypto_challenge,
                 R.id.nav_security_misconfig_challenge2, R.id.nav_security_misconfig_challenge3,
+                R.id.nav_input_validation_lesson, R.id.nav_xss_challenge,
+                R.id.nav_privacy_lesson,
+                R.id.nav_client_side_injection_lesson, R.id.nav_client_side_injection_challenge1, R.id.nav_client_side_injection_challenge2,
                 R.id.nav_adb_reference
         ).setOpenableLayout(drawer)
                 .build();

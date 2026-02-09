@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:background="@color/background_secondary">
+    android:background="?attr/colorSurface"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,8 +27,8 @@
             android:layout_marginBottom="24dp"
             app:cardElevation="4dp"
             app:cardCornerRadius="12dp"
-            app:cardBackgroundColor="#FCE4EC"
-            app:strokeColor="#E91E63"
+            app:cardBackgroundColor="@color/card_danger_bg"
+            app:strokeColor="@color/card_danger_stroke"
             app:strokeWidth="2dp">
 
             <LinearLayout
@@ -43,7 +43,7 @@
                     android:text="Objective"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="#C2185B"
+                    android:textColor="@color/card_danger_accent"
                     android:layout_marginBottom="8dp" />
 
                 <TextView
@@ -59,7 +59,7 @@
                     android:text="Test Credentials"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="#C2185B"
+                    android:textColor="@color/card_danger_accent"
                     android:layout_marginBottom="8dp" />
 
                 <TextView
@@ -76,7 +76,7 @@
                     android:text="Where to Find the Vulnerability"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="#C2185B"
+                    android:textColor="@color/card_danger_accent"
                     android:layout_marginBottom="8dp" />
 
                 <TextView
@@ -93,7 +93,7 @@
                     android:text="How to Exploit"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="#C2185B"
+                    android:textColor="@color/card_danger_accent"
                     android:layout_marginBottom="8dp" />
 
                 <TextView
@@ -115,8 +115,8 @@
             android:layout_marginBottom="16dp"
             app:cardElevation="4dp"
             app:cardCornerRadius="12dp"
-            app:cardBackgroundColor="#FFFFFF"
-            app:strokeColor="#E91E63"
+            app:cardBackgroundColor="@color/card_bg"
+            app:strokeColor="@color/card_danger_stroke"
             app:strokeWidth="4dp">
 
             <LinearLayout
@@ -187,8 +187,8 @@
             android:visibility="gone"
             app:cardElevation="4dp"
             app:cardCornerRadius="12dp"
-            app:cardBackgroundColor="#FFFFFF"
-            app:strokeColor="#4CAF50"
+            app:cardBackgroundColor="@color/card_bg"
+            app:strokeColor="@color/card_success_stroke"
             app:strokeWidth="4dp">
 
             <LinearLayout
@@ -221,7 +221,7 @@
                     android:text="Current Role: user"
                     android:textSize="14sp"
                     android:fontFamily="monospace"
-                    android:textColor="#666666"
+                    android:textColor="@color/text_secondary"
                     android:layout_marginBottom="16dp" />
 
                 <Button
@@ -230,8 +230,7 @@
                     android:layout_height="wrap_content"
                     android:text="Access Admin Panel"
                     android:textSize="16sp"
-                    android:layout_marginBottom="8dp"
-                    android:backgroundTint="#E91E63" />
+                    android:layout_marginBottom="8dp" />
 
                 <Button
                     android:id="@+id/logout_button"
@@ -253,7 +252,7 @@
             android:visibility="gone"
             app:cardElevation="4dp"
             app:cardCornerRadius="12dp"
-            app:cardBackgroundColor="#FFFFFF">
+            app:cardBackgroundColor="@color/card_bg">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -267,7 +266,7 @@
                     android:text="Admin Panel"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:textColor="#E91E63"
+                    android:textColor="@color/card_danger_accent"
                     android:layout_marginBottom="16dp" />
 
                 <TextView
@@ -276,9 +275,9 @@
                     android:layout_height="wrap_content"
                     android:text="⛔ Access Denied\n\nYou do not have admin privileges.\n\nHint: Authorization is checked client-side using SharedPreferences."
                     android:textSize="14sp"
-                    android:textColor="#D32F2F"
+                    android:textColor="@color/error_text"
                     android:padding="16dp"
-                    android:background="#FFEBEE"
+                    android:background="@color/error_bg"
                     android:visibility="visible"
                     android:layout_marginBottom="16dp" />
 
@@ -291,8 +290,8 @@
                     android:textStyle="bold"
                     android:fontFamily="monospace"
                     android:padding="16dp"
-                    android:background="#C8E6C9"
-                    android:textColor="#1B5E20"
+                    android:background="@color/success_bg"
+                    android:textColor="@color/success_text"
                     android:gravity="center" />
 
             </LinearLayout>

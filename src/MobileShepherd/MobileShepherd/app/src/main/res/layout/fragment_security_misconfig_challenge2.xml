@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/colorSurface">
     android:fillViewport="true">
 
     <LinearLayout
@@ -16,8 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardElevation="4dp"
-            app:cardCornerRadius="8dp"
-            app:cardBackgroundColor="#FFEBEE">
+            app:cardCornerRadius="8dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -28,7 +28,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Security Misconfiguration 1: Backup Extraction"
+                    android:text="Security Misconfiguration 2: Backup Extraction"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
@@ -39,6 +39,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/security_misconfig_challenge2_description"
                     android:textSize="14sp"
+                    android:textColor="?android:attr/textColorSecondary"
                     android:lineSpacingMultiplier="1.3"
                     android:layout_marginBottom="16dp" />
 
@@ -89,7 +90,7 @@
                         android:text="Secret Flag: [Encrypted]"
                         android:textSize="13sp"
                         android:fontFamily="monospace"
-                        android:textColor="#C62828" />
+                        android:textColor="@color/error_text" />
                 </LinearLayout>
 
                 <TextView
@@ -98,7 +99,7 @@
                     android:text="Hint: This app allows backups. Use ADB to extract the app data and examine the backup file for stored preferences."
                     android:textSize="12sp"
                     android:textStyle="italic"
-                    android:textColor="#666666"
+                    android:textColor="?android:attr/textColorSecondary"
                     android:background="#FFF3E0"
                     android:padding="12dp"
                     android:layout_marginBottom="16dp" />

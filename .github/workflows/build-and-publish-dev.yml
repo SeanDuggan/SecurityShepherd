@@ -52,9 +52,9 @@ jobs:
         with:
           push: true
         env:
-          IMAGE_TOMCAT: us-docker.pkg.dev/elastic-infosec-dev/security-shepherd/security-shepherd:latest
-          IMAGE_MARIADB: us-docker.pkg.dev/elastic-infosec-dev/security-shepherd/security-shepherd_mariadb:latest
-          IMAGE_MONGO: us-docker.pkg.dev/elastic-infosec-dev/security-shepherd/security-shepherd_mongo:latest
+          IMAGE_TOMCAT: security-shepherd:latest
+          IMAGE_MARIADB: security-shepherd_mariadb:latest
+          IMAGE_MONGO: security-shepherd_mongo:latest
           CONTAINER_TOMCAT: secshep-tomcat
           CONTAINER_MARIADB: secshep-mariadb
           CONTAINER_MONGO: secshep-mongo

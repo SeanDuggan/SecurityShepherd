@@ -74,7 +74,7 @@
 %>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>Elastic CTF - Powered by OWASP Security Shepherd - Scoreboard</title>
+<title>Security Shepherd - Scoreboard</title>
 
 <link href="css/theCss.css" rel="stylesheet" type="text/css"
 	media="screen" />
