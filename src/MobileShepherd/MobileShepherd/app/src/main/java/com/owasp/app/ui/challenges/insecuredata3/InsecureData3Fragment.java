@@ -111,8 +111,7 @@ public class InsecureData3Fragment extends Fragment {
         introText.setText(R.string.insufficient_crypto_intro);
         vulnerabilitiesText.setText(R.string.insufficient_crypto_vulnerabilities);
         
-        hintsSection.setVisibility(View.VISIBLE);
-        hintsText.setText(R.string.insecure_data3_hint);
+        hintsSection.setVisibility(View.GONE);
         
         bestPracticesSection.setVisibility(View.GONE);
         additionalSection.setVisibility(View.GONE);

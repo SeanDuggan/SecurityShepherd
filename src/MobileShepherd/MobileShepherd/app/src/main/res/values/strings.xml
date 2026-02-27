@@ -15,9 +15,6 @@
     <string name="menu_challenge1">Reverse Engineering 1</string>
     <string name="menu_challenge2">Reverse Engineering 2</string>
     <string name="menu_challenge3">Reverse Engineering 3</string>
-    <string name="menu_animations">Animations</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!-- Preferences -->
     <string name="dialog_based_preferences">Server Preferences</string>
@@ -33,6 +30,8 @@
         <item>light</item>
         <item>dark</item>
     </string-array>
+
+    <string name="hello_blank_fragment">Preferences</string>
 
     <string name="intro">This is a vulnerable App made to be used with the
 		OWASP Security Shepherd Project. You will need to configure the server
@@ -57,40 +56,13 @@
 		for more details. You should have received a copy of the GNU General
 		Public License along with the Security Shepherd project. If not, see
 		http://www.gnu.org/licenses.</string>
-    <string name="title_test_preference">Test Server Connection</string>
-    <string name="summary_test_preference">Tests the specified Server connection</string>
-
-    <!-- System Values -->
-    <string name="hard_soft_info">Hardware / Software Information</string>
-    <string name="serial">SERIAL: </string>
-    <string name="model">MODEL: </string>
-    <string name="id">ID: </string>
-    <string name="build">BUILD: </string>
-    <string name="manufacturer">MANUFACTURER: </string>
-    <string name="brand">BRAND: </string>
-    <string name="type">TYPE: </string>
-    <string name="user">USER: </string>
-    <string name="base">BASE: </string>
-    <string name="incremental">INCREMENTAL: </string>
-    <string name="sdk">SDK: </string>
-    <string name="board">BOARD: </string>
-    <string name="host">HOST: </string>
-    <string name="release">RELEASE: </string>
-    <string name="fingerprint">FINGERPRINT: </string>
-    <string name="versioncode">VERSION CODE: </string>
 
     <!-- Lesson Content -->
-    <string name="lesson_intro_title">Reverse Engineering Basics</string>
     <string name="lesson_intro">Welcome to the Reverse Engineering module! In this lesson, you will learn how to extract hidden information from Android applications.</string>
-    <string name="lesson_tools_title">Common Tools</string>
     <string name="lesson_tools">- APKTool - Decompiles APK files\n- Jadx - Java decompiler\n- dex2jar - Converts DEX to JAR\n- JD-GUI - Java class viewer\n- Android Studio - APK Analyzer</string>
-    <string name="lesson_techniques_title">Techniques</string>
-    <string name="lesson_techniques">1. Static Analysis - Examine code without running\n2. String Search - Look for hardcoded values\n3. Network Analysis - Monitor API calls\n4. Decompilation - Convert bytecode to source</string>
-    <string name="lesson_tips_title">Pro Tips</string>
-    <string name="lesson_tips">- Check strings.xml for hardcoded text\n- Look in BuildConfig and resource files\n- Examine obfuscated code carefully\n- Use grep to search decompiled code\n- Check native libraries (.so files)</string>
 
     <!-- Challenge 1 -->
-    <string name="challenge1_title">Challenge 1: Basic Flag Hunt</string>
+    <string name="challenge1_title">Basic Flag Hunt</string>
     <string name="challenge1_description">Find the flag hidden in plain sight within this application. Use static analysis tools to decompile the APK and search through the code.</string>
     <string name="challenge1_hint">Hint: The flag is stored as a simple string constant in one of the Java classes. Try searching for "flag" or "key" in the decompiled code.</string>
     <string name="challenge1_input_hint">Enter flag here</string>
@@ -98,7 +70,7 @@
     <string name="challenge1_failure">Incorrect flag. Try again!</string>
 
     <!-- Challenge 2 -->
-    <string name="challenge2_title">Challenge 2: Encoded Secrets</string>
+    <string name="challenge2_title">Encoded Secrets</string>
     <string name="challenge2_description">This flag has been encoded to make it slightly harder to find. You\'ll need to decode it after finding it in the source code.</string>
     <string name="challenge2_hint">Hint: Look for Base64 encoded strings or other common encoding schemes. The flag might be split across multiple variables or methods.</string>
     <string name="challenge2_input_hint">Enter decoded flag</string>
@@ -106,8 +78,8 @@
     <string name="challenge2_failure">That\'s not right. Check your decoding.</string>
 
     <!-- Challenge 3 -->
-    <string name="challenge3_title">Challenge 3: Obfuscated Challenge</string>
-    <string name="challenge3_description">The hardest challenge yet! The flag is obfuscated and split across multiple locations. You\'ll need advanced reverse engineering skills.</string>
+    <string name="challenge3_title">Obfuscated</string>
+    <string name="challenge3_description">The hardest one yet! The flag is obfuscated and split across multiple locations. You\'ll need advanced reverse engineering skills.</string>
     <string name="challenge3_hint">Hint: The flag is constructed at runtime using multiple obfuscated methods. Look for string concatenation, XOR operations, or reflection. Try debugging or analyzing the bytecode.</string>
     <string name="challenge3_input_hint">Enter final flag</string>
     <string name="challenge3_success">Amazing! You\'ve mastered reverse engineering!</string>
@@ -119,16 +91,9 @@
 
     <!-- Insecure Data Lesson -->
     <string name="menu_insecure_data_lesson">Insecure Data Lesson</string>
-    <string name="insecure_data_lesson_title">Insecure Data Storage</string>
     <string name="insecure_data_intro">Learn about insecure data storage vulnerabilities in mobile applications. This is one of the most common security issues in mobile apps where sensitive information is stored without proper protection.</string>
-    <string name="insecure_data_what_title">What is Insecure Data Storage?</string>
-    <string name="insecure_data_what">Insecure data storage occurs when sensitive information like passwords, tokens, personal data, or cryptographic keys are stored on the device without adequate protection. Attackers with physical access to the device or malware can extract this data.</string>
-    <string name="insecure_data_locations_title">Common Insecure Storage Locations</string>
     <string name="insecure_data_locations">- SQLite Databases (unencrypted)\n- SharedPreferences (plain text)\n- Internal Storage files\n- External Storage (SD card)\n- Application logs\n- Temporary files\n- Cloud storage backups</string>
-    <string name="insecure_data_vulns_title">Why It\'s Dangerous</string>
     <string name="insecure_data_vulns">1. Physical Access - Anyone with the device can extract data\n2. Backup Exposure - Data in cloud backups\n3. Malware - Other apps can access unprotected data\n4. Forensics - Data persists even after app deletion\n5. Rooted Devices - Full filesystem access</string>
-    <string name="insecure_data_find_title">How to Find Insecure Data</string>
-    <string name="insecure_data_find">- Use ADB to pull app data directory\n- Examine SQLite databases with sqlite3\n- Check SharedPreferences XML files\n- Review app logs with logcat\n- Use tools like Objection or Frida\n- Inspect backup files</string>
 
     <!-- Landing Activity -->
     <string name="landing_title">Mobile Security Shepherd</string>
@@ -149,25 +114,23 @@
 
     <!-- Insecure Data Storage Challenge 2 -->
     <string name="menu_insecure_data2">Insecure Data 2</string>
-    <string name="insecure_data2_description">This challenge stores sensitive credentials in Android SharedPreferences. Many developers think this is secure, but SharedPreferences files are stored as plain XML and can be easily extracted.\n\nYour mission: Extract the SharedPreferences XML file and find the secret flag among the stored credentials.</string>
+    <string name="insecure_data2_description">This challenge stores sensitive credentials in Android SharedPreferences. Many developers think this is secure, but SharedPreferences files are stored as plain XML and can be easily extracted.\n\nExtract the SharedPreferences XML file and find the secret flag among the stored credentials.</string>
     <string name="insecure_data2_hint">1. Use ADB to pull SharedPreferences files\n2. Location: /data/data/com.owasp.app/shared_prefs/\n3. File name: UserCredentials.xml\n4. SharedPreferences stores everything in plain text XML\n5. Look for a key named "secret_flag"\n6. Command: adb pull /data/data/com.owasp.app/shared_prefs/UserCredentials.xml</string>
 
     <!-- Insecure Data Storage Challenge 3 -->
     <string name="menu_insecure_data3">Insecure Data 3</string>
-    <string name="insecure_data3_description">This challenge implements custom encryption using a XOR cipher. While the data appears encrypted, the encryption scheme is weak and can be reverse engineered.\n\nYour mission: Decompile the APK, analyze the encryption algorithm, and decrypt the flag. This challenge requires understanding of cryptographic weaknesses.</string>
+    <string name="insecure_data3_description">This challenge implements custom encryption using a XOR cipher. While the data appears encrypted, the encryption scheme is weak and can be reverse engineered.\n\nDecompile the APK, analyze the encryption algorithm, and decrypt the flag. This challenge requires understanding of cryptographic weaknesses.</string>
     <string name="insecure_data3_hint">1. Decompile the APK using jadx or apktool\n2. Find the InsecureData3Fragment class\n3. Analyze the xorEncrypt() method\n4. The XOR key is hardcoded as "SHEPHERD"\n5. XOR is symmetric - encryption and decryption are identical\n6. Use the encrypted hex data shown in the app\n7. Decrypt: ciphertext XOR key = plaintext</string>
 
     <!-- Poor Authentication Lesson -->
     <string name="menu_poor_auth_lesson">Poor Authentication Lesson</string>
     <string name="poor_auth_intro">Poor authentication is one of the most critical mobile vulnerabilities. Authentication is the cornerstone of app security - if attackers bypass it, all other security measures become irrelevant.</string>
     <string name="poor_auth_vulnerabilities">- Weak security questions (easily guessable)\n- Passwords logged in plaintext\n- Credentials in world-readable files\n- Weak temporary passwords\n- Verbose error messages\n- Debug logs in production</string>
-    <string name="poor_auth_security_questions">Why Security Questions Fail:\n\n- Answers often public (social media)\n- Easy to guess or research\n- Predictable common answers\n- Never change over time\n\nBetter Alternatives:\n- Email-based password reset\n- SMS one-time codes\n- Biometric authentication</string>
-    <string name="poor_auth_logging">Logging Dangers:\n\n- Logcat accessible via ADB\n- World-readable files\n- Logs persist after deletion\n- Cloud backups expose data\n\nNever Log:\n- Passwords, PINs, tokens\n- API keys\n- Personal information\n- Security answers</string>
     <string name="poor_auth_best_practices">Secure Practices:\n\n- Strong password policies\n- Multi-factor authentication\n- Email verification for resets\n- Account lockout after failures\n- Never log credentials\n- Disable debug logs in production</string>
 
     <!-- Poor Authentication Challenge -->
-    <string name="menu_poor_auth_challenge">Poor Authentication Challenge</string>
-    <string name="poor_auth_challenge_description">This challenge covers multiple poor authentication vulnerabilities:\n\n- Weak security questions with easily discoverable answers\n- Sensitive information logged to logcat\n- Personal details written to files\n- Weak temporary password generation\n\nYour mission: The account is locked, but you can use the password reset feature. Find the security question answers by examining logs and files, reset the password, login, and capture the flag!\n\nHint: Start by checking logcat for interesting information...</string>
+    <string name="menu_poor_auth_challenge">Poor Authentication 1</string>
+    <string name="poor_auth_challenge_description">This covers multiple poor authentication vulnerabilities:\n\n- Weak security questions with easily discoverable answers\n- Sensitive information logged to logcat\n- Personal details written to files\n- Weak temporary password generation\n\nThe account is locked, but you can use the password reset feature. Find the security question answers by examining logs and files, reset the password, login, and capture the flag!</string>
 
     <!-- Insecure Authorization Lesson -->
     <string name="menu_insecure_authorization_lesson">Insecure Authorization Lesson</string>
@@ -181,30 +144,27 @@
     <string name="supply_chain_best_practices">Secure Practices:\n\n- Regularly audit and update dependencies\n- Use dependency scanning tools (OWASP Dependency-Check)\n- Verify checksums and signatures\n- Monitor CVE databases\n- Remove unused dependencies\n- Review third-party SDK permissions\n- Implement secure update mechanisms\n- Use Software Bill of Materials (SBOM)</string>
 
     <!-- Supply Chain Security Challenge -->
-    <string name="menu_supply_chain_challenge">Supply Chain Security Challenge</string>
-    <string name="supply_chain_challenge_desc">This app uses a vulnerable third-party analytics SDK from "ThirdPartyAnalytics Inc." The SDK is severely outdated (16 months old) and contains multiple security issues:\n\n- Known CVEs (CVE-2023-45678, CVE-2024-12345)\n- Hardcoded backdoor authentication token\n- Insecure telemetry data storage\n- Base64-encoded credentials in logs\n\nYour mission: Analyze the SDK initialization process, examine logcat logs, inspect the app\'s files directory, and find the hidden flag that proves you\'ve successfully exploited the supply chain vulnerability!\n\nHint: Use logcat filtering and explore the app\'s data directory using Device File Explorer or ADB.</string>
+    <string name="menu_supply_chain_challenge">Supply Chain Security 1</string>
+    <string name="supply_chain_challenge_desc">This app uses a vulnerable third-party analytics SDK from "ThirdPartyAnalytics Inc." The SDK is severely outdated (16 months old) and contains multiple security issues:\n\n- Known CVEs (CVE-2023-45678, CVE-2024-12345)\n- Hardcoded backdoor authentication token\n- Insecure telemetry data storage\n- Base64-encoded credentials in logs\n\nAnalyze the SDK initialization process, examine logcat logs, inspect the app\'s files directory, and find the hidden flag that proves you\'ve successfully exploited the supply chain vulnerability!</string>
 
     <!-- Insecure Communication Lesson -->
     <string name="menu_insecure_comm_lesson">Insecure Communication Lesson</string>
     <string name="insecure_comm_intro">Insecure communication occurs when mobile apps transmit sensitive data without proper encryption. Any attacker on the same network can intercept, read, and modify unencrypted traffic, leading to credential theft, session hijacking, and data breaches.</string>
-    <string name="insecure_comm_http_https">HTTP vs HTTPS:\n\n- HTTP: Plaintext protocol - all data visible to anyone monitoring the network\n- HTTPS: Encrypted with TLS/SSL - protects data confidentiality and integrity\n- Mixed content: Using both HTTP and HTTPS exposes users to attacks\n- Certificate validation: Must verify server identity to prevent MITM attacks</string>
     <string name="insecure_comm_vulnerabilities">Common Issues:\n\n- Sending credentials over HTTP\n- Accepting invalid/self-signed certificates\n- Using weak cipher suites or deprecated TLS versions\n- Disabling certificate pinning for convenience\n- Sensitive data in URLs (visible in logs/history)\n- Mixed HTTP/HTTPS sessions exposing session tokens</string>
     <string name="insecure_comm_best_practices">Secure Practices:\n\n- Always use HTTPS for all network communications\n- Validate SSL/TLS certificates properly\n- Implement certificate pinning for critical APIs\n- Use strong cipher suites (TLS 1.2+)\n- Never disable certificate validation in production\n- Keep sensitive data out of URLs\n- Use secure WebSocket (WSS) for real-time communication</string>
 
     <!-- Insecure Communication Challenge -->
-    <string name="menu_insecure_comm_challenge">Insecure Communication Challenge</string>
-    <string name="insecure_comm_challenge_desc">This app makes multiple network requests to different endpoints. Some use HTTPS (secure), while others use HTTP (insecure).\n\nYour mission: Monitor the app\'s network traffic using logcat, identify which requests are sent over HTTP, and extract the session token that was transmitted in plaintext.\n\nHints:\n- Use logcat filter tag: AppNetworkMonitor\n- Look for HTTP (not HTTPS) requests\n- The flag is in the X-Session-Token header\n- Pay attention to protocol warnings</string>
+    <string name="menu_insecure_comm_challenge">Insecure Communication 1</string>
+    <string name="insecure_comm_challenge_desc">This app makes multiple network requests to different endpoints. Some use HTTPS (secure), while others use HTTP (insecure).\n\nMonitor the app\'s network traffic using logcat, identify which requests are sent over HTTP, and extract the session token that was transmitted in plaintext.</string>
 
     <!-- Insufficient Cryptography Lesson -->
     <string name="menu_insufficient_crypto_lesson">Insufficient Cryptography Lesson</string>
     <string name="insufficient_crypto_intro">Insufficient cryptography occurs when mobile apps use weak encryption algorithms, inadequate key lengths, poor key management, or flawed cryptographic implementations. These weaknesses allow attackers to decrypt sensitive data, bypass encryption, or manipulate cryptographic processes.</string>
     <string name="insufficient_crypto_vulnerabilities">Common Crypto Vulnerabilities:\n\n- Weak algorithms: DES, RC4, MD5, SHA-1\n- Insufficient key length: Keys &lt; 128 bits\n- ECB mode: Pattern analysis attacks\n- Hardcoded keys: Keys in source code\n- Static IVs: Initialization vector reuse\n- Weak key derivation: Simple hashing for keys\n- Insecure random: Predictable Random() instead of SecureRandom\n- No salt: Password hashing without random salt</string>
-    <string name="insufficient_crypto_best_practices">Secure Cryptography Practices:\n\n- Use AES-256 for symmetric encryption\n- Use RSA-2048+ or ECC for asymmetric crypto\n- Always use CBC, CTR, or GCM mode (never ECB)\n- Generate random IVs for each encryption\n- Use SecureRandom for all cryptographic values\n- Store keys in Android Keystore\n- Use PBKDF2, bcrypt, or scrypt for key derivation\n- Always salt password hashes\n- Use SHA-256 or SHA-3 for hashing\n- Implement proper key rotation\n- Never hardcode cryptographic keys</string>
-    <string name="insufficient_crypto_impact">Real-World Consequences:\n\n- Data Breaches: Encrypted data exposed when weak crypto is cracked\n- Compliance Violations: GDPR, PCI-DSS require strong encryption\n- Financial Loss: Credit card theft, fraud from decrypted data\n- Reputation Damage: Loss of customer trust\n- Intellectual Property Theft: Competitors access proprietary algorithms\n\nExample: In 2019, a banking app used DES encryption. Researchers cracked it in 6 hours, exposing millions of customer accounts.</string>
 
     <!-- Insufficient Cryptography Challenge -->
-    <string name="menu_insufficient_crypto_challenge">Insufficient Cryptography Challenge</string>
-    <string name="insufficient_crypto_challenge_desc">This app implements cryptographic operations with multiple severe vulnerabilities:\n\n- ECB Mode: Electronic Codebook mode reveals patterns in encrypted data\n- MD5 Key Derivation: Using broken MD5 hash to generate encryption keys\n- Insecure Random: Predictable Random() with fixed seed instead of SecureRandom\n- Static IV: Reusing the same Initialization Vector for all encryptions\n\nYour mission: Analyze the cryptographic implementation by monitoring logcat logs, decompile the APK to examine the crypto code, identify all vulnerabilities, and extract the hidden flag!\n\nHints:\n- Filter logcat with tag: InsufficientCryptoChallenge\n- Look for cipher suite, key derivation method, IV usage\n- Use jadx to decompile and search for crypto-related classes\n- The flag is obfuscated in byte arrays in the source code</string>
+    <string name="menu_insufficient_crypto_challenge">Insufficient Cryptography 1</string>
+    <string name="insufficient_crypto_challenge_desc">This app implements cryptographic operations with multiple severe vulnerabilities:\n\n- ECB Mode: Electronic Codebook mode reveals patterns in encrypted data\n- MD5 Key Derivation: Using broken MD5 hash to generate encryption keys\n- Insecure Random: Predictable Random() with fixed seed instead of SecureRandom\n- Static IV: Reusing the same Initialization Vector for all encryptions\n\nAnalyze the cryptographic implementation by monitoring logcat logs, decompile the APK to examine the crypto code, identify all vulnerabilities, and extract the hidden flag!</string>
 
     <!-- Security Misconfiguration Lesson -->
     <string name="menu_security_misconfig_lesson">Security Misconfiguration Lesson</string>
@@ -215,11 +175,11 @@
 
     <!-- Security Misconfiguration Challenge 2 -->
     <string name="menu_security_misconfig_challenge2">Security Misconfiguration 1</string>
-    <string name="security_misconfig_challenge2_description">This application has backup enabled (android:allowBackup="true"), allowing app data to be extracted using Android Debug Bridge.\n\nYour mission: Use ADB to create a backup of this app\'s data, extract the backup file, and find the flag stored in SharedPreferences.\n\nSteps:\n1. Create backup: adb backup -f backup.ab -noapk com.owasp.app\n2. Convert .ab to .tar: Use abe.jar or android-backup-extractor\n3. Extract tar: tar -xvf backup.tar\n4. Find SharedPreferences XML files\n5. Locate the flag in the preferences\n\nThe flag is stored in plain text in the SharedPreferences!</string>
+    <string name="security_misconfig_challenge2_description">This application has backup enabled (android:allowBackup="true"), allowing app data to be extracted using Android Debug Bridge.\n\nUse ADB to create a backup of this app\'s data, extract the backup file, and find the flag stored in SharedPreferences.\n\nSteps:\n1. Create backup: adb backup -f backup.ab -noapk com.owasp.app\n2. Convert .ab to .tar: Use abe.jar or android-backup-extractor\n3. Extract tar: tar -xvf backup.tar\n4. Find SharedPreferences XML files\n5. Locate the flag in the preferences\n\nThe flag is stored in plain text in the SharedPreferences!</string>
 
     <!-- Security Misconfiguration Challenge 3 -->
     <string name="menu_security_misconfig_challenge3">Security Misconfiguration 2</string>
-    <string name="security_misconfig_challenge3_description">This application has a SecretActivity that is exported without proper permission checks, allowing it to be launched directly via ADB or by other applications.\n\nYour mission: Find the exported activity in AndroidManifest.xml and launch it with the correct intent extras to reveal the flag.\n\nSteps:\n1. Decompile APK or read AndroidManifest.xml\n2. Find the exported activity (android:exported="true")\n3. Identify required intent extras from challenge hints\n4. Launch via ADB: adb shell am start -n com.owasp.app/.SecretActivity -e unlock_code shepherd2023\n5. The activity will display the flag when launched correctly\n\nThis shows how exported components without authentication can be exploited!</string>
+    <string name="security_misconfig_challenge3_description">This application contains a security misconfiguration vulnerability related to exported components. Can you identify and exploit it to retrieve the flag?</string>
 
     <!-- Input Validation Lesson (M7) -->
     <string name="menu_input_validation_lesson">Input Validation Lesson</string>
@@ -228,19 +188,17 @@
     <string name="input_validation_lesson_hint">URL Validation Bypass Techniques:\n\nThe lesson demonstrates a common URL validation flaw where the app checks if a trusted domain appears ANYWHERE in the URL using contains().\n\nBypass Methods:\n1. Subdomain: https://example.com.evil.com\n2. Parameter: https://evil.com?redirect=example.com\n3. Fragment: https://evil.com#example.com\n4. Path: https://evil.com/example.com\n5. Username: https://example.com@evil.com\n\nProper Validation:\n- Use startsWith() for protocol + domain\n- Parse URL and check host property\n- Use allowlist of exact domains\n- Validate scheme (https only)\n- Check against URL.getHost() not full URL string\n\nTry these payloads:\n- https://evil.com?trusted=example.com\n- https://example.com.attacker.com\n- https://malicious.com#example.com\n\nThe flag reveals when you successfully bypass the validation!</string>
 
     <!-- XSS WebView Challenge (M7) -->
-    <string name="menu_xss_challenge">XSS WebView Challenge</string>
+    <string name="menu_xss_challenge">XSS WebView 1</string>
 
     <!-- Privacy Controls Lesson (M6) -->
     <string name="menu_privacy_lesson">Privacy Controls Lesson</string>
     <string name="privacy_lesson_title">Inadequate Privacy Controls</string>
     <string name="privacy_lesson_description">Learn how image metadata can leak sensitive information about users, including location, device info, and timestamps. This lesson demonstrates OWASP Mobile Top 10 M6: Inadequate Privacy Controls.</string>
     <string name="privacy_lesson_objective">Load the sample image and analyze its metadata to find the hidden flag. Pay attention to EXIF data that applications often fail to strip before sharing or uploading images.</string>
-    <string name="privacy_lesson_warning">Photos taken by mobile devices contain extensive metadata (EXIF) that can reveal:\n- GPS coordinates (exact location)\n- Device make and model\n- Timestamp when photo was taken\n- Software/app used\n- Camera settings\n- User comments and descriptions\n\nMost apps fail to strip this data before sharing!</string>
     <string name="privacy_photo_description">Photo with metadata</string>
     <string name="privacy_no_image_text">No image loaded. Tap \"Load Sample Image\" to begin.</string>
     <string name="privacy_btn_load_sample">Load Sample Image</string>
     <string name="privacy_btn_take_photo">Take New Photo</string>
-    <string name="privacy_btn_analyze_metadata">Analyze Metadata (Find Flag)</string>
     <string name="privacy_lesson_intro">Inadequate Privacy Controls occur when mobile applications fail to properly handle user data privacy. This includes:\n\n- Not stripping metadata from photos/videos before sharing\n- Leaking location data through EXIF tags\n- Failing to anonymize personal information\n- Excessive data collection without user consent\n- Storing sensitive data in accessible locations\n- Transmitting PII without encryption\n- Not respecting privacy settings\n\nThis vulnerability is classified as OWASP Mobile Top 10 M6.</string>
     <string name="privacy_lesson_vulnerabilities">Privacy Control Failures:\n\n- Image Metadata Leakage: Photos contain GPS coordinates, timestamps, device info in EXIF data\n- Location Tracking: Apps collect precise location without clear user benefit\n- Clipboard Access: Reading clipboard without user knowledge\n- Contact/Calendar Access: Uploading full contact lists unnecessarily\n- Analytics Overreach: Tracking user behavior beyond stated purpose\n- PII in Logs: Logging personally identifiable information\n- Identifier Persistence: Using permanent device IDs for tracking\n- No Privacy Controls: Missing opt-out mechanisms\n- Data Minimization Failure: Collecting more data than needed\n- Third-party SDK Leaks: SDKs transmitting user data without disclosure</string>
     <string name="privacy_lesson_hints">Finding the Flag:\n\n1. Tap \"Load Sample Image\" to load the preloaded photo\n2. Tap \"Analyze Metadata\" to view all EXIF data\n3. Look for the Image Description field in the metadata\n4. The flag is hidden in one of the EXIF tags\n\nEXIF Tags to Check:\n- TAG_IMAGE_DESCRIPTION\n- TAG_USER_COMMENT\n- TAG_ARTIST\n- TAG_MAKE\n- TAG_MODEL\n- TAG_GPS_LATITUDE\n- TAG_GPS_LONGITUDE\n- TAG_DATETIME\n\nThe flag format is: OWASP{...}</string>

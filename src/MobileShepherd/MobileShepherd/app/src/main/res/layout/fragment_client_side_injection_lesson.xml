@@ -71,7 +71,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Search for users in the database. Try to find the hidden admin user with the flag!"
+                    android:text="Search for users by exact username. Try to find the hidden admin user with the flag!"
                     android:textSize="14sp"
                     android:layout_marginBottom="16dp" />
 

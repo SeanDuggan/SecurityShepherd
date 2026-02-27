@@ -63,8 +63,8 @@ public class ClientSideInjectionLessonFragment extends Fragment {
         insertUser(db, "bob", "bob@app.com", "Bob Jones", false);
         insertUser(db, "charlie", "charlie@app.com", "Charlie Brown", false);
         
-        // Insert hidden admin user with flag
-        insertUser(db, "superadmin", "super@app.com", HIDDEN_FLAG, true);
+        // Insert hidden admin user with flag (obscure username)
+        insertUser(db, "sys_root", "root@system.internal", HIDDEN_FLAG, true);
         
         db.close();
     }
@@ -87,7 +87,7 @@ public class ClientSideInjectionLessonFragment extends Fragment {
         }
 
         // VULNERABLE: Concatenating user input directly into SQL query
-        String query = "SELECT username, email, full_name, is_admin FROM users WHERE username LIKE '%" + searchTerm + "%'";
+        String query = "SELECT username, email, full_name, is_admin FROM users WHERE username = '" + searchTerm + "'";
         
         Log.d(TAG, "Executing query: " + query);
         

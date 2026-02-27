@@ -76,8 +76,7 @@ public class PoorAuthChallengeFragment extends Fragment {
         introText.setText(R.string.poor_auth_intro);
         vulnerabilitiesText.setText(R.string.poor_auth_vulnerabilities);
         
-        hintsSection.setVisibility(View.VISIBLE);
-        hintsText.setText(R.string.poor_auth_lesson_hint);
+        hintsSection.setVisibility(View.GONE);
         
         bestPracticesSection.setVisibility(View.VISIBLE);
         TextView bestPracticesText = dialogView.findViewById(R.id.best_practices_text);

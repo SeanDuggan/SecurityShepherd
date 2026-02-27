@@ -91,8 +91,7 @@ public class ReverseEngineering2Fragment extends Fragment {
         introText.setText(R.string.lesson_intro);
         vulnerabilitiesText.setText(R.string.lesson_tools);
         
-        hintsSection.setVisibility(View.VISIBLE);
-        hintsText.setText(R.string.challenge2_hint);
+        hintsSection.setVisibility(View.GONE);
         
         bestPracticesSection.setVisibility(View.GONE);
         additionalSection.setVisibility(View.GONE);

@@ -94,8 +94,7 @@ public class InsecureData1Fragment extends Fragment {
         introText.setText(R.string.insecure_data_intro);
         vulnerabilitiesText.setText(R.string.insecure_data_vulns);
         
-        hintsSection.setVisibility(View.VISIBLE);
-        hintsText.setText(R.string.insecure_data1_hint);
+        hintsSection.setVisibility(View.GONE);
         
         bestPracticesSection.setVisibility(View.GONE);
         additionalSection.setVisibility(View.GONE);
