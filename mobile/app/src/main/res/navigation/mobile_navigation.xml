@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home"
+    app:enterAnim="@anim/slide_in_right"
+    app:exitAnim="@anim/slide_out_left"
+    app:popEnterAnim="@anim/slide_in_left"
+    app:popExitAnim="@anim/slide_out_right">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.owasp.app.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_lesson"
+        android:name="com.owasp.app.ui.lessons.LessonFragment"
+        android:label="@string/menu_lesson"
+        tools:layout="@layout/fragment_lesson" />
+
+    <fragment
+        android:id="@+id/nav_insecure_data_lesson"
+        android:name="com.owasp.app.ui.lessons.insecuredata.InsecureDataLessonFragment"
+        android:label="@string/menu_insecure_data_lesson"
+        tools:layout="@layout/fragment_insecure_data_lesson" />
+
+    <fragment
+        android:id="@+id/nav_challenge1"
+        android:name="com.owasp.app.ui.challenges.reverseengineering.ReverseEngineering1Fragment"
+        android:label="@string/menu_reverse_engineering1"
+        tools:layout="@layout/fragment_reverse_engineering1" />
+
+    <fragment
+        android:id="@+id/nav_challenge2"
+        android:name="com.owasp.app.ui.challenges.reverseengineering.ReverseEngineering2Fragment"
+        android:label="@string/menu_reverse_engineering2"
+        tools:layout="@layout/fragment_reverse_engineering2" />
+
+    <fragment
+        android:id="@+id/nav_challenge3"
+        android:name="com.owasp.app.ui.challenges.reverseengineering.ReverseEngineering3Fragment"
+        android:label="@string/menu_reverse_engineering3"
+        tools:layout="@layout/fragment_reverse_engineering3" />
+
+    <fragment
+        android:id="@+id/nav_insecure_data1"
+        android:name="com.owasp.app.ui.challenges.insecuredata1.InsecureData1Fragment"
+        android:label="@string/menu_insecure_data1"
+        tools:layout="@layout/fragment_insecure_data1" />
+
+    <fragment
+        android:id="@+id/nav_insecure_data2"
+        android:name="com.owasp.app.ui.challenges.insecuredata2.InsecureData2Fragment"
+        android:label="@string/menu_insecure_data2"
+        tools:layout="@layout/fragment_insecure_data2" />
+
+    <fragment
+        android:id="@+id/nav_poor_auth_lesson"
+        android:name="com.owasp.app.ui.lessons.poorauth.PoorAuthLessonFragment"
+        android:label="@string/menu_poor_auth_lesson"
+        tools:layout="@layout/fragment_poor_auth_lesson" />
+
+    <fragment
+        android:id="@+id/nav_poor_auth_challenge"
+        android:name="com.owasp.app.ui.challenges.poorauth.PoorAuthChallengeFragment"
+        android:label="@string/menu_poor_auth_challenge"
+        tools:layout="@layout/fragment_poor_auth_challenge" />
+
+    <fragment
+        android:id="@+id/nav_insecure_authorization_lesson"
+        android:name="com.owasp.app.ui.lessons.insecureauthorization.InsecureAuthorizationLessonFragment"
+        android:label="@string/menu_insecure_authorization_lesson"
+        tools:layout="@layout/fragment_insecure_authorization_lesson" />
+
+    <fragment
+        android:id="@+id/nav_supply_chain_lesson"
+        android:name="com.owasp.app.ui.lessons.supplychain.SupplyChainLessonFragment"
+        android:label="@string/menu_supply_chain_lesson"
+        tools:layout="@layout/fragment_supply_chain_lesson" />
+
+    <fragment
+        android:id="@+id/nav_supply_chain_challenge"
+        android:name="com.owasp.app.ui.challenges.supplychain.SupplyChainChallengeFragment"
+        android:label="@string/menu_supply_chain_challenge"
+        tools:layout="@layout/fragment_supply_chain_challenge" />
+
+    <fragment
+        android:id="@+id/nav_insecure_comm_lesson"
+        android:name="com.owasp.app.ui.lessons.insecurecomm.InsecureCommLessonFragment"
+        android:label="@string/menu_insecure_comm_lesson"
+        tools:layout="@layout/fragment_insecure_comm_lesson" />
+
+    <fragment
+        android:id="@+id/nav_insecure_comm_challenge"
+        android:name="com.owasp.app.ui.challenges.insecurecomm.InsecureCommChallengeFragment"
+        android:label="@string/menu_insecure_comm_challenge"
+        tools:layout="@layout/fragment_insecure_comm_challenge" />
+
+    <fragment
+        android:id="@+id/nav_insufficient_crypto_lesson"
+        android:name="com.owasp.app.ui.lessons.crypto.InsufficientCryptoLessonFragment"
+        android:label="@string/menu_insufficient_crypto_lesson"
+        tools:layout="@layout/fragment_insufficient_crypto_lesson" />
+
+    <fragment
+        android:id="@+id/nav_insufficient_crypto_challenge"
+        android:name="com.owasp.app.ui.challenges.crypto.InsufficientCryptoChallengeFragment"
+        android:label="@string/menu_insufficient_crypto_challenge"
+        tools:layout="@layout/fragment_insufficient_crypto_challenge" />
+
+    <fragment
+        android:id="@+id/nav_adb_reference"
+        android:name="com.owasp.app.ui.adb.AdbReferenceFragment"
+        android:label="@string/action_adb_reference"
+        tools:layout="@layout/fragment_adb_reference" />
+
+    <fragment
+        android:id="@+id/nav_security_misconfig_lesson"
+        android:name="com.owasp.app.ui.lessons.securitymisconfig.SecurityMisconfigLessonFragment"
+        android:label="@string/menu_security_misconfig_lesson"
+        tools:layout="@layout/fragment_security_misconfig_lesson" />
+
+    <fragment
+        android:id="@+id/nav_security_misconfig_challenge2"
+        android:name="com.owasp.app.ui.challenges.securitymisconfig.SecurityMisconfigChallenge2Fragment"
+        android:label="@string/menu_security_misconfig_challenge2"
+        tools:layout="@layout/fragment_security_misconfig_challenge2" />
+
+    <fragment
+        android:id="@+id/nav_security_misconfig_challenge3"
+        android:name="com.owasp.app.ui.challenges.securitymisconfig.SecurityMisconfigChallenge3Fragment"
+        android:label="@string/menu_security_misconfig_challenge3"
+        tools:layout="@layout/fragment_security_misconfig_challenge3" />
+
+    <fragment
+        android:id="@+id/nav_input_validation_lesson"
+        android:name="com.owasp.app.ui.lessons.InputValidationLessonFragment"
+        android:label="@string/menu_input_validation_lesson"
+        tools:layout="@layout/fragment_input_validation_lesson" />
+
+    <fragment
+        android:id="@+id/nav_xss_challenge"
+        android:name="com.owasp.app.ui.challenges.inputvalidation.XssWebViewChallengeFragment"
+        android:label="@string/menu_xss_challenge"
+        tools:layout="@layout/fragment_xss_challenge" />
+
+    <fragment
+        android:id="@+id/nav_privacy_lesson"
+        android:name="com.owasp.app.ui.lessons.privacycontrols.PrivacyControlsLessonFragment"
+        android:label="@string/menu_privacy_lesson"
+        tools:layout="@layout/fragment_privacy_controls_lesson" />
+
+    <fragment
+        android:id="@+id/nav_client_side_injection_lesson"
+        android:name="com.owasp.app.ui.lessons.clientsideinjection.ClientSideInjectionLessonFragment"
+        android:label="Client-Side Injection Lesson"
+        tools:layout="@layout/fragment_client_side_injection_lesson" />
+
+    <fragment
+        android:id="@+id/nav_client_side_injection_challenge1"
+        android:name="com.owasp.app.ui.challenges.clientsideinjection.ClientSideInjectionChallenge1Fragment"
+        android:label="Client-Side Injection Challenge 1"
+        tools:layout="@layout/fragment_client_side_injection_challenge1" />
+
+    <fragment
+        android:id="@+id/nav_client_side_injection_challenge2"
+        android:name="com.owasp.app.ui.challenges.clientsideinjection.ClientSideInjectionChallenge2Fragment"
+        android:label="Client-Side Injection Challenge 2"
+        tools:layout="@layout/fragment_client_side_injection_challenge2" />
+
+</navigation>

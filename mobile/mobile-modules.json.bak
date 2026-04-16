@@ -1,0 +1,329 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "Mobile Security Shepherd - Complete Lessons and Challenges with Keys",
+  "version": "2.0",
+  "lastUpdated": "2026-04-07",
+  "modules": {
+    "lessons": [
+      {
+        "moduleId": "53a53a66cb3bf3e4c665c442425ca90e29536edd",
+        "moduleName": "Insecure Data Storage",
+        "moduleNameLangPointer": "insecure.data.storage",
+        "moduleCategory": "Mobile Insecure Data Storage",
+        "moduleCategoryLangPointer": "mobile.insecure.data.storage",
+        "key": "Battery777",
+        "newFormatKey": "KEY{1ns3cur3_D4t4_St0r4g3_L34k}",
+        "source": "database",
+        "incrementalRank": 45,
+        "scoreValue": 25
+      },
+      {
+        "moduleId": "2ab09c0c18470ae5f87d219d019a1f603e66f944",
+        "moduleName": "Reverse Engineering",
+        "moduleNameLangPointer": "reverse.engineering",
+        "moduleCategory": "Mobile Reverse Engineering",
+        "moduleCategoryLangPointer": "mobile.reverse.engineering",
+        "key": "DrumaDrumaDrumBoomBoom",
+        "newFormatKey": "KEY{R3v3rs3_Eng1n33r1ng_M4st3r_2024}",
+        "source": "database",
+        "incrementalRank": 75,
+        "scoreValue": 40
+      },
+      {
+        "moduleId": "335440fef02d19259254ed88293b62f31cccdd41",
+        "moduleName": "Client Side Injection",
+        "moduleNameLangPointer": "client.side.injection",
+        "moduleCategory": "Mobile Injection",
+        "moduleCategoryLangPointer": "mobile.injection",
+        "key": "VolcanicEruptionsAbruptInterruptions",
+        "newFormatKey": "KEY{CL13NT_S1D3_SQL_1NJ3CT10N}",
+        "source": "database",
+        "incrementalRank": 87,
+        "scoreValue": 50
+      },
+      {
+        "moduleId": "0cdd1549e7c74084d7059ce748b93ef657b44457",
+        "moduleName": "Poor Authentication",
+        "moduleNameLangPointer": "poor.authentication",
+        "moduleCategory": "Mobile Poor Authentication",
+        "moduleCategoryLangPointer": "mobile.poor.authentication",
+        "key": "UpsideDownPizzaDip",
+        "newFormatKey": "KEY{T4co_Sn0r3s_0n_4_C0uch}",
+        "source": "database",
+        "incrementalRank": 90,
+        "scoreValue": 50
+      },
+      {
+        "moduleId": null,
+        "moduleName": "Insecure Authorization",
+        "moduleNameLangPointer": "insecure.authorization",
+        "moduleCategory": "Mobile Authorization",
+        "moduleCategoryLangPointer": "mobile.authorization",
+        "key": "KEY{Pr1v1l3g3_Esc4l4t10n_Pwn3d}",
+        "source": "mobileApp",
+        "incrementalRank": null,
+        "scoreValue": null,
+        "notes": "New module in mobile app, not yet in database"
+      },
+      {
+        "moduleId": null,
+        "moduleName": "Supply Chain Security",
+        "moduleNameLangPointer": "supply.chain.security",
+        "moduleCategory": "Mobile Supply Chain",
+        "moduleCategoryLangPointer": "mobile.supply.chain",
+        "key": "KEY{Vuln3r4bl3_D3p3nd3ncy}",
+        "source": "mobileApp",
+        "incrementalRank": null,
+        "scoreValue": null,
+        "notes": "New module in mobile app, not yet in database"
+      },
+      {
+        "moduleId": null,
+        "moduleName": "Insecure Communication",
+        "moduleNameLangPointer": "insecure.communication",
+        "moduleCategory": "Mobile Communication",
+        "moduleCategoryLangPointer": "mobile.communication",
+        "key": "KEY{Unsecur3_HTTP_Tr4ff1c}",
+        "source": "mobileApp",
+        "incrementalRank": null,
+        "scoreValue": null,
+        "notes": "New module in mobile app, not yet in database"
+      },
+      {
+        "moduleId": null,
+        "moduleName": "Insufficient Cryptography",
+        "moduleNameLangPointer": "insufficient.cryptography",
+        "moduleCategory": "Mobile Cryptography",
+        "moduleCategoryLangPointer": "mobile.cryptography",
+        "key": "KEY{W3ak_DES_Encrypt10n}",
+        "source": "mobileApp",
+        "incrementalRank": null,
+        "scoreValue": null,
+        "notes": "New module in mobile app, not yet in database"
+      },
+      {
+        "moduleId": null,
+        "moduleName": "Security Misconfiguration",
+        "moduleNameLangPointer": "security.misconfiguration",
+        "moduleCategory": "Mobile Security Misconfiguration",
+        "moduleCategoryLangPointer": "mobile.security.misconfiguration",
+        "key": "KEY{D3bugg4bl3_Fl4g_F0und}",
+        "source": "mobileApp",
+        "incrementalRank": null,
+        "scoreValue": null,
+        "notes": "New module in mobile app, not yet in database"
+      },
+      {
+        "moduleId": null,
+        "moduleName": "Input Validation",
+        "moduleNameLangPointer": "input.validation",
+        "moduleCategory": "Mobile Input Validation",
+        "moduleCategoryLangPointer": "mobile.input.validation",
+        "key": "KEY{1nput_V4l1d4t10n_Byp4ss3d}",
+        "source": "mobileApp",
+        "incrementalRank": null,
+        "scoreValue": null,
+        "notes": "New module in mobile app, not yet in database"
+      },
+      {
+        "moduleId": null,
+        "moduleName": "Privacy Controls",
+        "moduleNameLangPointer": "privacy.controls",
+        "moduleCategory": "Mobile Privacy",
+        "moduleCategoryLangPointer": "mobile.privacy",
+        "key": "KEY{3x1f_M3t4d4t4_L34k5_L0c4t10n}",
+        "source": "mobileApp",
+        "incrementalRank": null,
+        "scoreValue": null,
+        "notes": "New module in mobile app, not yet in database"
+      }
+    ],
+    "challenges": [
+      {
+        "moduleId": "52885a3db5b09adc24f38bc453fe348f850649b3",
+        "moduleName": "Reverse Engineering 1",
+        "moduleNameLangPointer": "reverse.engineering.1",
+        "moduleCategory": "Mobile Reverse Engineering",
+        "moduleCategoryLangPointer": "mobile.reverse.engineering",
+        "key": "christopherjenkins",
+        "newFormatKey": "KEY{S1mpl3_Fl4g_34sy_T0_F1nd}",
+        "source": "database",
+        "incrementalRank": 85,
+        "scoreValue": 50
+      },
+      {
+        "moduleId": "f16bf2ab1c1bf400d36330f91e9ac6045edcd003",
+        "moduleName": "Reverse Engineering 2",
+        "moduleNameLangPointer": "reverse.engineering.2",
+        "moduleCategory": "Mobile Reverse Engineering",
+        "moduleCategoryLangPointer": "mobile.reverse.engineering",
+        "key": "FireStoneElectric",
+        "newFormatKey": "KEY{B4s3_S1xty_F0ur_D3c0d3d}",
+        "source": "database",
+        "incrementalRank": 98,
+        "scoreValue": 50
+      },
+      {
+        "moduleId": "307f78f18fd6a87e50ed6705231a9f24cd582574",
+        "moduleName": "Insecure Data Storage 1",
+        "moduleNameLangPointer": "insecure.data.storage.1",
+        "moduleCategory": "Mobile Insecure Data Storage",
+        "moduleCategoryLangPointer": "mobile.insecure.data.storage",
+        "key": "WarshipsAndWrenches",
+        "newFormatKey": "KEY{SQLit3_D4t4_3xtr4ct3d}",
+        "source": "database",
+        "incrementalRank": 116,
+        "scoreValue": 60
+      },
+      {
+        "moduleId": "da3de2e556494a9c2fb7308a98454cf55f3a4911",
+        "moduleName": "Insecure Data Storage 2",
+        "moduleNameLangPointer": "insecure.data.storage.2",
+        "moduleCategory": "Mobile Insecure Data Storage",
+        "moduleCategoryLangPointer": "mobile.insecure.data.storage",
+        "key": "starfish123",
+        "newFormatKey": "KEY{Sh4r3d_Pr3fs_L34k3d}",
+        "source": "database",
+        "incrementalRank": 129,
+        "scoreValue": 65
+      },
+      {
+        "moduleId": "a3f7ffd0f9c3d15564428d4df0b91bd927e4e5e4",
+        "moduleName": "Client Side Injection 1",
+        "moduleNameLangPointer": "client.side.injection.1",
+        "moduleCategory": "Mobile Injection",
+        "moduleCategoryLangPointer": "mobile.injection",
+        "key": "SourHatsAndAngryCats",
+        "newFormatKey": "KEY{SQL_1nj3ct10n_4dm1n_Pwn}",
+        "source": "database",
+        "incrementalRank": 138,
+        "scoreValue": 70
+      },
+      {
+        "moduleId": "e635fce334aa61fdaa459c21c286d6332eddcdd3",
+        "moduleName": "Client Side Injection 2",
+        "moduleNameLangPointer": "client.side.injection.2",
+        "moduleCategory": "Mobile Injection",
+        "moduleCategoryLangPointer": "mobile.injection",
+        "key": "BurpingChimneys",
+        "newFormatKey": "KEY{UN10N_B4s3d_1nj3ct10n}",
+        "source": "database",
+        "incrementalRank": 155,
+        "scoreValue": 80
+      },
+      {
+        "moduleId": "ba6e65e4881c8499b5e53eb33b5be6b5d0f1fb2c",
+        "moduleName": "Poor Authentication 1",
+        "moduleNameLangPointer": "poor.authentication.1",
+        "moduleCategory": "Mobile Poor Authentication",
+        "moduleCategoryLangPointer": "mobile.poor.authentication",
+        "key": "MegaKillerExtremeCheese",
+        "newFormatKey": "KEY{P00r_Auth_W34k_Qu3st10ns}",
+        "source": "database",
+        "incrementalRank": 160,
+        "scoreValue": 60
+      },
+      {
+        "moduleId": "064e28ea4b2f7708b8cb4495d9db1a5e05decdb8",
+        "moduleName": "Poor Authentication 2",
+        "moduleNameLangPointer": "poor.authentication.2",
+        "moduleCategory": "Mobile Poor Authentication",
+        "moduleCategoryLangPointer": "mobile.poor.authentication",
+        "key": "MoreRobotsNotEnoughNuts",
+        "source": "database",
+        "incrementalRank": 173,
+        "scoreValue": 70
+      },
+      {
+        "moduleId": null,
+        "moduleName": "Supply Chain Security 1",
+        "moduleNameLangPointer": "supply.chain.security.1",
+        "moduleCategory": "Mobile Supply Chain",
+        "moduleCategoryLangPointer": "mobile.supply.chain",
+        "key": "KEY{Vuln3r4bl3_D3p3nd3ncy}",
+        "source": "mobileApp",
+        "incrementalRank": null,
+        "scoreValue": null,
+        "notes": "New challenge in mobile app, not yet in database"
+      },
+      {
+        "moduleId": null,
+        "moduleName": "Insecure Communication 1",
+        "moduleNameLangPointer": "insecure.communication.1",
+        "moduleCategory": "Mobile Communication",
+        "moduleCategoryLangPointer": "mobile.communication",
+        "key": "KEY{N3tw0rk_Sn1ff3d}",
+        "source": "mobileApp",
+        "incrementalRank": null,
+        "scoreValue": null,
+        "notes": "New challenge in mobile app, not yet in database"
+      },
+      {
+        "moduleId": null,
+        "moduleName": "Insufficient Cryptography 1",
+        "moduleNameLangPointer": "insufficient.cryptography.1",
+        "moduleCategory": "Mobile Cryptography",
+        "moduleCategoryLangPointer": "mobile.cryptography",
+        "key": "KEY{ECB_M0d3_Vuln3r4bl3}",
+        "source": "mobileApp",
+        "incrementalRank": null,
+        "scoreValue": null,
+        "notes": "New challenge in mobile app, not yet in database"
+      },
+      {
+        "moduleId": null,
+        "moduleName": "Security Misconfiguration 1",
+        "moduleNameLangPointer": "security.misconfiguration.1",
+        "moduleCategory": "Mobile Security Misconfiguration",
+        "moduleCategoryLangPointer": "mobile.security.misconfiguration",
+        "key": "KEY{B4ckup_D4t4_3xtr4ct3d}",
+        "source": "mobileApp",
+        "incrementalRank": null,
+        "scoreValue": null,
+        "notes": "New challenge in mobile app, not yet in database"
+      },
+      {
+        "moduleId": null,
+        "moduleName": "Security Misconfiguration 2",
+        "moduleNameLangPointer": "security.misconfiguration.2",
+        "moduleCategory": "Mobile Security Misconfiguration",
+        "moduleCategoryLangPointer": "mobile.security.misconfiguration",
+        "key": "KEY{3xp0rt3d_C0mp0n3nt_Pwn}",
+        "source": "mobileApp",
+        "incrementalRank": null,
+        "scoreValue": null,
+        "notes": "New challenge in mobile app, not yet in database"
+      },
+      {
+        "moduleId": null,
+        "moduleName": "XSS WebView Challenge",
+        "moduleNameLangPointer": "xss.webview.challenge",
+        "moduleCategory": "Mobile Input Validation",
+        "moduleCategoryLangPointer": "mobile.input.validation",
+        "key": "KEY{XSS_W3bV13w_Pwn3d_2024}",
+        "source": "mobileApp",
+        "incrementalRank": null,
+        "scoreValue": null,
+        "notes": "New challenge in mobile app, not yet in database"
+      }
+    ]
+  },
+  "statistics": {
+    "totalLessons": 11,
+    "totalChallenges": 14,
+    "totalModules": 25
+  },
+  "notes": {
+    "sources": [
+      "Database modules: Extracted from src/main/resources/database/coreSchema.sql",
+      "Mobile app modules: Extracted from mobile/scripts/calculate_key_hashes.py and mobile app code"
+    ],
+    "keyFormats": {
+      "database": "Original keys from coreSchema.sql (moduleResult field)",
+      "mobileApp": "New KEY{} format used in mobile app"
+    },
+    "usage": "This file is for local development reference only. Keys should never be committed to version control in production environments.",
+    "todo": "Mobile app modules need to be added to the database (coreSchema.sql) with proper moduleId, incrementalRank, and scoreValue",
+    "warning": "Some modules have both old format keys (from database) and new KEY{} format keys (from mobile app). The mobile app now uses KEY{} format exclusively."
+  }
+}

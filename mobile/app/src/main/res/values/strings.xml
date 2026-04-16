@@ -1,0 +1,204 @@
+<resources>
+    <string name="app_name">MobileShepherd</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Reverser</string>
+    <string name="nav_header_subtitle">Break Everything</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_owasp_top10">OWASP Mobile Top 10 2024</string>
+    <string name="action_adb_reference">ADB Commands</string>
+    <string name="action_exit">Exit</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_lesson">Reverse Engineering Lesson</string>
+    <string name="menu_reverse_engineering1">Reverse Engineering 1</string>
+    <string name="menu_reverse_engineering2">Reverse Engineering 2</string>
+    <string name="menu_reverse_engineering3">Reverse Engineering 3</string>
+
+    <!-- Preferences -->
+    <string name="dialog_based_preferences">Server Preferences</string>
+
+    <!-- Theme arrays -->
+    <string-array name="theme_entries">
+        <item>System Default</item>
+        <item>Light</item>
+        <item>Dark</item>
+    </string-array>
+    <string-array name="theme_values">
+        <item>system</item>
+        <item>light</item>
+        <item>dark</item>
+    </string-array>
+
+    <string name="hello_blank_fragment">Preferences</string>
+
+    <string name="intro">This is a vulnerable App made to be used with the
+		OWASP Security Shepherd Project. You will need to configure the server
+		address in the settings to match the address of the Security Shepherd
+		instance you have access to. This can be either a URL or an IP. For
+		more information, please visit
+		https://www.owasp.org/index.php/OWASP_Security_Shepherd </string>
+
+    <string name="server_title">Server Address</string>
+    <string name="server_summary">Enter Server address here</string>
+    <string name="server_dialog_title">Enter Server Address</string>
+
+    <string name="license_title">License</string>
+    <string name="summary_license">This App is part of the Security Shepherd Project.
+		The Security Shepherd project is free software: you can redistribute
+		it and/or modify it under the terms of the GNU General Public License
+		as published by the Free Software Foundation, either version 3 of the
+		License, or (at your option) any later version. The Security Shepherd
+		project is distributed in the hope that it will be useful, but WITHOUT
+		ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+		FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+		for more details. You should have received a copy of the GNU General
+		Public License along with the Security Shepherd project. If not, see
+		http://www.gnu.org/licenses.</string>
+
+    <!-- Lesson Content -->
+    <string name="lesson_intro">The Reverse Engineering module introduces techniques for extracting hidden information from Android applications.</string>
+    <string name="lesson_tools">- APKTool - Decompiles APK files\n- Jadx - Java decompiler\n- dex2jar - Converts DEX to JAR\n- JD-GUI - Java class viewer\n- Android Studio - APK Analyzer</string>
+
+    <!-- Reverse Engineering Challenge 1 -->
+    <string name="reverse_engineering_1_description">Analyze the application package and identify the required key through reverse-engineering techniques.</string>
+    <string name="reverse_engineering_1_hint">Hint: The key is stored as a simple string constant in one of the Java classes. Try searching for "flag" or "key" in the decompiled code.</string>
+    <string name="reverse_engineering_1_input_hint">Enter key here</string>
+    <string name="reverse_engineering_1_success">Key validated successfully.</string>
+    <string name="reverse_engineering_1_failure">The key is incorrect. Please try again.</string>
+
+    <!-- Reverse Engineering Challenge 2 -->
+    <string name="reverse_engineering_2_description">Locate an encoded key within the application and determine the appropriate method to decode it.</string>
+    <string name="reverse_engineering_2_hint">Hint: Look for Base64 encoded strings or other common encoding schemes. The key might be split across multiple variables or methods.</string>
+    <string name="reverse_engineering_2_input_hint">Enter Key</string>
+    <string name="reverse_engineering_2_success">Key decoded and validated successfully.</string>
+    <string name="reverse_engineering_2_failure">The submitted value is incorrect. Review the decoding method and try again.</string>
+
+    <!--Reverse Engineering Challenge 3 -->
+    <string name="reverse_engineering_3_description">Perform advanced reverse-engineering analysis to recover a key protected by layered obfuscation techniques.</string>
+    <string name="reverse_engineering_3_input_hint">Enter Key</string>
+    <string name="reverse_engineering_3_success">Key validated successfully.</string>
+    <string name="reverse_engineering_3_failure">Incorrect. This one requires deep analysis.</string>
+    <string name="reverse_engineering_3_hint">Hint: The key is constructed at runtime using multiple obfuscated methods. Look for string concatenation, XOR operations, or reflection. Try debugging or analyzing the bytecode.</string>
+
+    <!-- Common Strings -->
+    <string name="validate_button">Validate Key</string>
+    <string name="clear_button">Clear</string>
+
+    <!-- Insecure Data Lesson -->
+    <string name="menu_insecure_data_lesson">Insecure Data Lesson</string>
+    <string name="insecure_data_intro">Learn about insecure data storage vulnerabilities in mobile applications. This is one of the most common security issues in mobile apps where sensitive information is stored without proper protection.</string>
+    <string name="insecure_data_locations">- SQLite Databases (unencrypted)\n- SharedPreferences (plain text)\n- Internal Storage files\n- External Storage (SD card)\n- Application logs\n- Temporary files\n- Cloud storage backups</string>
+    <string name="insecure_data_vulns">1. Physical Access - Anyone with the device can extract data\n2. Backup Exposure - Data in cloud backups\n3. Malware - Other apps can access unprotected data\n4. Forensics - Data persists even after app deletion\n5. Rooted Devices - Full filesystem access</string>
+
+    <!-- Landing Activity -->
+    <string name="landing_title">Mobile Security Shepherd</string>
+    <string name="landing_warning">WARNING: This is an intentionally vulnerable mobile application!</string>
+    <string name="landing_button">Enter App</string>
+
+    <!-- Home Screen -->
+    <string name="home_welcome_title">Welcome to Mobile Shepherd</string>
+    <string name="home_welcome_description">Learn mobile security through interactive lessons and hands-on challenges</string>
+    <string name="home_getting_started_title">Getting Started</string>
+    <string name="home_getting_started_steps">1. Open the menu (☰) to navigate\n2. Start with a lesson to learn concepts\n3. Apply your knowledge in challenges\n4. Use logcat and debugging tools\n5. Find the flags!</string>
+
+    <!-- Insecure Data Storage Challenge 1 -->
+    <string name="menu_insecure_data1">Insecure Data 1</string>
+    <string name="insecure_data1_description">A password hash is stored in a SQLite database. The value is hashed with MD5 rather than encoded. Recover the original password from the hash and submit it as the key.</string>
+
+    <!-- Lesson Hints -->
+    <string name="lesson_hint">Step-by-Step Guide:\n\n1. EXTRACT THE APK\n   - Connect device via ADB\n   - Run: adb shell pm list packages | grep reverser\n   - Run: adb shell pm path com.owasp.app\n   - Run: adb pull /data/app/[path]/base.apk\n\n2. DECOMPILE WITH JADX\n   - Download JADX from GitHub\n   - Run: jadx base.apk\n   - Or use JADX-GUI for visual interface\n\n3. NAVIGATE TO TARGET FILE\n   - Open: sources/com/owasp/reverser/ui/lessons/LessonFragment.java\n   - Look in the class body for string variables\n   - Search for keywords: flag, key, secret, password\n\n4. ALTERNATIVE TOOLS\n   - APKTool: apktool d base.apk (produces smali)\n   - dex2jar + JD-GUI: For JAR decompilation\n   - Ghidra: Advanced static analysis\n   - Frida: Dynamic runtime inspection\n\n5. WHAT TO LOOK FOR\n   - Hardcoded strings in class fields\n   - Static final String variables\n   - Suspicious base64 or hex strings\n   - Comments or debug messages\n\nTarget: LessonFragment.java in package com.owasp.app.ui.lessons</string>
+
+    <!-- Insecure Data Storage Challenge 2 -->
+    <string name="menu_insecure_data2">Insecure Data 2</string>
+    <string name="insecure_data2_description">Sensitive credentials are stored in Android SharedPreferences. Although commonly used, SharedPreferences data is saved as plain XML and can be extracted. Retrieve the XML file and identify the secret key in the stored entries.</string>
+
+    <!-- Poor Authentication Lesson -->
+    <string name="menu_poor_auth_lesson">Poor Authentication Lesson</string>
+    <string name="poor_auth_intro">Poor authentication is one of the most critical mobile vulnerabilities. Authentication is the cornerstone of app security - if attackers bypass it, all other security measures become irrelevant.</string>
+    <string name="poor_auth_vulnerabilities">- Weak security questions (easily guessable)\n- Passwords logged in plaintext\n- Credentials in world-readable files\n- Weak temporary passwords\n- Verbose error messages\n- Debug logs in production</string>
+
+    <!-- Poor Authentication Challenge -->
+    <string name="menu_poor_auth_challenge">Poor Authentication 1</string>
+    <string name="poor_auth_challenge_description">This scenario includes multiple authentication weaknesses:\n\n- Weak security questions with easily discoverable answers\n- Sensitive information logged to logcat\n- Personal details written to files\n- Weak temporary password generation\n\nThe account is locked. Use the password reset workflow, identify the security question answers from logs and files, reset the password, authenticate, and retrieve the key.</string>
+
+    <!-- Insecure Authorization Lesson -->
+    <string name="menu_insecure_authorization_lesson">Insecure Authorization Lesson</string>
+    <string name="insecure_authorization_intro">Insecure authorization occurs when apps fail to properly enforce access controls after authentication. Even if users authenticate correctly, improper authorization checks allow privilege escalation, access to other users\' data, or unauthorized actions. Client-side authorization flaws can allow role and permission checks to be manipulated.</string>
+
+    <!-- Supply Chain Security Lesson -->
+    <string name="menu_supply_chain_lesson">Supply Chain Security Lesson</string>
+    <string name="supply_chain_intro">Inadequate supply chain security occurs when mobile apps use vulnerable third-party libraries, SDKs, or dependencies. Attackers exploit these weak links to compromise entire applications, affecting millions of users.</string>
+    <string name="supply_chain_vulnerabilities">Common Issues:\n\n- Using dependencies with known vulnerabilities\n- Not verifying SDK authenticity\n- Hardcoded API keys in libraries\n- Insecure data collection by third parties\n- Excessive permissions requested by SDKs\n- Outdated dependencies not updated for years</string>
+
+    <!-- Supply Chain Security Challenge -->
+    <string name="menu_supply_chain_challenge">Supply Chain Security 1</string>
+    <string name="supply_chain_challenge_desc">The application uses a vulnerable third-party analytics SDK from "ThirdPartyAnalytics Inc." The SDK is significantly outdated (16 months old) and contains multiple security issues:\n\n- Known CVEs (CVE-2023-45678, CVE-2024-12345)\n- Hardcoded backdoor authentication token\n- Insecure telemetry data storage\n- Base64-encoded credentials in logs\n\nAnalyze SDK initialization, review logcat output, inspect the application files directory, and retrieve the hidden key.</string>
+
+    <!-- Insecure Communication Lesson -->
+    <string name="menu_insecure_comm_lesson">Insecure Communication Lesson</string>
+    <string name="insecure_comm_intro">Insecure communication occurs when mobile apps transmit sensitive data without proper encryption. Any attacker on the same network can intercept, read, and modify unencrypted traffic, leading to credential theft, session hijacking, and data breaches.</string>
+    <string name="insecure_comm_vulnerabilities">Common Issues:\n\n- Sending credentials over HTTP\n- Accepting invalid/self-signed certificates\n- Using weak cipher suites or deprecated TLS versions\n- Disabling certificate pinning for convenience\n- Sensitive data in URLs (visible in logs/history)\n- Mixed HTTP/HTTPS sessions exposing session tokens</string>
+
+    <!-- Insecure Communication Challenge -->
+    <string name="menu_insecure_comm_challenge">Insecure Communication 1</string>
+    <string name="insecure_comm_challenge_desc">The application sends network requests to multiple endpoints. Some use HTTPS (secure), while others use HTTP (insecure).\n\nMonitor network traffic using logcat, identify requests sent over HTTP, and extract the session token transmitted in plaintext.</string>
+
+    <!-- Insufficient Cryptography Lesson -->
+    <string name="menu_insufficient_crypto_lesson">Insufficient Cryptography Lesson</string>
+    <string name="insufficient_crypto_intro">Insufficient cryptography occurs when mobile apps use weak encryption algorithms, inadequate key lengths, poor key management, or flawed cryptographic implementations. These weaknesses allow attackers to decrypt sensitive data, bypass encryption, or manipulate cryptographic processes.</string>
+    <string name="insufficient_crypto_vulnerabilities">Common Crypto Vulnerabilities:\n\n- Weak algorithms: DES, RC4, MD5, SHA-1\n- Insufficient key length: Keys &lt; 128 bits\n- ECB mode: Pattern analysis attacks\n- Hardcoded keys: Keys in source code\n- Static IVs: Initialization vector reuse\n- Weak key derivation: Simple hashing for keys\n- Insecure random: Predictable Random() instead of SecureRandom\n- No salt: Password hashing without random salt</string>
+
+    <!-- Insufficient Cryptography Challenge -->
+    <string name="menu_insufficient_crypto_challenge">Insufficient Cryptography 1</string>
+    <string name="insufficient_crypto_challenge_desc">The application performs cryptographic operations with multiple vulnerabilities:\n\n- ECB Mode: Electronic Codebook mode reveals patterns in encrypted data\n- MD5 Key Derivation: Using MD5 to generate encryption keys\n- Insecure Random: Predictable Random() with fixed seed instead of SecureRandom\n- Static IV: Reusing the same initialization vector for all encryptions\n\nAnalyze the cryptographic implementation by reviewing logcat output and decompiled code, identify the weaknesses, and extract the hidden key.</string>
+
+    <!-- Security Misconfiguration Lesson -->
+    <string name="menu_security_misconfig_lesson">Security Misconfiguration Lesson</string>
+    <string name="security_misconfig_intro">Security misconfiguration occurs when security settings are not properly defined, implemented, maintained, or enforced. This is one of the most common vulnerabilities in mobile applications, often resulting from default configurations, incomplete setups, or overly permissive settings that expose the app to various attack vectors.</string>
+    <string name="security_misconfig_vulnerabilities">Common Security Misconfigurations:\n\n- Debug Mode Enabled: android:debuggable=true allows JDWP debugging in production\n- Backup Allowed: android:allowBackup=true enables ADB backup extraction of app data\n- Exported Components: Activities/Services/Receivers without proper permission checks\n- Cleartext Traffic: Allowing unencrypted HTTP connections\n- Excessive Permissions: Requesting unnecessary dangerous permissions\n- Verbose Error Messages: Leaking sensitive information in production logs\n- Default Credentials: Unchanged API keys, passwords in configuration files\n- Insecure File Permissions: World-readable/writable files\n- Missing Certificate Pinning: Vulnerable to MITM attacks\n- WebView Misconfigurations: JavaScript enabled, file access allowed</string>
+
+    <!-- Security Misconfiguration Challenge 2 -->
+    <string name="menu_security_misconfig_challenge2">Security Misconfiguration 1</string>
+    <string name="security_misconfig_challenge2_description">This application has backup enabled (android:allowBackup="true"), allowing app data to be extracted using Android Debug Bridge.\n\nUse ADB to create a backup of this app\'s data, extract the backup file, and find the key stored in SharedPreferences.\n\nSteps:\n1. Create backup: adb backup -f backup.ab -noapk com.owasp.app\n2. Convert .ab to .tar: Use abe.jar or android-backup-extractor\n3. Extract tar: tar -xvf backup.tar\n4. Find SharedPreferences XML files\n5. Locate the key in the preferences\n\nThe key is stored in plain text in the SharedPreferences!</string>
+
+    <!-- Security Misconfiguration Challenge 3 -->
+    <string name="menu_security_misconfig_challenge3">Security Misconfiguration 2</string>
+    <string name="security_misconfig_challenge3_description">This application contains a security misconfiguration vulnerability related to exported components. Can you identify and exploit it to retrieve the key?</string>
+
+    <!-- Input Validation Lesson (M7) -->
+    <string name="menu_input_validation_lesson">Input Validation Lesson</string>
+    <string name="input_validation_lesson_intro">Input/Output validation vulnerabilities occur when applications fail to properly validate, sanitize, or encode data at trust boundaries. This includes both data coming into the app (user input, API responses, intents) and data going out (WebView content, logs, broadcasts). Insufficient validation can lead to injection attacks, data corruption, security bypasses, and unintended application behavior.</string>
+    <string name="input_validation_lesson_vulnerabilities">Common Input/Output Validation Issues:\n\n- SQL Injection: Unsanitized input in database queries allows data extraction\n- Path Traversal: Unvalidated file paths enable access to unauthorized files\n- WebView XSS: Unescaped user data rendered in WebViews enables script injection\n- Intent Injection: Malicious data in Android Intents bypasses security checks\n- Command Injection: User input passed to system commands enables arbitrary execution\n- XML/JSON Injection: Malformed data breaks parsers and logic\n- Log Injection: Unvalidated data in logs creates fake entries or leaks data\n- URL Validation Bypass: Weak URL checks allow access to unauthorized resources\n- Format String Attacks: User input in format strings causes crashes or leaks\n- Deep Link Exploits: Improperly validated deep link parameters bypass authentication</string>
+
+    <!-- XSS WebView Challenge (M7) -->
+    <string name="menu_xss_challenge">XSS WebView 1</string>
+
+    <!-- Privacy Controls Lesson (M6) -->
+    <string name="menu_privacy_lesson">Privacy Controls Lesson</string>
+    <string name="privacy_lesson_title">Inadequate Privacy Controls</string>
+    <string name="privacy_lesson_description">Image metadata can leak sensitive information about users, including location, device information, and timestamps. The content aligns with OWASP Mobile Top 10 M6: Inadequate Privacy Controls.</string>
+    <string name="privacy_lesson_objective">Load the sample image and analyze its metadata to find the hidden key. Pay attention to EXIF data that applications often fail to strip before sharing or uploading images.</string>
+    <string name="privacy_photo_description">Photo with metadata</string>
+    <string name="privacy_no_image_text">No image loaded. Tap \"Load Sample Image\" to begin.</string>
+    <string name="privacy_btn_load_sample">Load Sample Image</string>
+    <string name="privacy_btn_take_photo">Take New Photo</string>
+    <string name="privacy_lesson_intro">Inadequate Privacy Controls occur when mobile applications fail to properly handle user data privacy. This includes:\n\n- Not stripping metadata from photos/videos before sharing\n- Leaking location data through EXIF tags\n- Failing to anonymize personal information\n- Excessive data collection without user consent\n- Storing sensitive data in accessible locations\n- Transmitting PII without encryption\n- Not respecting privacy settings\n\nThis vulnerability is classified as OWASP Mobile Top 10 M6.</string>
+    <string name="privacy_lesson_vulnerabilities">Privacy Control Failures:\n\n- Image Metadata Leakage: Photos contain GPS coordinates, timestamps, device info in EXIF data\n- Location Tracking: Apps collect precise location without clear user benefit\n- Clipboard Access: Reading clipboard without user knowledge\n- Contact/Calendar Access: Uploading full contact lists unnecessarily\n- Analytics Overreach: Tracking user behavior beyond stated purpose\n- PII in Logs: Logging personally identifiable information\n- Identifier Persistence: Using permanent device IDs for tracking\n- No Privacy Controls: Missing opt-out mechanisms\n- Data Minimization Failure: Collecting more data than needed\n- Third-party SDK Leaks: SDKs transmitting user data without disclosure</string>
+    <string name="privacy_lesson_hints">Finding the Key:\n\n1. Tap \"Load Sample Image\" to load the preloaded photo\n2. Tap \"Analyze Metadata\" to view all EXIF data\n3. Look for the Image Description field in the metadata\n4. The key is hidden in one of the EXIF tags\n\nEXIF Tags to Check:\n- TAG_IMAGE_DESCRIPTION\n- TAG_USER_COMMENT\n- TAG_ARTIST\n- TAG_MAKE\n- TAG_MODEL\n- TAG_GPS_LATITUDE\n- TAG_GPS_LONGITUDE\n- TAG_DATETIME\n</string>
+<!-- Client-Side Injection Lesson -->
+    <string name="client_side_injection_lesson_description">Client-side injection vulnerabilities occur when mobile applications do not properly sanitize user input before using it in SQL queries, JavaScript execution, or other interpreters. The primary focus is SQL injection in client-side SQLite databases.\n\nThe module explains how SQL queries can be manipulated to bypass authentication, extract sensitive data, and compromise application security.</string>
+    <string name="client_side_injection_lesson_intro">Client-Side Injection occurs when mobile applications fail to properly validate and sanitize user input before using it in SQL queries, JavaScript contexts, or other interpreters on the device.\n\nTypes of Client-Side Injection:\n\n- SQL Injection in SQLite databases\n- JavaScript injection in WebViews\n- XML/JSON injection in parsers\n- Command injection in system calls\n- NoSQL injection in local databases\n- File path injection\n\nSQL Injection is particularly dangerous because:\n- SQLite databases store sensitive app data\n- Attackers can read any table\n- Authentication can be bypassed\n- Data can be modified or deleted\n- Business logic can be circumvented</string>
+    <string name="client_side_injection_lesson_vulnerabilities">SQL Injection Vulnerabilities:\n\n- String Concatenation: Building queries with user input\n  - "SELECT * FROM users WHERE name = \'" + input + "\'"\n  - Allows injection: \' OR 1=1--\n\n- Improper Escaping: Not handling special characters\n  - Single quotes (\')\n  - Comment markers (-- or /**/)\n  - SQL keywords (OR, UNION, SELECT)\n\n- Lack of Validation: Accepting any user input\n  - No input length limits\n  - No character whitelisting\n  - No pattern matching\n\nCommon Attack Patterns:\n- Authentication Bypass: \' OR \'1\'=\'1\n- UNION Attacks: \' UNION SELECT * FROM secrets--\n- Comment Injection: admin\'--\n- Always True Conditions: 1\' OR \'1\'=\'1</string>
+
+    <!-- Client-Side Injection Challenge 1 -->
+    <string name="client_side_injection_challenge1_description">Exploit SQL injection in a login form to bypass authentication and retrieve the admin password.\n\nGoal: Use SQL injection to login as admin and discover the hidden key (admin password).</string>
+    <string name="client_side_injection_challenge1_intro">A vulnerable login workflow builds SQL queries through string concatenation. User accounts are stored in a SQLite database with usernames, passwords, roles, and balance data.\n\nObjective:\n1. Identify the SQL injection vulnerability\n2. Bypass the authentication mechanism\n3. Retrieve the administrator account password\n4. Submit the password as the key\n\nThe weakness exists because user input is concatenated directly into SQL queries without proper validation or parameterization.</string>
+    <string name="client_side_injection_challenge1_vulnerabilities">Vulnerable Code Pattern:\n\nString query = "SELECT * FROM accounts WHERE username = \'" + username + "\' AND password = \'" + password + "\'";\n\nThis allows attackers to:\n- Break out of the query context\n- Inject their own SQL logic\n- Bypass authentication checks\n- Retrieve data from any user\n\nExample Attack:\nUsername: admin\'--\nPassword: (anything)\n\nResulting Query:\nSELECT * FROM accounts WHERE username = \'admin\'--\' AND password = \'....\'\n\nThe -- comments out the password check!</string>
+
+    <!-- Client-Side Injection Challenge 2 -->
+    <string name="client_side_injection_challenge2_description">Search the product database and extract the administrator token from the hidden \'secrets\' table.</string>
+    <string name="client_side_injection_challenge2_intro">A product search feature contains a SQL injection vulnerability. Unlike basic authentication bypass, this exercise requires UNION-based injection to query a separate table.\n\nDatabase Structure:\n- products table: name, category, price, stock\n- secrets table: secret_key, secret_value (HIDDEN)\n\nObjective:\n1. Identify the number of columns in the products query\n2. Use UNION SELECT to query the secrets table\n3. Extract the admin_token value\n4. Submit it as the key\n\nRequired concepts:\n- UNION SQL operator\n- Column count matching\n- Cross-table data extraction</string>
+    <string name="client_side_injection_challenge2_vulnerabilities">Vulnerable Code:\n\nString query = "SELECT name, category, price, stock FROM products WHERE name LIKE \'%" + input + "%\'";\n\nUNION-Based Injection allows:\n- Combining results from multiple queries\n- Accessing tables not in original query\n- Bypassing application logic\n- Extracting data from hidden tables\n\nAttack Requirements:\n1. Match column count in UNION\n2. Match data types (use NULL for unknowns)\n3. Terminate original query properly\n4. Know or guess target table name\n\nExample Attack:\n\' UNION SELECT secret_key, secret_value, NULL, NULL FROM secrets--</string>
+
+</resources>
