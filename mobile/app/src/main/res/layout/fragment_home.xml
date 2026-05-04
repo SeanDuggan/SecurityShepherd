@@ -36,7 +36,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/home_welcome_title"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="@color/text_primary"
                     android:gravity="center"
@@ -48,7 +48,38 @@
                     android:text="@string/home_welcome_description"
                     android:textSize="16sp"
                     android:textColor="@color/text_secondary"
-                    android:gravity="center" />
+                    android:gravity="center"
+                    android:layout_marginBottom="16dp" />
+                    
+                <!-- Progress Stats -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="#E8F5E9"
+                    android:padding="12dp"
+                    android:layout_marginTop="8dp">
+                    
+                    <TextView
+                        android:id="@+id/lessons_progress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="0 of 11 lessons completed"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_primary"
+                        android:gravity="center"
+                        android:layout_marginBottom="4dp" />
+                        
+                    <TextView
+                        android:id="@+id/challenges_progress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="0 of 13 challenges completed"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_primary"
+                        android:gravity="center" />
+                        
+                </LinearLayout>
 
             </LinearLayout>
 

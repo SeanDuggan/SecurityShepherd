@@ -130,12 +130,6 @@
         tools:layout="@layout/fragment_security_misconfig_challenge2" />
 
     <fragment
-        android:id="@+id/nav_security_misconfig_challenge3"
-        android:name="com.owasp.app.ui.challenges.securitymisconfig.SecurityMisconfigChallenge3Fragment"
-        android:label="@string/menu_security_misconfig_challenge3"
-        tools:layout="@layout/fragment_security_misconfig_challenge3" />
-
-    <fragment
         android:id="@+id/nav_input_validation_lesson"
         android:name="com.owasp.app.ui.lessons.InputValidationLessonFragment"
         android:label="@string/menu_input_validation_lesson"

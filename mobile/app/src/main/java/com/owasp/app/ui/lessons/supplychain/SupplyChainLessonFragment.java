@@ -29,9 +29,12 @@ public class SupplyChainLessonFragment extends Fragment {
     private FragmentSupplyChainLessonBinding binding;
     private static final String TAG = "SupplyChainLesson";
     
-    // Simulated vulnerable third-party library with hardcoded API key
-    private static final String THIRD_PARTY_API_KEY = "sk_live_vulnerable_key_12345";
-    private static final String DEMO_FLAG = "KEY{Vuln3r4bl3_D3p3nd3ncy}";
+    // Simulated vulnerability in androidx.exifinterface:exifinterface:1.3.7
+    // CVE-2024-XXXX: Debug mode exposes sensitive EXIF data processing keys
+    private static final String VULNERABLE_LIB = "androidx.exifinterface:exifinterface:1.3.7";
+    private static final String EXIF_DEBUG_KEY = "exif_debug_processor_key_1337";
+    private static final String FLAG = "KEY{Vuln3r4bl3_D3p3nd3ncy}";
+    
     private boolean fabExpanded = false;
     private ProgressTracker progressTracker;
 
@@ -47,87 +50,117 @@ public class SupplyChainLessonFragment extends Fragment {
         FloatingActionButton fab = requireActivity().findViewById(R.id.fab);
         FloatingActionButton fabCommandRef = requireActivity().findViewById(R.id.fab_command_reference);
         FloatingActionButton fabOwaspLink = requireActivity().findViewById(R.id.fab_owasp_link);
+        FloatingActionButton fabMarkComplete = requireActivity().findViewById(R.id.fab_mark_complete);
 
         if (fab != null) {
-            fab.setOnClickListener(v -> toggleFabExpansion(fab, fabCommandRef, fabOwaspLink));
+            fab.setOnClickListener(v -> toggleFabExpansion(fab, fabCommandRef, fabOwaspLink, fabMarkComplete));
         }
         if (fabCommandRef != null) {
             fabCommandRef.setOnClickListener(v -> {
                 showDetailedInfo();
-                collapseFab(fab, fabCommandRef, fabOwaspLink);
+                collapseFab(fab, fabCommandRef, fabOwaspLink, fabMarkComplete);
             });
         }
         if (fabOwaspLink != null) {
             fabOwaspLink.setOnClickListener(v -> {
                 openOwaspTop10Link();
-                collapseFab(fab, fabCommandRef, fabOwaspLink);
+                collapseFab(fab, fabCommandRef, fabOwaspLink, fabMarkComplete);
+            });
+        }
+        if (fabMarkComplete != null) {
+            fabMarkComplete.setOnClickListener(v -> {
+                toggleCompleteStatus();
+                updateMarkCompleteFabAppearance(fabMarkComplete);
+                collapseFab(fab, fabCommandRef, fabOwaspLink, fabMarkComplete);
             });
         }
 
-        // Log initialization showing vulnerable dependency behavior
-        Log.d(TAG, "Initializing third-party analytics library v2.3.1 (VULNERABLE)");
-        Log.d(TAG, "WARNING: This version contains known security vulnerabilities CVE-2023-12345");
+        // Set initial FAB appearance based on completion status
+        updateMarkCompleteFabAppearance(fabMarkComplete);
+
+        // Initialize vulnerable Analytics SDK - logs hardcoded API key
+        initializeAnalyticsSDK();
         
-        // Setup demo section
-        binding.checkDependencyButton.setOnClickListener(v -> checkDependency());
+        // Setup flag submission
+        binding.submitButton.setOnClickListener(v -> submitFlag());
 
         return root;
     }
+    
+    /**
+     * Simulates vulnerability in androidx.exifinterface:exifinterface:1.3.7
+     * This version has a debug mode that exposes internal processing keys
+     */
+    private void initializeAnalyticsSDK() {
+        Log.d(TAG, "=================================================");
+        Log.d(TAG, "ExifInterface Library Initialization");
+        Log.d(TAG, "=================================================");
+        Log.d(TAG, "Library: " + VULNERABLE_LIB);
+        Log.d(TAG, "Debug Mode: ENABLED");
+        Log.d(TAG, "Initializing EXIF data processor...");
+        Log.d(TAG, "Loading debug configuration...");
+        Log.d(TAG, "Debug processor key: " + EXIF_DEBUG_KEY);
+        Log.d(TAG, "EXIF parser ready");
+        Log.d(TAG, "Warning: Debug mode should be disabled in production");
+        Log.d(TAG, "=================================================");
+    }
+    
+    private void submitFlag() {
+        String enteredFlag = binding.flagInput.getText().toString().trim();
 
-    private void checkDependency() {
-        String enteredKey = binding.apiKeyInput.getText().toString().trim();
-
-        if (enteredKey.isEmpty()) {
-            Toast.makeText(getContext(), "Please enter an API key", Toast.LENGTH_SHORT).show();
+        if (enteredFlag.isEmpty()) {
+            Toast.makeText(getContext(), "Please enter a flag", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        Log.d(TAG, "Validating API key from vulnerable dependency...");
-        Log.d(TAG, "Comparing: " + enteredKey + " with stored key: " + THIRD_PARTY_API_KEY);
-
-        if (enteredKey.equals(THIRD_PARTY_API_KEY)) {
-            // Successful exploitation
-            binding.demoCard.setCardBackgroundColor(getResources().getColor(android.R.color.holo_green_light));
-            binding.flagText.setText("✓ Vulnerable Dependency Exploited!\n\nFlag: " + DEMO_FLAG);
-            binding.flagText.setVisibility(View.VISIBLE);
+        if (enteredFlag.equals(FLAG)) {
+            // Correct flag!
+            binding.submissionCard.setCardBackgroundColor(getResources().getColor(android.R.color.holo_green_light));
+            binding.resultText.setText("SUCCESS!\n\nFlag: " + FLAG + "\n\nYou successfully identified the vulnerable dependency (" + VULNERABLE_LIB + ") which had debug mode enabled, exposing internal processing keys.\n\nOWASP Mobile Top 10 M6: Insufficient Supply Chain Security");
+            binding.resultText.setVisibility(View.VISIBLE);
             
-            Toast.makeText(getContext(), "Access Granted! You exploited the vulnerable third-party library!", Toast.LENGTH_LONG).show();
-            Log.d(TAG, "CRITICAL: Hardcoded credentials exposed! Flag: " + DEMO_FLAG);
+            Toast.makeText(getContext(), "Correct flag! Challenge completed!", Toast.LENGTH_LONG).show();
             
-            binding.checkDependencyButton.setEnabled(false);
-            binding.apiKeyInput.setEnabled(false);
+            binding.submitButton.setEnabled(false);
+            binding.flagInput.setEnabled(false);
         } else {
-            // Failed attempt
-            binding.demoCard.setCardBackgroundColor(getResources().getColor(android.R.color.holo_red_light));
-            binding.flagText.setVisibility(View.GONE);
+            // Incorrect flag
+            binding.submissionCard.setCardBackgroundColor(getResources().getColor(android.R.color.holo_red_light));
+            binding.resultText.setVisibility(View.GONE);
             
-            Toast.makeText(getContext(), "Invalid API Key", Toast.LENGTH_SHORT).show();
-            Log.e(TAG, "API key validation failed.");
+            Toast.makeText(getContext(), "Incorrect flag", Toast.LENGTH_SHORT).show();
             
-            binding.apiKeyInput.setText("");
+            binding.flagInput.setText("");
+            
+            // Reset card color after delay
+            binding.getRoot().postDelayed(() -> {
+                binding.submissionCard.setCardBackgroundColor(getResources().getColor(R.color.card_bg));
+            }, 2000);
         }
     }
 
-    private void toggleFabExpansion(FloatingActionButton mainFab, FloatingActionButton fab1, FloatingActionButton fab2) {
+    private void toggleFabExpansion(FloatingActionButton mainFab, FloatingActionButton fab1, FloatingActionButton fab2, FloatingActionButton fab3) {
         fabExpanded = !fabExpanded;
         if (fabExpanded) {
             if (fab1 != null) fab1.setVisibility(View.VISIBLE);
             if (fab2 != null) fab2.setVisibility(View.VISIBLE);
+            if (fab3 != null) fab3.setVisibility(View.VISIBLE);
             if (mainFab != null) mainFab.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
         } else {
-            collapseFab(mainFab, fab1, fab2);
+            collapseFab(mainFab, fab1, fab2, fab3);
         }
     }
 
-    private void collapseFab(FloatingActionButton mainFab, FloatingActionButton fab1, FloatingActionButton fab2) {
+    private void collapseFab(FloatingActionButton mainFab, FloatingActionButton fab1, FloatingActionButton fab2, FloatingActionButton fab3) {
         fabExpanded = false;
         if (fab1 != null) fab1.setVisibility(View.GONE);
         if (fab2 != null) fab2.setVisibility(View.GONE);
+        if (fab3 != null) fab3.setVisibility(View.GONE);
         if (mainFab != null) mainFab.setImageResource(android.R.drawable.ic_menu_help);
     }
 
     private void openOwaspTop10Link() {
-        String url = "https://owasp.org/www-project-mobile-top-10/2023-risks/m8-code-tampering";
+        String url = "https://owasp.org/www-project-mobile-top-10/2023-risks/m6-insufficient-supply-chain-security";
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         startActivity(browserIntent);
     }
@@ -150,19 +183,35 @@ public class SupplyChainLessonFragment extends Fragment {
         // bestPracticesSection.setVisibility(View.GONE);
         additionalSection.setVisibility(View.GONE);
         
-        boolean isCompleted = progressTracker.isCompleted(FlagValidator.Module.SUPPLY_CHAIN_LESSON);
-        String buttonText = isCompleted ? "Mark as Incomplete" : "Mark as Complete";
-        
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setTitle("Supply Chain Security");
         builder.setView(dialogView);
         builder.setPositiveButton("Close", null);
-        builder.setNeutralButton(buttonText, (d, which) -> {
-            boolean nowCompleted = progressTracker.toggleCompleted(FlagValidator.Module.SUPPLY_CHAIN_LESSON);
-            String message = nowCompleted ? "✓ Marked as complete!" : "○ Marked as incomplete";
-            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
-        });
         builder.show();
+    }
+    
+    private void toggleCompleteStatus() {
+        boolean nowCompleted = progressTracker.toggleCompleted(FlagValidator.Module.SUPPLY_CHAIN_LESSON);
+        String message = nowCompleted ? "✓ Marked as complete!" : "○ Marked as incomplete";
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
+    }
+    
+    private void updateMarkCompleteFabAppearance(FloatingActionButton fabMarkComplete) {
+        if (fabMarkComplete == null) return;
+        
+        boolean isCompleted = progressTracker.isCompleted(FlagValidator.Module.SUPPLY_CHAIN_LESSON);
+        
+        if (isCompleted) {
+            // Red - will mark as incomplete
+            fabMarkComplete.setBackgroundTintList(android.content.res.ColorStateList.valueOf(
+                androidx.core.content.ContextCompat.getColor(requireContext(), R.color.security_red)));
+            fabMarkComplete.setContentDescription("Mark as Incomplete");
+        } else {
+            // Green - will mark as complete
+            fabMarkComplete.setBackgroundTintList(android.content.res.ColorStateList.valueOf(
+                androidx.core.content.ContextCompat.getColor(requireContext(), R.color.success_green)));
+            fabMarkComplete.setContentDescription("Mark as Complete");
+        }
     }
 
     @Override
@@ -171,7 +220,8 @@ public class SupplyChainLessonFragment extends Fragment {
         FloatingActionButton fab = requireActivity().findViewById(R.id.fab);
         FloatingActionButton fabCommandRef = requireActivity().findViewById(R.id.fab_command_reference);
         FloatingActionButton fabOwaspLink = requireActivity().findViewById(R.id.fab_owasp_link);
-        collapseFab(fab, fabCommandRef, fabOwaspLink);
+        FloatingActionButton fabMarkComplete = requireActivity().findViewById(R.id.fab_mark_complete);
+        collapseFab(fab, fabCommandRef, fabOwaspLink, fabMarkComplete);
         binding = null;
     }
 }

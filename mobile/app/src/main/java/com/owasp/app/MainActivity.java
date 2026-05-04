@@ -25,14 +25,51 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.owasp.app.databinding.ActivityMainBinding;
+import com.owasp.app.utils.FlagValidator;
+import com.owasp.app.utils.ProgressTracker;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
+    private ProgressTracker progressTracker;
+    private NavigationAdapter navigationAdapter;
+    private static final Map<Integer, FlagValidator.Module> NAV_TO_MODULE_MAP = new HashMap<>();
+    
+    static {
+        // Lessons
+        NAV_TO_MODULE_MAP.put(R.id.nav_lesson, FlagValidator.Module.RE_LESSON);
+        NAV_TO_MODULE_MAP.put(R.id.nav_insecure_data_lesson, FlagValidator.Module.IDS_LESSON);
+        NAV_TO_MODULE_MAP.put(R.id.nav_poor_auth_lesson, FlagValidator.Module.POOR_AUTH_LESSON);
+        NAV_TO_MODULE_MAP.put(R.id.nav_insecure_authorization_lesson, FlagValidator.Module.INSECURE_AUTH_LESSON);
+        // NAV_TO_MODULE_MAP.put(R.id.nav_supply_chain_lesson, FlagValidator.Module.SUPPLY_CHAIN_LESSON); // TODO: Develop proper functionality
+        NAV_TO_MODULE_MAP.put(R.id.nav_insecure_comm_lesson, FlagValidator.Module.INSECURE_COMM_LESSON);
+        NAV_TO_MODULE_MAP.put(R.id.nav_insufficient_crypto_lesson, FlagValidator.Module.INSUFFICIENT_CRYPTO_LESSON);
+        NAV_TO_MODULE_MAP.put(R.id.nav_security_misconfig_lesson, FlagValidator.Module.SECURITY_MISCONFIG_LESSON);
+        NAV_TO_MODULE_MAP.put(R.id.nav_input_validation_lesson, FlagValidator.Module.INPUT_VALIDATION_LESSON);
+        NAV_TO_MODULE_MAP.put(R.id.nav_privacy_lesson, FlagValidator.Module.PRIVACY_LESSON);
+        NAV_TO_MODULE_MAP.put(R.id.nav_client_side_injection_lesson, FlagValidator.Module.CLIENT_SIDE_INJECTION_LESSON);
+        
+        // Challenges
+        NAV_TO_MODULE_MAP.put(R.id.nav_challenge1, FlagValidator.Module.RE_CHALLENGE_1);
+        NAV_TO_MODULE_MAP.put(R.id.nav_challenge2, FlagValidator.Module.RE_CHALLENGE_2);
+        NAV_TO_MODULE_MAP.put(R.id.nav_challenge3, FlagValidator.Module.RE_CHALLENGE_3);
+        NAV_TO_MODULE_MAP.put(R.id.nav_insecure_data1, FlagValidator.Module.IDS_CHALLENGE_1);
+        NAV_TO_MODULE_MAP.put(R.id.nav_insecure_data2, FlagValidator.Module.IDS_CHALLENGE_2);
+        NAV_TO_MODULE_MAP.put(R.id.nav_poor_auth_challenge, FlagValidator.Module.POOR_AUTH_CHALLENGE);
+        // NAV_TO_MODULE_MAP.put(R.id.nav_supply_chain_challenge, FlagValidator.Module.SUPPLY_CHAIN_CHALLENGE); // TODO: Develop proper functionality
+        NAV_TO_MODULE_MAP.put(R.id.nav_insecure_comm_challenge, FlagValidator.Module.INSECURE_COMM_CHALLENGE);
+        NAV_TO_MODULE_MAP.put(R.id.nav_insufficient_crypto_challenge, FlagValidator.Module.INSUFFICIENT_CRYPTO_CHALLENGE);
+        NAV_TO_MODULE_MAP.put(R.id.nav_security_misconfig_challenge2, FlagValidator.Module.SECURITY_MISCONFIG_CHALLENGE_2);
+        NAV_TO_MODULE_MAP.put(R.id.nav_xss_challenge, FlagValidator.Module.XSS_CHALLENGE);
+        NAV_TO_MODULE_MAP.put(R.id.nav_client_side_injection_challenge1, FlagValidator.Module.CLIENT_SIDE_INJECTION_CHALLENGE_1);
+        NAV_TO_MODULE_MAP.put(R.id.nav_client_side_injection_challenge2, FlagValidator.Module.CLIENT_SIDE_INJECTION_CHALLENGE_2);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,27 +150,35 @@ public class MainActivity extends AppCompatActivity {
 
         DrawerLayout drawer = binding.drawerLayout;
         
+        // Initialize ProgressTracker
+        progressTracker = new ProgressTracker(this);
+        
+        // Set up completion change listener to refresh navigation
+        ProgressTracker.setGlobalCompletionListener(() -> {
+            runOnUiThread(() -> refreshNavigation());
+        });
+        
         // Setup RecyclerView for navigation
         RecyclerView navRecyclerView = findViewById(R.id.nav_recycler_view);
         navRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         
         List<NavigationItem> navigationItems = createNavigationItems();
-        NavigationAdapter adapter = new NavigationAdapter(navigationItems, item -> {
+        navigationAdapter = new NavigationAdapter(navigationItems, item -> {
             // Handle navigation item click
             NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
             navController.navigate(item.getNavigationId());
             drawer.closeDrawers();
-        });
-        navRecyclerView.setAdapter(adapter);
+        }, progressTracker, NAV_TO_MODULE_MAP);
+        navRecyclerView.setAdapter(navigationAdapter);
         
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_lesson, R.id.nav_insecure_data_lesson, R.id.nav_poor_auth_lesson, R.id.nav_insecure_authorization_lesson, R.id.nav_supply_chain_lesson, R.id.nav_insecure_comm_lesson, R.id.nav_insufficient_crypto_lesson, R.id.nav_security_misconfig_lesson,
+                R.id.nav_home, R.id.nav_lesson, R.id.nav_insecure_data_lesson, R.id.nav_poor_auth_lesson, R.id.nav_insecure_authorization_lesson, R.id.nav_insecure_comm_lesson, R.id.nav_insufficient_crypto_lesson, R.id.nav_security_misconfig_lesson,
                 R.id.nav_challenge1, R.id.nav_challenge2, R.id.nav_challenge3,
             R.id.nav_insecure_data1, R.id.nav_insecure_data2,
-                R.id.nav_poor_auth_challenge, R.id.nav_supply_chain_challenge, R.id.nav_insecure_comm_challenge, R.id.nav_insufficient_crypto_challenge,
-                R.id.nav_security_misconfig_challenge2, R.id.nav_security_misconfig_challenge3,
+                R.id.nav_poor_auth_challenge, R.id.nav_insecure_comm_challenge, R.id.nav_insufficient_crypto_challenge,
+                R.id.nav_security_misconfig_challenge2,
                 R.id.nav_input_validation_lesson, R.id.nav_xss_challenge,
                 R.id.nav_privacy_lesson,
                 R.id.nav_client_side_injection_lesson, R.id.nav_client_side_injection_challenge1, R.id.nav_client_side_injection_challenge2,
@@ -152,61 +197,121 @@ public class MainActivity extends AppCompatActivity {
         
         // Lessons group
         NavigationItem lessonsGroup = new NavigationItem(2, "Lessons", R.drawable.ic_menu_camera);
-        lessonsGroup.addChild(new NavigationItem(21, "Reverse Engineering", 0, R.id.nav_lesson));
-        lessonsGroup.addChild(new NavigationItem(22, "Insecure Data Storage", 0, R.id.nav_insecure_data_lesson));
-        lessonsGroup.addChild(new NavigationItem(23, "Poor Authentication", 0, R.id.nav_poor_auth_lesson));
-        lessonsGroup.addChild(new NavigationItem(24, "Insecure Authorization", 0, R.id.nav_insecure_authorization_lesson));
-        lessonsGroup.addChild(new NavigationItem(25, "Supply Chain Security", 0, R.id.nav_supply_chain_lesson));
-        lessonsGroup.addChild(new NavigationItem(26, "Insecure Communication", 0, R.id.nav_insecure_comm_lesson));
-        lessonsGroup.addChild(new NavigationItem(27, "Insufficient Cryptography", 0, R.id.nav_insufficient_crypto_lesson));
-        lessonsGroup.addChild(new NavigationItem(28, "Security Misconfiguration", 0, R.id.nav_security_misconfig_lesson));
-        lessonsGroup.addChild(new NavigationItem(29, "Input Validation", 0, R.id.nav_input_validation_lesson));
-        lessonsGroup.addChild(new NavigationItem(30, "Privacy Controls", 0, R.id.nav_privacy_lesson));
-        lessonsGroup.addChild(new NavigationItem(31, "Client-Side Injection", 0, R.id.nav_client_side_injection_lesson));
-        items.add(lessonsGroup);
+        addChildIfNotCompleted(lessonsGroup, new NavigationItem(21, "Reverse Engineering", 0, R.id.nav_lesson));
+        addChildIfNotCompleted(lessonsGroup, new NavigationItem(22, "Insecure Data Storage", 0, R.id.nav_insecure_data_lesson));
+        addChildIfNotCompleted(lessonsGroup, new NavigationItem(23, "Poor Authentication", 0, R.id.nav_poor_auth_lesson));
+        addChildIfNotCompleted(lessonsGroup, new NavigationItem(24, "Insecure Authorization", 0, R.id.nav_insecure_authorization_lesson));
+        // addChildIfNotCompleted(lessonsGroup, new NavigationItem(25, "Supply Chain Security", 0, R.id.nav_supply_chain_lesson)); // TODO: Develop proper functionality
+        addChildIfNotCompleted(lessonsGroup, new NavigationItem(26, "Insecure Communication", 0, R.id.nav_insecure_comm_lesson));
+        addChildIfNotCompleted(lessonsGroup, new NavigationItem(27, "Insufficient Cryptography", 0, R.id.nav_insufficient_crypto_lesson));
+        addChildIfNotCompleted(lessonsGroup, new NavigationItem(28, "Security Misconfiguration", 0, R.id.nav_security_misconfig_lesson));
+        addChildIfNotCompleted(lessonsGroup, new NavigationItem(29, "Input Validation", 0, R.id.nav_input_validation_lesson));
+        addChildIfNotCompleted(lessonsGroup, new NavigationItem(30, "Privacy Controls", 0, R.id.nav_privacy_lesson));
+        addChildIfNotCompleted(lessonsGroup, new NavigationItem(31, "Client-Side Injection", 0, R.id.nav_client_side_injection_lesson));
+        if (lessonsGroup.getChildren().size() > 0) items.add(lessonsGroup);
         
         // Challenges group
         NavigationItem challengesGroup = new NavigationItem(3, "Challenges", R.drawable.ic_menu_code);
         
         // Reverse Engineering sub-group
         NavigationItem reverseEngGroup = new NavigationItem(40, "Reverse Engineering", 0);
-        reverseEngGroup.addChild(new NavigationItem(41, "Challenge 1", 0, R.id.nav_challenge1));
-        reverseEngGroup.addChild(new NavigationItem(42, "Challenge 2", 0, R.id.nav_challenge2));
-        reverseEngGroup.addChild(new NavigationItem(43, "Challenge 3", 0, R.id.nav_challenge3));
-        challengesGroup.addChild(reverseEngGroup);
+        addChildIfNotCompleted(reverseEngGroup, new NavigationItem(41, "Challenge 1", 0, R.id.nav_challenge1));
+        addChildIfNotCompleted(reverseEngGroup, new NavigationItem(42, "Challenge 2", 0, R.id.nav_challenge2));
+        addChildIfNotCompleted(reverseEngGroup, new NavigationItem(43, "Challenge 3", 0, R.id.nav_challenge3));
+        if (reverseEngGroup.getChildren().size() > 0) challengesGroup.addChild(reverseEngGroup);
         
         // Insecure Data Storage sub-group
         NavigationItem insecureDataGroup = new NavigationItem(44, "Insecure Data Storage", 0);
-        insecureDataGroup.addChild(new NavigationItem(45, "Challenge 1", 0, R.id.nav_insecure_data1));
-        insecureDataGroup.addChild(new NavigationItem(46, "Challenge 2", 0, R.id.nav_insecure_data2));
-        challengesGroup.addChild(insecureDataGroup);
+        addChildIfNotCompleted(insecureDataGroup, new NavigationItem(45, "Challenge 1", 0, R.id.nav_insecure_data1));
+        addChildIfNotCompleted(insecureDataGroup, new NavigationItem(46, "Challenge 2", 0, R.id.nav_insecure_data2));
+        if (insecureDataGroup.getChildren().size() > 0) challengesGroup.addChild(insecureDataGroup);
         
         // Individual challenges
-        challengesGroup.addChild(new NavigationItem(47, "Poor Authentication", 0, R.id.nav_poor_auth_challenge));
-        challengesGroup.addChild(new NavigationItem(48, "Supply Chain Security", 0, R.id.nav_supply_chain_challenge));
-        challengesGroup.addChild(new NavigationItem(49, "Insecure Communication", 0, R.id.nav_insecure_comm_challenge));
-        challengesGroup.addChild(new NavigationItem(50, "Insufficient Cryptography", 0, R.id.nav_insufficient_crypto_challenge));
+        addChildIfNotCompleted(challengesGroup, new NavigationItem(47, "Poor Authentication", 0, R.id.nav_poor_auth_challenge));
+        // addChildIfNotCompleted(challengesGroup, new NavigationItem(48, "Supply Chain Security", 0, R.id.nav_supply_chain_challenge)); // TODO: Develop proper functionality
+        addChildIfNotCompleted(challengesGroup, new NavigationItem(49, "Insecure Communication", 0, R.id.nav_insecure_comm_challenge));
+        addChildIfNotCompleted(challengesGroup, new NavigationItem(50, "Insufficient Cryptography", 0, R.id.nav_insufficient_crypto_challenge));
         
         // Security Misconfiguration sub-group
         NavigationItem securityMisconfigGroup = new NavigationItem(51, "Security Misconfiguration", 0);
-        securityMisconfigGroup.addChild(new NavigationItem(52, "Challenge 1", 0, R.id.nav_security_misconfig_challenge2));
-        securityMisconfigGroup.addChild(new NavigationItem(53, "Challenge 2", 0, R.id.nav_security_misconfig_challenge3));
-        challengesGroup.addChild(securityMisconfigGroup);
+        addChildIfNotCompleted(securityMisconfigGroup, new NavigationItem(52, "Challenge 1", 0, R.id.nav_security_misconfig_challenge2));
+        if (securityMisconfigGroup.getChildren().size() > 0) challengesGroup.addChild(securityMisconfigGroup);
         
-        challengesGroup.addChild(new NavigationItem(54, "XSS WebView", 0, R.id.nav_xss_challenge));
+        addChildIfNotCompleted(challengesGroup, new NavigationItem(54, "XSS WebView", 0, R.id.nav_xss_challenge));
         
         // Client-Side Injection sub-group
         NavigationItem clientSideGroup = new NavigationItem(55, "Client-Side Injection", 0);
-        clientSideGroup.addChild(new NavigationItem(56, "Challenge 1", 0, R.id.nav_client_side_injection_challenge1));
-        clientSideGroup.addChild(new NavigationItem(57, "Challenge 2", 0, R.id.nav_client_side_injection_challenge2));
-        challengesGroup.addChild(clientSideGroup);
+        addChildIfNotCompleted(clientSideGroup, new NavigationItem(56, "Challenge 1", 0, R.id.nav_client_side_injection_challenge1));
+        addChildIfNotCompleted(clientSideGroup, new NavigationItem(57, "Challenge 2", 0, R.id.nav_client_side_injection_challenge2));
+        if (clientSideGroup.getChildren().size() > 0) challengesGroup.addChild(clientSideGroup);
         
-        items.add(challengesGroup);
+        if (challengesGroup.getChildren().size() > 0) items.add(challengesGroup);
         
         // ADB Reference
         items.add(new NavigationItem(4, "ADB Reference", R.drawable.ic_menu_code, R.id.nav_adb_reference));
         
+        // Completed group - show all completed lessons and challenges
+        NavigationItem completedGroup = new NavigationItem(5, "Completed", R.drawable.ic_menu_camera);
+        boolean hasCompleted = false;
+        
+        for (Map.Entry<Integer, FlagValidator.Module> entry : NAV_TO_MODULE_MAP.entrySet()) {
+            if (progressTracker.isCompleted(entry.getValue())) {
+                hasCompleted = true;
+                String title = getTitleForNavId(entry.getKey());
+                completedGroup.addChild(new NavigationItem(1000 + entry.getKey(), title, 0, entry.getKey()));
+            }
+        }
+        
+        if (hasCompleted) {
+            items.add(completedGroup);
+        }
+        
         return items;
+    }
+    
+    private String getTitleForNavId(int navId) {
+        // Map navigation IDs to readable titles
+        if (navId == R.id.nav_lesson) return "Reverse Engineering";
+        if (navId == R.id.nav_insecure_data_lesson) return "Insecure Data Storage";
+        if (navId == R.id.nav_poor_auth_lesson) return "Poor Authentication";
+        if (navId == R.id.nav_insecure_authorization_lesson) return "Insecure Authorization";
+        // if (navId == R.id.nav_supply_chain_lesson) return "Supply Chain Security"; // TODO: Develop proper functionality
+        if (navId == R.id.nav_insecure_comm_lesson) return "Insecure Communication";
+        if (navId == R.id.nav_insufficient_crypto_lesson) return "Insufficient Cryptography";
+        if (navId == R.id.nav_security_misconfig_lesson) return "Security Misconfiguration";
+        if (navId == R.id.nav_input_validation_lesson) return "Input Validation";
+        if (navId == R.id.nav_privacy_lesson) return "Privacy Controls";
+        if (navId == R.id.nav_client_side_injection_lesson) return "Client-Side Injection";
+        if (navId == R.id.nav_challenge1) return "RE Challenge 1";
+        if (navId == R.id.nav_challenge2) return "RE Challenge 2";
+        if (navId == R.id.nav_challenge3) return "RE Challenge 3";
+        if (navId == R.id.nav_insecure_data1) return "IDS Challenge 1";
+        if (navId == R.id.nav_insecure_data2) return "IDS Challenge 2";
+        if (navId == R.id.nav_poor_auth_challenge) return "Poor Auth Challenge";
+        // if (navId == R.id.nav_supply_chain_challenge) return "Supply Chain Challenge"; // TODO: Develop proper functionality
+        if (navId == R.id.nav_insecure_comm_challenge) return "Insecure Comm Challenge";
+        if (navId == R.id.nav_insufficient_crypto_challenge) return "Crypto Challenge";
+        if (navId == R.id.nav_security_misconfig_challenge2) return "Security Misconfig Challenge";
+        if (navId == R.id.nav_xss_challenge) return "XSS Challenge";
+        if (navId == R.id.nav_client_side_injection_challenge1) return "Client Injection Challenge 1";
+        if (navId == R.id.nav_client_side_injection_challenge2) return "Client Injection Challenge 2";
+        return "Module";
+    }
+    
+    private void addChildIfNotCompleted(NavigationItem parent, NavigationItem child) {
+        // Only add the child if it's not completed
+        if (child.getNavigationId() != 0) {
+            FlagValidator.Module module = NAV_TO_MODULE_MAP.get(child.getNavigationId());
+            if (module != null && progressTracker.isCompleted(module)) {
+                return; // Skip completed items
+            }
+        }
+        parent.addChild(child);
+    }
+    
+    public void refreshNavigation() {
+        List<NavigationItem> navigationItems = createNavigationItems();
+        navigationAdapter.updateItems(navigationItems);
     }
 
     @Override

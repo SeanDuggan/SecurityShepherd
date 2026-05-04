@@ -47,16 +47,17 @@
             </intent-filter>
         </activity>
 
-        <!-- Security Misconfiguration Challenge 3: Exported Activity -->
+        <!-- Security Misconfiguration Lesson: Exported Component Vulnerability -->
         <activity
-            android:name=".SecretActivity"
+            android:name=".ui.lessons.securitymisconfig.MisconfigLessonSecretActivity"
             android:exported="true"
-            android:label="Secret Activity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+            android:label="Configuration Debug Panel" />
+
+        <!-- Insecure Data Storage Lesson: Internal Debug Activity -->
+        <activity
+            android:name=".ui.lessons.insecuredata.DataStorageDebugActivity"
+            android:exported="false"
+            android:label="Data Storage Debug" />
 
         <!-- FileProvider for camera image capture -->
         <provider

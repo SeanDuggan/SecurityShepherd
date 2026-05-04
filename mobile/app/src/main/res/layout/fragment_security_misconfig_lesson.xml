@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             app:cardElevation="2dp"
-            app:cardCornerRadius="8dp"
+            app:cardCornerRadius="16dp"
             app:cardBackgroundColor="@color/card_warning_bg"
             app:strokeColor="#FFC107"
             app:strokeWidth="2dp">
@@ -44,10 +44,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardElevation="4dp"
-            app:cardCornerRadius="12dp"
-            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="16dp"
+            app:cardBackgroundColor="@color/card_bg"
             app:strokeColor="#FFC107"
-            app:strokeWidth="4dp">
+            app:strokeWidth="2dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -58,7 +58,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Configuration Check Exercise"
+                    android:text="Configuration Check"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
@@ -67,7 +67,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="This exercise shows various security configuration settings. Check which ones are properly configured and which are security risks!"
+                    android:text="Check various security configuration settings to identify which ones are properly configured and which are security risks."
                     android:textSize="14sp"
                     android:lineSpacingMultiplier="1.3"
                     android:layout_marginBottom="16dp" />
@@ -143,6 +143,146 @@
                     android:textStyle="bold"
                     android:padding="12dp"
                     android:visibility="gone" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Exported Component Exploitation Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:cardElevation="4dp"
+            app:cardCornerRadius="16dp"
+            app:cardBackgroundColor="@color/card_bg"
+            app:strokeColor="@color/security_red"
+            app:strokeWidth="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="⚠️ Exploit Exported Component"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/security_red"
+                    android:layout_marginBottom="12dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="This app contains an EXPORTED COMPONENT that can be invoked by any app or ADB command. Scan for components, identify the vulnerable one, and exploit it to retrieve the lesson key!"
+                    android:textSize="14sp"
+                    android:lineSpacingMultiplier="1.3"
+                    android:layout_marginBottom="16dp" />
+
+                <Button
+                    android:id="@+id/scan_components_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="🔍 Scan App Components"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- Component List Section -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/components_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:visibility="gone"
+                    app:cardElevation="2dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardBackgroundColor="@color/background_primary"
+                    app:strokeColor="@color/info_blue"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="12dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="📋 Discovered Activities:"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/info_blue"
+                            android:layout_marginBottom="12dp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="🟢 Safe (exported=false)  🔴 Vulnerable (exported=true)"
+                            android:textSize="11sp"
+                            android:layout_marginBottom="8dp"
+                            android:textColor="?android:attr/textColorSecondary" />
+
+                        <LinearLayout
+                            android:id="@+id/components_container"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- ADB Command Reference -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    app:cardElevation="2dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardBackgroundColor="@color/background_primary"
+                    app:strokeColor="@color/warning_orange"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="12dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="📱 ADB Exploitation Command:"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="8dp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="adb shell am start -n com.owasp.app/[ACTIVITY_PATH]"
+                            android:textSize="12sp"
+                            android:fontFamily="monospace"
+                            android:background="@color/card_bg"
+                            android:padding="8dp"
+                            android:textIsSelectable="true"
+                            android:layout_marginBottom="8dp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Scan components above, find the exported one, and replace [ACTIVITY_PATH] with the full class path (e.g., .ui.lessons.securitymisconfig.ClassName)"
+                            android:textSize="11sp"
+                            android:textStyle="italic"
+                            android:textColor="?android:attr/textColorSecondary" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
 
             </LinearLayout>
 

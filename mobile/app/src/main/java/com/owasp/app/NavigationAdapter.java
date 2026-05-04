@@ -9,23 +9,32 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.owasp.app.utils.FlagValidator;
+import com.owasp.app.utils.ProgressTracker;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.ViewHolder> {
 
     private List<NavigationItem> items;
     private List<NavigationItem> displayedItems;
     private OnItemClickListener listener;
+    private ProgressTracker progressTracker;
+    private Map<Integer, FlagValidator.Module> navToModuleMap;
 
     public interface OnItemClickListener {
         void onItemClick(NavigationItem item);
     }
 
-    public NavigationAdapter(List<NavigationItem> items, OnItemClickListener listener) {
+    public NavigationAdapter(List<NavigationItem> items, OnItemClickListener listener, 
+                           ProgressTracker progressTracker, Map<Integer, FlagValidator.Module> navToModuleMap) {
         this.items = items;
         this.displayedItems = new ArrayList<>();
         this.listener = listener;
+        this.progressTracker = progressTracker;
+        this.navToModuleMap = navToModuleMap;
         updateDisplayedItems();
     }
 
@@ -34,6 +43,12 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
         for (NavigationItem item : items) {
             addItemWithChildren(item, 0);
         }
+    }
+    
+    public void updateItems(List<NavigationItem> newItems) {
+        this.items = newItems;
+        updateDisplayedItems();
+        notifyDataSetChanged();
     }
     
     private void addItemWithChildren(NavigationItem item, int depth) {
@@ -87,6 +102,7 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
         private ImageView icon;
         private TextView title;
         private ImageView expandIcon;
+        private TextView completedIndicator;
         private View itemView;
 
         public ViewHolder(@NonNull View itemView) {
@@ -95,10 +111,27 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
             icon = itemView.findViewById(R.id.nav_item_icon);
             title = itemView.findViewById(R.id.nav_item_title);
             expandIcon = itemView.findViewById(R.id.nav_item_expand_icon);
+            completedIndicator = itemView.findViewById(R.id.nav_item_completed_indicator);
         }
 
         public void bind(NavigationItem item) {
             title.setText(item.getTitle());
+            
+            // Check if this item is completed
+            boolean isCompleted = false;
+            if (item.getNavigationId() != 0 && navToModuleMap != null) {
+                FlagValidator.Module module = navToModuleMap.get(item.getNavigationId());
+                if (module != null && progressTracker != null) {
+                    isCompleted = progressTracker.isCompleted(module);
+                }
+            }
+            
+            // Show/hide completed indicator
+            if (isCompleted && !item.isExpandable()) {
+                completedIndicator.setVisibility(View.VISIBLE);
+            } else {
+                completedIndicator.setVisibility(View.GONE);
+            }
             
             int depth = getItemDepth(item);
             int leftPadding = 16 + (depth * 32); // 16dp base, 32dp per level

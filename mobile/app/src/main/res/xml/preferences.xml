@@ -28,6 +28,15 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="Support">
+
+        <Preference
+            android:key="submit_issue_preference"
+            android:title="@string/submit_issue_title"
+            android:summary="@string/submit_issue_summary" />
+
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="License">
         <PreferenceScreen
             android:summary="@string/summary_license" />

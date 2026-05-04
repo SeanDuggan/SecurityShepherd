@@ -44,22 +44,33 @@ public class ReverseEngineering3Fragment extends Fragment {
         FloatingActionButton fab = requireActivity().findViewById(R.id.fab);
         FloatingActionButton fabCommandRef = requireActivity().findViewById(R.id.fab_command_reference);
         FloatingActionButton fabOwaspLink = requireActivity().findViewById(R.id.fab_owasp_link);
+        FloatingActionButton fabMarkComplete = requireActivity().findViewById(R.id.fab_mark_complete);
 
         if (fab != null) {
-            fab.setOnClickListener(v -> toggleFabExpansion(fab, fabCommandRef, fabOwaspLink));
+            fab.setOnClickListener(v -> toggleFabExpansion(fab, fabCommandRef, fabOwaspLink, fabMarkComplete));
         }
         if (fabCommandRef != null) {
             fabCommandRef.setOnClickListener(v -> {
                 showVulnerabilityInfo();
-                collapseFab(fab, fabCommandRef, fabOwaspLink);
+                collapseFab(fab, fabCommandRef, fabOwaspLink, fabMarkComplete);
             });
         }
         if (fabOwaspLink != null) {
             fabOwaspLink.setOnClickListener(v -> {
                 openOwaspTop10Link();
-                collapseFab(fab, fabCommandRef, fabOwaspLink);
+                collapseFab(fab, fabCommandRef, fabOwaspLink, fabMarkComplete);
             });
         }
+        if (fabMarkComplete != null) {
+            fabMarkComplete.setOnClickListener(v -> {
+                toggleCompleteStatus();
+                updateMarkCompleteFabAppearance(fabMarkComplete);
+                collapseFab(fab, fabCommandRef, fabOwaspLink, fabMarkComplete);
+            });
+        }
+
+        // Set initial FAB appearance based on completion status
+        updateMarkCompleteFabAppearance(fabMarkComplete);
 
         final EditText inputFlag = binding.inputFlag;
         final Button btnValidate = binding.btnValidate;
@@ -97,21 +108,23 @@ public class ReverseEngineering3Fragment extends Fragment {
         return root;
     }
 
-    private void toggleFabExpansion(FloatingActionButton mainFab, FloatingActionButton fab1, FloatingActionButton fab2) {
+    private void toggleFabExpansion(FloatingActionButton mainFab, FloatingActionButton fab1, FloatingActionButton fab2, FloatingActionButton fab3) {
         fabExpanded = !fabExpanded;
         if (fabExpanded) {
             if (fab1 != null) fab1.setVisibility(View.VISIBLE);
             if (fab2 != null) fab2.setVisibility(View.VISIBLE);
+            if (fab3 != null) fab3.setVisibility(View.VISIBLE);
             if (mainFab != null) mainFab.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
         } else {
-            collapseFab(mainFab, fab1, fab2);
+            collapseFab(mainFab, fab1, fab2, fab3);
         }
     }
 
-    private void collapseFab(FloatingActionButton mainFab, FloatingActionButton fab1, FloatingActionButton fab2) {
+    private void collapseFab(FloatingActionButton mainFab, FloatingActionButton fab1, FloatingActionButton fab2, FloatingActionButton fab3) {
         fabExpanded = false;
         if (fab1 != null) fab1.setVisibility(View.GONE);
         if (fab2 != null) fab2.setVisibility(View.GONE);
+        if (fab3 != null) fab3.setVisibility(View.GONE);
         if (mainFab != null) mainFab.setImageResource(android.R.drawable.ic_menu_help);
     }
 
@@ -143,11 +156,31 @@ public class ReverseEngineering3Fragment extends Fragment {
                 .setTitle("Reverse Engineering Challenge 3")
                 .setView(dialogView)
                 .setPositiveButton("Close", null)
-                .setNeutralButton("Mark as Complete", (d, which) -> {
-                    progressTracker.markCompleted(FlagValidator.Module.RE_CHALLENGE_3);
-                    android.widget.Toast.makeText(requireContext(), "✓ Marked as complete!", android.widget.Toast.LENGTH_SHORT).show();
-                })
                 .show();
+    }
+    
+    private void toggleCompleteStatus() {
+        boolean nowCompleted = progressTracker.toggleCompleted(FlagValidator.Module.RE_CHALLENGE_3);
+        String message = nowCompleted ? "✓ Marked as complete!" : "○ Marked as incomplete";
+        android.widget.Toast.makeText(requireContext(), message, android.widget.Toast.LENGTH_SHORT).show();
+    }
+    
+    private void updateMarkCompleteFabAppearance(FloatingActionButton fabMarkComplete) {
+        if (fabMarkComplete == null) return;
+        
+        boolean isCompleted = progressTracker.isCompleted(FlagValidator.Module.RE_CHALLENGE_3);
+        
+        if (isCompleted) {
+            // Red - will mark as incomplete
+            fabMarkComplete.setBackgroundTintList(android.content.res.ColorStateList.valueOf(
+                androidx.core.content.ContextCompat.getColor(requireContext(), R.color.security_red)));
+            fabMarkComplete.setContentDescription("Mark as Incomplete");
+        } else {
+            // Green - will mark as complete
+            fabMarkComplete.setBackgroundTintList(android.content.res.ColorStateList.valueOf(
+                androidx.core.content.ContextCompat.getColor(requireContext(), R.color.success_green)));
+            fabMarkComplete.setContentDescription("Mark as Complete");
+        }
     }
 
     @Override
@@ -156,7 +189,8 @@ public class ReverseEngineering3Fragment extends Fragment {
         FloatingActionButton fab = requireActivity().findViewById(R.id.fab);
         FloatingActionButton fabCommandRef = requireActivity().findViewById(R.id.fab_command_reference);
         FloatingActionButton fabOwaspLink = requireActivity().findViewById(R.id.fab_owasp_link);
-        collapseFab(fab, fabCommandRef, fabOwaspLink);
+        FloatingActionButton fabMarkComplete = requireActivity().findViewById(R.id.fab_mark_complete);
+        collapseFab(fab, fabCommandRef, fabOwaspLink, fabMarkComplete);
         binding = null;
     }
 }

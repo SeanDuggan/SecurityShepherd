@@ -19,6 +19,15 @@ public class ProgressTracker {
     private static final String KEY_COMPLETION_COUNT = "completion_count_";
     
     private final SharedPreferences prefs;
+    private static CompletionChangeListener globalListener;
+    
+    public interface CompletionChangeListener {
+        void onCompletionChanged();
+    }
+    
+    public static void setGlobalCompletionListener(CompletionChangeListener listener) {
+        globalListener = listener;
+    }
     
     public ProgressTracker(Context context) {
         this.prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
@@ -51,6 +60,11 @@ public class ProgressTracker {
         editor.putInt(KEY_COMPLETION_COUNT + module.getId(), count + 1);
         
         editor.apply();
+        
+        // Notify listener of change
+        if (globalListener != null) {
+            globalListener.onCompletionChanged();
+        }
     }
     
     /**
@@ -65,6 +79,11 @@ public class ProgressTracker {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putStringSet(KEY_COMPLETED_MODULES, completed);
         editor.apply();
+        
+        // Notify listener of change
+        if (globalListener != null) {
+            globalListener.onCompletionChanged();
+        }
     }
     
     /**

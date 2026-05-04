@@ -55,7 +55,6 @@ public class FlagValidator {
         // Security Misconfiguration
         SECURITY_MISCONFIG_LESSON("security_misconfig_lesson", TYPE_LESSON),
         SECURITY_MISCONFIG_CHALLENGE_2("security_misconfig_challenge_2", TYPE_CHALLENGE),
-        SECURITY_MISCONFIG_CHALLENGE_3("security_misconfig_challenge_3", TYPE_CHALLENGE),
         
         // Input Validation
         INPUT_VALIDATION_LESSON("input_validation_lesson", TYPE_LESSON),
@@ -113,7 +112,6 @@ public class FlagValidator {
         put(Module.INSECURE_COMM_CHALLENGE, "902da64e328c69e90637dfdb1a1a9b00ac9ca59a765d9d8b34c5138fc78154be");
         put(Module.INSUFFICIENT_CRYPTO_CHALLENGE, "6db91af881848682f983cba5b0057350a3bec0260095acd2d836f0196ca43762");
         put(Module.SECURITY_MISCONFIG_CHALLENGE_2, "3d65ad9434f0c9d859f7b31a76dbf34030c6c9d2b3556cb85dfb82dcb7ba50c9");
-        put(Module.SECURITY_MISCONFIG_CHALLENGE_3, "e54256b5c0dbf110afe1ebf9cc0e71f214579bc8e5b6fc9d15aee0c81ddde7f0");
         put(Module.XSS_CHALLENGE, "9bb87d8849b4bf7160d704f469e87c5028bc5a0058f2495ef6c0d6d5b16a87b0");
         put(Module.CLIENT_SIDE_INJECTION_CHALLENGE_1, "47a667b98924268439ad607442a3eb558641c4484d6b781690547c912d17fcdd");
         put(Module.CLIENT_SIDE_INJECTION_CHALLENGE_2, "cae83b66f0b1761894682ece0432c24c945c2d578da735a1aeac8060e45a4b71");

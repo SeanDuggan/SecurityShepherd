@@ -54,24 +54,36 @@ public class InsecureCommLessonFragment extends Fragment {
         FloatingActionButton fab = requireActivity().findViewById(R.id.fab);
         FloatingActionButton fabCommandRef = requireActivity().findViewById(R.id.fab_command_reference);
         FloatingActionButton fabOwaspLink = requireActivity().findViewById(R.id.fab_owasp_link);
+        FloatingActionButton fabMarkComplete = requireActivity().findViewById(R.id.fab_mark_complete);
         
         if (fab != null) {
-            fab.setOnClickListener(v -> toggleFabExpansion(fab, fabCommandRef, fabOwaspLink));
+            fab.setOnClickListener(v -> toggleFabExpansion(fab, fabCommandRef, fabOwaspLink, fabMarkComplete));
         }
         
         if (fabCommandRef != null) {
             fabCommandRef.setOnClickListener(v -> {
                 showDetailedInfo();
-                collapseFab(fab, fabCommandRef, fabOwaspLink);
+                collapseFab(fab, fabCommandRef, fabOwaspLink, fabMarkComplete);
             });
         }
         
         if (fabOwaspLink != null) {
             fabOwaspLink.setOnClickListener(v -> {
                 openOwaspTop10Link();
-                collapseFab(fab, fabCommandRef, fabOwaspLink);
+                collapseFab(fab, fabCommandRef, fabOwaspLink, fabMarkComplete);
             });
         }
+        
+        if (fabMarkComplete != null) {
+            fabMarkComplete.setOnClickListener(v -> {
+                toggleCompleteStatus();
+                updateMarkCompleteFabAppearance(fabMarkComplete);
+                collapseFab(fab, fabCommandRef, fabOwaspLink, fabMarkComplete);
+            });
+        }
+
+        // Set initial FAB appearance based on completion status
+        updateMarkCompleteFabAppearance(fabMarkComplete);
 
         binding.sendHttpButton.setOnClickListener(v -> sendInsecureRequest());
 
@@ -85,46 +97,28 @@ public class InsecureCommLessonFragment extends Fragment {
         new Thread(() -> {
             try {
                 // Reconstruct flag at runtime
-                String flag = decodeFlag();
+                String apiKey = decodeFlag();
                 
-                // Simulate HTTP request with plaintext credentials
-                URL url = new URL("http://api.insecure-app.com/login");
+                // Send actual HTTP request - flag is the API key in headers
+                URL url = new URL("http://api.mobile-analytics.test/v1/events");
                 
-                // Log the entire HTTP request (what a packet sniffer would see)
-                Log.d(TAG, "═══════════════════════════════════════");
-                Log.d(TAG, "HTTP REQUEST CAPTURED");
-                Log.d(TAG, "═══════════════════════════════════════");
-                Log.d(TAG, "Method: POST");
-                Log.d(TAG, "URL: " + url.toString());
-                Log.d(TAG, "Protocol: HTTP/1.1 (UNENCRYPTED)");
-                Log.d(TAG, "");
-                Log.d(TAG, "Headers:");
-                Log.d(TAG, "  Content-Type: application/json");
-                Log.d(TAG, "  User-Agent: InsecureApp/1.0");
-                Log.d(TAG, "  X-API-Key: sk_live_4829fjksd92jfks");
-                Log.d(TAG, "");
-                Log.d(TAG, "Request Body (JSON):");
-                Log.d(TAG, "{");
-                Log.d(TAG, "  \"username\": \"admin\",");
-                Log.d(TAG, "  \"password\": \"" + flag + "\",");
-                Log.d(TAG, "  \"device_id\": \"android_12345\"");
-                Log.d(TAG, "}");
-                Log.d(TAG, "═══════════════════════════════════════");
-                Log.d(TAG, "WARNING: Credentials sent in PLAINTEXT!");
-                Log.d(TAG, "WARNING: Any attacker on the network can read this!");
-                Log.d(TAG, "═══════════════════════════════════════");
+                // Log basic info (but NOT the API key - they must intercept traffic)
+                Log.d(TAG, "Sending HTTP POST to: " + url.toString());
+                Log.d(TAG, "Protocol: HTTP (unencrypted)");
                 
-                // Actually attempt the connection (will fail, but that's fine)
+                // Actually send the connection
                 try {
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("POST");
                     conn.setRequestProperty("Content-Type", "application/json");
-                    conn.setRequestProperty("X-API-Key", "sk_live_4829fjksd92jfks");
+                    conn.setRequestProperty("User-Agent", "MobileApp/2.1.0");
+                    conn.setRequestProperty("X-API-Key", apiKey);  // FLAG IS HERE
                     conn.setDoOutput(true);
-                    conn.setConnectTimeout(3000);
-                    conn.setReadTimeout(3000);
+                    conn.setConnectTimeout(5000);
+                    conn.setReadTimeout(5000);
                     
-                    String jsonBody = "{\"username\":\"admin\",\"password\":\"" + flag + "\",\"device_id\":\"android_12345\"}";
+                    // JSON body with analytics event data
+                    String jsonBody = "{\"event_type\":\"user_login\",\"user_id\":\"12345\",\"timestamp\":\"2026-05-04T10:30:00Z\",\"device\":\"Android\"}";
                     
                     try (OutputStream os = conn.getOutputStream()) {
                         byte[] input = jsonBody.getBytes(StandardCharsets.UTF_8);
@@ -132,22 +126,32 @@ public class InsecureCommLessonFragment extends Fragment {
                     }
                     
                     int responseCode = conn.getResponseCode();
-                    Log.d(TAG, "Response Code: " + responseCode);
+                    Log.d(TAG, "Server response: " + responseCode);
                     
                 } catch (Exception e) {
-                    Log.d(TAG, "Connection failed (expected): " + e.getMessage());
-                    Log.d(TAG, "But the HTTP request was logged above!");
+                    // Connection will fail (.test domain doesn't resolve), but request was sent to proxy
+                    Log.d(TAG, "Connection failed: " + e.getMessage());
+                    Log.d(TAG, "HTTP request was transmitted (intercept it to see the API key)");
                 }
                 
                 requireActivity().runOnUiThread(() -> {
-                    binding.statusText.setText("✓ HTTP request sent!\n\nCheck logcat to see the plaintext traffic.");
+                    String requestPreview = "✓ Analytics event transmitted!\n\n" +
+                            "Request sent to: http://api.mobile-analytics.test/v1/events\n\n" +
+                            "HTTP Request Structure:\n" +
+                            "POST /v1/events HTTP/1.1\n" +
+                            "Content-Type: application/json\n" +
+                            "User-Agent: MobileApp/2.1.0\n" +
+                            "X-API-Key: ████████████████\n\n" +
+                            "Body:\n" +
+                            "{\"event_type\":\"user_login\",...}\n\n" +
+                            "The API key was sent in plaintext!\n" +
+                            "Use a proxy tool to intercept and capture it.";
+                    
+                    binding.statusText.setText(requestPreview);
                     binding.statusText.setTextColor(getResources().getColor(android.R.color.holo_orange_dark));
                     binding.demoCard.setCardBackgroundColor(getResources().getColor(android.R.color.holo_orange_light));
                     
-                    binding.flagText.setText("Flag found in HTTP traffic!\n\nFlag: " + flag);
-                    binding.flagText.setVisibility(View.VISIBLE);
-                    
-                    Toast.makeText(getContext(), "Request logged! Check logcat with tag: NetworkTraffic", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Event sent over HTTP! Intercept to capture the API key.", Toast.LENGTH_LONG).show();
                 });
                 
             } catch (Exception e) {
@@ -165,22 +169,24 @@ public class InsecureCommLessonFragment extends Fragment {
         return PART1 + PART2 + PART3 + PART4 + PART5;
     }
 
-    private void toggleFabExpansion(FloatingActionButton mainFab, FloatingActionButton fab1, FloatingActionButton fab2) {
+    private void toggleFabExpansion(FloatingActionButton mainFab, FloatingActionButton fab1, FloatingActionButton fab2, FloatingActionButton fab3) {
         fabExpanded = !fabExpanded;
         
         if (fabExpanded) {
             if (fab1 != null) fab1.setVisibility(View.VISIBLE);
             if (fab2 != null) fab2.setVisibility(View.VISIBLE);
+            if (fab3 != null) fab3.setVisibility(View.VISIBLE);
             if (mainFab != null) mainFab.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
         } else {
-            collapseFab(mainFab, fab1, fab2);
+            collapseFab(mainFab, fab1, fab2, fab3);
         }
     }
 
-    private void collapseFab(FloatingActionButton mainFab, FloatingActionButton fab1, FloatingActionButton fab2) {
+    private void collapseFab(FloatingActionButton mainFab, FloatingActionButton fab1, FloatingActionButton fab2, FloatingActionButton fab3) {
         fabExpanded = false;
         if (fab1 != null) fab1.setVisibility(View.GONE);
         if (fab2 != null) fab2.setVisibility(View.GONE);
+        if (fab3 != null) fab3.setVisibility(View.GONE);
         if (mainFab != null) mainFab.setImageResource(android.R.drawable.ic_menu_help);
     }
 
@@ -209,19 +215,35 @@ public class InsecureCommLessonFragment extends Fragment {
         // bestPracticesSection.setVisibility(View.GONE);
         additionalSection.setVisibility(View.GONE);
         
-        boolean isCompleted = progressTracker.isCompleted(FlagValidator.Module.INSECURE_COMM_LESSON);
-        String buttonText = isCompleted ? "Mark as Incomplete" : "Mark as Complete";
-        
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setTitle("Insecure Communication");
         builder.setView(dialogView);
         builder.setPositiveButton("Close", null);
-        builder.setNeutralButton(buttonText, (d, which) -> {
-            boolean nowCompleted = progressTracker.toggleCompleted(FlagValidator.Module.INSECURE_COMM_LESSON);
-            String message = nowCompleted ? "✓ Marked as complete!" : "○ Marked as incomplete";
-            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
-        });
         builder.show();
+    }
+    
+    private void toggleCompleteStatus() {
+        boolean nowCompleted = progressTracker.toggleCompleted(FlagValidator.Module.INSECURE_COMM_LESSON);
+        String message = nowCompleted ? "✓ Marked as complete!" : "○ Marked as incomplete";
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
+    }
+    
+    private void updateMarkCompleteFabAppearance(FloatingActionButton fabMarkComplete) {
+        if (fabMarkComplete == null) return;
+        
+        boolean isCompleted = progressTracker.isCompleted(FlagValidator.Module.INSECURE_COMM_LESSON);
+        
+        if (isCompleted) {
+            // Red - will mark as incomplete
+            fabMarkComplete.setBackgroundTintList(android.content.res.ColorStateList.valueOf(
+                androidx.core.content.ContextCompat.getColor(requireContext(), R.color.security_red)));
+            fabMarkComplete.setContentDescription("Mark as Incomplete");
+        } else {
+            // Green - will mark as complete
+            fabMarkComplete.setBackgroundTintList(android.content.res.ColorStateList.valueOf(
+                androidx.core.content.ContextCompat.getColor(requireContext(), R.color.success_green)));
+            fabMarkComplete.setContentDescription("Mark as Complete");
+        }
     }
 
     @Override
@@ -232,7 +254,8 @@ public class InsecureCommLessonFragment extends Fragment {
         FloatingActionButton fab = requireActivity().findViewById(R.id.fab);
         FloatingActionButton fabCommandRef = requireActivity().findViewById(R.id.fab_command_reference);
         FloatingActionButton fabOwaspLink = requireActivity().findViewById(R.id.fab_owasp_link);
-        collapseFab(fab, fabCommandRef, fabOwaspLink);
+        FloatingActionButton fabMarkComplete = requireActivity().findViewById(R.id.fab_mark_complete);
+        collapseFab(fab, fabCommandRef, fabOwaspLink, fabMarkComplete);
         
         binding = null;
     }

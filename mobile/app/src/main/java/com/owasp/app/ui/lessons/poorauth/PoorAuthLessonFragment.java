@@ -56,24 +56,36 @@ public class PoorAuthLessonFragment extends Fragment {
         FloatingActionButton fab = requireActivity().findViewById(R.id.fab);
         FloatingActionButton fabCommandRef = requireActivity().findViewById(R.id.fab_command_reference);
         FloatingActionButton fabOwaspLink = requireActivity().findViewById(R.id.fab_owasp_link);
+        FloatingActionButton fabMarkComplete = requireActivity().findViewById(R.id.fab_mark_complete);
         
         if (fab != null) {
-            fab.setOnClickListener(v -> toggleFabExpansion(fab, fabCommandRef, fabOwaspLink));
+            fab.setOnClickListener(v -> toggleFabExpansion(fab, fabCommandRef, fabOwaspLink, fabMarkComplete));
         }
         
         if (fabCommandRef != null) {
             fabCommandRef.setOnClickListener(v -> {
                 showDetailedInfo();
-                collapseFab(fab, fabCommandRef, fabOwaspLink);
+                collapseFab(fab, fabCommandRef, fabOwaspLink, fabMarkComplete);
             });
         }
         
         if (fabOwaspLink != null) {
             fabOwaspLink.setOnClickListener(v -> {
                 openOwaspTop10Link();
-                collapseFab(fab, fabCommandRef, fabOwaspLink);
+                collapseFab(fab, fabCommandRef, fabOwaspLink, fabMarkComplete);
             });
         }
+        
+        if (fabMarkComplete != null) {
+            fabMarkComplete.setOnClickListener(v -> {
+                toggleCompleteStatus();
+                updateMarkCompleteFabAppearance(fabMarkComplete);
+                collapseFab(fab, fabCommandRef, fabOwaspLink, fabMarkComplete);
+            });
+        }
+
+        // Set initial FAB appearance based on completion status
+        updateMarkCompleteFabAppearance(fabMarkComplete);
 
         // Log the hardcoded PIN hash (intentionally insecure for demonstration)
         Log.d(TAG, "Initializing authentication system...");
@@ -125,22 +137,24 @@ public class PoorAuthLessonFragment extends Fragment {
         }
     }
 
-    private void toggleFabExpansion(FloatingActionButton mainFab, FloatingActionButton fab1, FloatingActionButton fab2) {
+    private void toggleFabExpansion(FloatingActionButton mainFab, FloatingActionButton fab1, FloatingActionButton fab2, FloatingActionButton fab3) {
         fabExpanded = !fabExpanded;
         
         if (fabExpanded) {
             if (fab1 != null) fab1.setVisibility(View.VISIBLE);
             if (fab2 != null) fab2.setVisibility(View.VISIBLE);
+            if (fab3 != null) fab3.setVisibility(View.VISIBLE);
             if (mainFab != null) mainFab.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
         } else {
-            collapseFab(mainFab, fab1, fab2);
+            collapseFab(mainFab, fab1, fab2, fab3);
         }
     }
 
-    private void collapseFab(FloatingActionButton mainFab, FloatingActionButton fab1, FloatingActionButton fab2) {
+    private void collapseFab(FloatingActionButton mainFab, FloatingActionButton fab1, FloatingActionButton fab2, FloatingActionButton fab3) {
         fabExpanded = false;
         if (fab1 != null) fab1.setVisibility(View.GONE);
         if (fab2 != null) fab2.setVisibility(View.GONE);
+        if (fab3 != null) fab3.setVisibility(View.GONE);
         if (mainFab != null) mainFab.setImageResource(android.R.drawable.ic_menu_help);
     }
 
@@ -210,19 +224,35 @@ public class PoorAuthLessonFragment extends Fragment {
         
         additionalSection.setVisibility(View.GONE);
         
-        boolean isCompleted = progressTracker.isCompleted(FlagValidator.Module.POOR_AUTH_LESSON);
-        String buttonText = isCompleted ? "Mark as Incomplete" : "Mark as Complete";
-        
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setTitle("Poor Authentication");
         builder.setView(dialogView);
         builder.setPositiveButton("Close", null);
-        builder.setNeutralButton(buttonText, (d, which) -> {
-            boolean nowCompleted = progressTracker.toggleCompleted(FlagValidator.Module.POOR_AUTH_LESSON);
-            String message = nowCompleted ? "✓ Marked as complete!" : "○ Marked as incomplete";
-            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
-        });
         builder.show();
+    }
+    
+    private void toggleCompleteStatus() {
+        boolean nowCompleted = progressTracker.toggleCompleted(FlagValidator.Module.POOR_AUTH_LESSON);
+        String message = nowCompleted ? "✓ Marked as complete!" : "○ Marked as incomplete";
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
+    }
+    
+    private void updateMarkCompleteFabAppearance(FloatingActionButton fabMarkComplete) {
+        if (fabMarkComplete == null) return;
+        
+        boolean isCompleted = progressTracker.isCompleted(FlagValidator.Module.POOR_AUTH_LESSON);
+        
+        if (isCompleted) {
+            // Red - will mark as incomplete
+            fabMarkComplete.setBackgroundTintList(android.content.res.ColorStateList.valueOf(
+                androidx.core.content.ContextCompat.getColor(requireContext(), R.color.security_red)));
+            fabMarkComplete.setContentDescription("Mark as Incomplete");
+        } else {
+            // Green - will mark as complete
+            fabMarkComplete.setBackgroundTintList(android.content.res.ColorStateList.valueOf(
+                androidx.core.content.ContextCompat.getColor(requireContext(), R.color.success_green)));
+            fabMarkComplete.setContentDescription("Mark as Complete");
+        }
     }
 
     @Override
@@ -233,7 +263,8 @@ public class PoorAuthLessonFragment extends Fragment {
         FloatingActionButton fab = requireActivity().findViewById(R.id.fab);
         FloatingActionButton fabCommandRef = requireActivity().findViewById(R.id.fab_command_reference);
         FloatingActionButton fabOwaspLink = requireActivity().findViewById(R.id.fab_owasp_link);
-        collapseFab(fab, fabCommandRef, fabOwaspLink);
+        FloatingActionButton fabMarkComplete = requireActivity().findViewById(R.id.fab_mark_complete);
+        collapseFab(fab, fabCommandRef, fabOwaspLink, fabMarkComplete);
         
         binding = null;
     }

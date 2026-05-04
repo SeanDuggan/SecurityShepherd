@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             style="@style/Widget.Material3.CardView.Filled"
-            app:cardCornerRadius="12dp"
+            app:cardCornerRadius="16dp"
             app:cardBackgroundColor="@color/card_info_bg">
 
             <LinearLayout
@@ -54,7 +54,7 @@
             android:layout_marginBottom="12dp"
             android:visibility="gone"
             app:cardElevation="2dp"
-            app:cardCornerRadius="8dp"
+            app:cardCornerRadius="16dp"
             app:cardBackgroundColor="@color/card_warning_bg">
 
             <LinearLayout
@@ -91,7 +91,7 @@
             android:layout_height="wrap_content"
             android:visibility="gone"
             app:cardElevation="2dp"
-            app:cardCornerRadius="8dp"
+            app:cardCornerRadius="16dp"
             app:cardBackgroundColor="@color/card_warning_bg">
 
             <LinearLayout

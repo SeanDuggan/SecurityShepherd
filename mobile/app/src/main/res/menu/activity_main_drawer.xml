@@ -111,10 +111,6 @@
                 android:icon="@drawable/ic_menu_settings"
                 android:title="@string/menu_security_misconfig_challenge2" />
             <item
-                android:id="@+id/nav_security_misconfig_challenge3"
-                android:icon="@drawable/ic_menu_settings"
-                android:title="@string/menu_security_misconfig_challenge3" />
-            <item
                 android:id="@+id/nav_xss_challenge"
                 android:icon="@drawable/ic_menu_web"
                 android:title="@string/menu_xss_challenge" />

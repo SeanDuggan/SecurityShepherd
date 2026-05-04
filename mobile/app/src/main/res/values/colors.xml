@@ -43,6 +43,9 @@
     <color name="card_info_stroke">#2196F3</color>
     <color name="card_info_accent">#1565C0</color>
     
+    <color name="card_lesson_bg">#F3E5F5</color>
+    <color name="card_lesson_stroke">#8E24AA</color>
+    
     <color name="card_error_bg">#FFEBEE</color>
     <color name="card_error_text">#C62828</color>
     

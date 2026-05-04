@@ -1,6 +1,8 @@
 package com.owasp.app.ui.lessons.securitymisconfig;
 
+import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import android.content.Intent;
@@ -35,6 +38,8 @@ public class SecurityMisconfigLessonFragment extends Fragment {
     private TextView networkStatus;
     private TextView permissionsStatus;
     private TextView resultText;
+    private LinearLayout componentsContainer;
+    private View componentsCard;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -49,30 +54,47 @@ public class SecurityMisconfigLessonFragment extends Fragment {
         networkStatus = root.findViewById(R.id.network_status);
         permissionsStatus = root.findViewById(R.id.permissions_status);
         resultText = root.findViewById(R.id.result_text);
+        componentsContainer = root.findViewById(R.id.components_container);
+        componentsCard = root.findViewById(R.id.components_card);
         
         Button checkButton = root.findViewById(R.id.check_config_button);
         checkButton.setOnClickListener(v -> checkConfiguration());
+
+        // Component scanning for exported component discovery
+        Button scanComponentsButton = root.findViewById(R.id.scan_components_button);
+        scanComponentsButton.setOnClickListener(v -> scanComponents());
 
         // Setup expandable FAB with command reference and OWASP link
         FloatingActionButton fab = requireActivity().findViewById(R.id.fab);
         FloatingActionButton fabCommandRef = requireActivity().findViewById(R.id.fab_command_reference);
         FloatingActionButton fabOwaspLink = requireActivity().findViewById(R.id.fab_owasp_link);
+        FloatingActionButton fabMarkComplete = requireActivity().findViewById(R.id.fab_mark_complete);
 
         if (fab != null) {
-            fab.setOnClickListener(v -> toggleFabExpansion(fab, fabCommandRef, fabOwaspLink));
+            fab.setOnClickListener(v -> toggleFabExpansion(fab, fabCommandRef, fabOwaspLink, fabMarkComplete));
         }
         if (fabCommandRef != null) {
             fabCommandRef.setOnClickListener(v -> {
                 showDetailedInfo();
-                collapseFab(fab, fabCommandRef, fabOwaspLink);
+                collapseFab(fab, fabCommandRef, fabOwaspLink, fabMarkComplete);
             });
         }
         if (fabOwaspLink != null) {
             fabOwaspLink.setOnClickListener(v -> {
                 openOwaspTop10Link();
-                collapseFab(fab, fabCommandRef, fabOwaspLink);
+                collapseFab(fab, fabCommandRef, fabOwaspLink, fabMarkComplete);
             });
         }
+        if (fabMarkComplete != null) {
+            fabMarkComplete.setOnClickListener(v -> {
+                toggleCompleteStatus();
+                updateMarkCompleteFabAppearance(fabMarkComplete);
+                collapseFab(fab, fabCommandRef, fabOwaspLink, fabMarkComplete);
+            });
+        }
+
+        // Set initial FAB appearance based on completion status
+        updateMarkCompleteFabAppearance(fabMarkComplete);
 
         return root;
     }
@@ -159,21 +181,106 @@ public class SecurityMisconfigLessonFragment extends Fragment {
         Log.i(TAG, "Configuration check complete. Issues found: " + issues);
     }
 
-    private void toggleFabExpansion(FloatingActionButton mainFab, FloatingActionButton fab1, FloatingActionButton fab2) {
+    private void scanComponents() {
+        componentsContainer.removeAllViews();
+        
+        try {
+            PackageManager pm = requireContext().getPackageManager();
+            String packageName = requireContext().getPackageName();
+            PackageInfo packageInfo = pm.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
+            
+            ActivityInfo[] activities = packageInfo.activities;
+            int exportedCount = 0;
+            
+            if (activities != null) {
+                for (ActivityInfo activity : activities) {
+                    boolean isExported = activity.exported;
+                    if (isExported) {
+                        exportedCount++;
+                    }
+                    
+                    // Create view for each component
+                    LinearLayout itemLayout = new LinearLayout(requireContext());
+                    itemLayout.setOrientation(LinearLayout.VERTICAL);
+                    itemLayout.setPadding(12, 8, 12, 8);
+                    
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    );
+                    params.setMargins(0, 0, 0, 8);
+                    itemLayout.setLayoutParams(params);
+                    
+                    // Status indicator and activity name
+                    TextView nameView = new TextView(requireContext());
+                    String statusIcon = isExported ? "🔴" : "🟢";
+                    String statusText = isExported ? "EXPORTED" : "Safe";
+                    String activityName = activity.name.replace("com.owasp.app.", "");
+                    
+                    nameView.setText(statusIcon + " " + activityName);
+                    nameView.setTextSize(12);
+                    nameView.setTextColor(isExported ? 
+                        Color.parseColor("#D32F2F") : 
+                        Color.parseColor("#388E3C"));
+                    nameView.setTypeface(null, android.graphics.Typeface.BOLD);
+                    itemLayout.addView(nameView);
+                    
+                    // Full path and label
+                    TextView detailsView = new TextView(requireContext());
+                    String labelText = activity.loadLabel(pm).toString();
+                    detailsView.setText("   Label: " + labelText + "\n   " + statusText);
+                    detailsView.setTextSize(10);
+                    detailsView.setTextColor(Color.parseColor("#666666"));
+                    detailsView.setTypeface(android.graphics.Typeface.MONOSPACE);
+                    detailsView.setPadding(0, 4, 0, 0);
+                    itemLayout.addView(detailsView);
+                    
+                    // Divider
+                    View divider = new View(requireContext());
+                    LinearLayout.LayoutParams dividerParams = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT, 1
+                    );
+                    dividerParams.setMargins(0, 8, 0, 0);
+                    divider.setLayoutParams(dividerParams);
+                    divider.setBackgroundColor(Color.parseColor("#E0E0E0"));
+                    itemLayout.addView(divider);
+                    
+                    componentsContainer.addView(itemLayout);
+                }
+                
+                componentsCard.setVisibility(View.VISIBLE);
+                
+                android.widget.Toast.makeText(requireContext(), 
+                    "Found " + activities.length + " activities (" + exportedCount + " exported)", 
+                    android.widget.Toast.LENGTH_SHORT).show();
+                
+                Log.i(TAG, "Component scan complete. Total: " + activities.length + ", Exported: " + exportedCount);
+            }
+        } catch (Exception e) {
+            android.widget.Toast.makeText(requireContext(), 
+                "Error scanning components: " + e.getMessage(), 
+                android.widget.Toast.LENGTH_SHORT).show();
+            Log.e(TAG, "Error scanning components", e);
+        }
+    }
+
+    private void toggleFabExpansion(FloatingActionButton mainFab, FloatingActionButton fab1, FloatingActionButton fab2, FloatingActionButton fab3) {
         fabExpanded = !fabExpanded;
         if (fabExpanded) {
             if (fab1 != null) fab1.setVisibility(View.VISIBLE);
             if (fab2 != null) fab2.setVisibility(View.VISIBLE);
+            if (fab3 != null) fab3.setVisibility(View.VISIBLE);
             if (mainFab != null) mainFab.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
         } else {
-            collapseFab(mainFab, fab1, fab2);
+            collapseFab(mainFab, fab1, fab2, fab3);
         }
     }
 
-    private void collapseFab(FloatingActionButton mainFab, FloatingActionButton fab1, FloatingActionButton fab2) {
+    private void collapseFab(FloatingActionButton mainFab, FloatingActionButton fab1, FloatingActionButton fab2, FloatingActionButton fab3) {
         fabExpanded = false;
         if (fab1 != null) fab1.setVisibility(View.GONE);
         if (fab2 != null) fab2.setVisibility(View.GONE);
+        if (fab3 != null) fab3.setVisibility(View.GONE);
         if (mainFab != null) mainFab.setImageResource(android.R.drawable.ic_menu_help);
     }
 
@@ -197,19 +304,35 @@ public class SecurityMisconfigLessonFragment extends Fragment {
         // bestPracticesSection.setVisibility(View.GONE);
         additionalSection.setVisibility(View.GONE);
         
-        boolean isCompleted = progressTracker.isCompleted(FlagValidator.Module.SECURITY_MISCONFIG_LESSON);
-        String buttonText = isCompleted ? "Mark as Incomplete" : "Mark as Complete";
-        
         new AlertDialog.Builder(requireContext())
                 .setTitle("Security Misconfiguration")
                 .setView(dialogView)
                 .setPositiveButton("Close", null)
-                .setNeutralButton(buttonText, (d, which) -> {
-                    boolean nowCompleted = progressTracker.toggleCompleted(FlagValidator.Module.SECURITY_MISCONFIG_LESSON);
-                    String message = nowCompleted ? "✓ Marked as complete!" : "○ Marked as incomplete";
-                    android.widget.Toast.makeText(requireContext(), message, android.widget.Toast.LENGTH_SHORT).show();
-                })
                 .show();
+    }
+    
+    private void toggleCompleteStatus() {
+        boolean nowCompleted = progressTracker.toggleCompleted(FlagValidator.Module.SECURITY_MISCONFIG_LESSON);
+        String message = nowCompleted ? "✓ Marked as complete!" : "○ Marked as incomplete";
+        android.widget.Toast.makeText(requireContext(), message, android.widget.Toast.LENGTH_SHORT).show();
+    }
+    
+    private void updateMarkCompleteFabAppearance(FloatingActionButton fabMarkComplete) {
+        if (fabMarkComplete == null) return;
+        
+        boolean isCompleted = progressTracker.isCompleted(FlagValidator.Module.SECURITY_MISCONFIG_LESSON);
+        
+        if (isCompleted) {
+            // Red - will mark as incomplete
+            fabMarkComplete.setBackgroundTintList(android.content.res.ColorStateList.valueOf(
+                androidx.core.content.ContextCompat.getColor(requireContext(), R.color.security_red)));
+            fabMarkComplete.setContentDescription("Mark as Incomplete");
+        } else {
+            // Green - will mark as complete
+            fabMarkComplete.setBackgroundTintList(android.content.res.ColorStateList.valueOf(
+                androidx.core.content.ContextCompat.getColor(requireContext(), R.color.success_green)));
+            fabMarkComplete.setContentDescription("Mark as Complete");
+        }
     }
 
     @Override
@@ -218,6 +341,7 @@ public class SecurityMisconfigLessonFragment extends Fragment {
         FloatingActionButton fab = requireActivity().findViewById(R.id.fab);
         FloatingActionButton fabCommandRef = requireActivity().findViewById(R.id.fab_command_reference);
         FloatingActionButton fabOwaspLink = requireActivity().findViewById(R.id.fab_owasp_link);
-        collapseFab(fab, fabCommandRef, fabOwaspLink);
+        FloatingActionButton fabMarkComplete = requireActivity().findViewById(R.id.fab_mark_complete);
+        collapseFab(fab, fabCommandRef, fabOwaspLink, fabMarkComplete);
     }
 }

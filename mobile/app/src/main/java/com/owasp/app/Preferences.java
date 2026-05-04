@@ -1,4 +1,6 @@
 package com.owasp.app;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -62,6 +64,20 @@ public class Preferences extends AppCompatActivity {
                     public boolean onPreferenceChange(Preference preference, Object newValue) {
                         String themeValue = (String) newValue;
                         applyTheme(themeValue);
+                        return true;
+                    }
+                });
+            }
+
+            // Set up submit issue preference listener
+            Preference submitIssuePreference = findPreference("submit_issue_preference");
+            if (submitIssuePreference != null) {
+                submitIssuePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                    @Override
+                    public boolean onPreferenceClick(Preference preference) {
+                        String issuesUrl = "https://github.com/OWASP/SecurityShepherd/issues";
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(issuesUrl));
+                        startActivity(browserIntent);
                         return true;
                     }
                 });

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.owasp.app.R;
 import com.owasp.app.databinding.FragmentLessonBinding;
 import com.owasp.app.utils.FlagValidator;
@@ -48,6 +50,30 @@ public class LessonFragment extends Fragment {
             textViewBrand.setText("Brand: " + text));
         lessonModel.getSDKText().observe(getViewLifecycleOwner(), text -> 
             textViewSDK.setText("SDK: " + text));
+
+        // Setup key verification
+        TextInputEditText keyInput = binding.keyInput;
+        Button verifyButton = binding.verifyKeyButton;
+        ProgressTracker progressTracker = new ProgressTracker(requireContext());
+
+        verifyButton.setOnClickListener(v -> {
+            String enteredKey = keyInput.getText() != null ? keyInput.getText().toString().trim() : "";
+            
+            if (enteredKey.isEmpty()) {
+                Toast.makeText(requireContext(), "Please enter a key", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            
+            if (enteredKey.equals(HIDDEN_FLAG)) {
+                // Correct key!
+                progressTracker.markCompleted(FlagValidator.Module.RE_LESSON);
+                Toast.makeText(requireContext(), "✓ Correct! Lesson marked as complete!", Toast.LENGTH_LONG).show();
+                keyInput.setText("");
+            } else {
+                // Incorrect key
+                Toast.makeText(requireContext(), "✗ Incorrect key. Try again!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         // Setup FAB to show detailed lesson information
         FloatingActionButton fab = requireActivity().findViewById(R.id.fab);

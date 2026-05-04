@@ -17,8 +17,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             app:cardElevation="2dp"
-            app:cardCornerRadius="8dp"
-            app:cardBackgroundColor="#F3E5F5"
+            app:cardCornerRadius="16dp"
+            app:cardBackgroundColor="@color/card_lesson_bg"
             app:strokeColor="#9C27B0"
             app:strokeWidth="2dp">
 
@@ -31,23 +31,32 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Find vulnerabilities in third-party SDK. Check logcat or decompile VulnerableSDK.java to extract the hardcoded API key."
+                    android:text="OWASP Mobile Top 10: M6 - Insufficient Supply Chain Security"
+                    android:textSize="14sp"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="This application uses several third-party dependencies. One of them contains a security vulnerability that can be exploited to obtain the flag."
                     android:textSize="14sp"
                     android:textColor="?android:attr/textColorSecondary" />
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Interactive Demo Card -->
+        <!-- Dependencies List -->
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/demo_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             app:cardElevation="4dp"
-            app:cardCornerRadius="12dp"
-            app:cardBackgroundColor="#FFFFFF"
-            app:strokeColor="#9C27B0"
-            app:strokeWidth="4dp">
+            app:cardCornerRadius="16dp"
+            app:cardBackgroundColor="@color/card_bg"
+            app:strokeColor="#757575"
+            app:strokeWidth="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -58,29 +67,104 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Interactive Demo"
+                    android:text="Third-Party Dependencies"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
-                    android:layout_marginBottom="8dp" />
+                    android:layout_marginBottom="12dp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="This demo shows a vulnerable third-party SDK with hardcoded credentials. Exploit this dependency to find the API key!"
+                    android:text="androidx.appcompat:appcompat:1.6.1"
                     android:textSize="14sp"
-                    android:textColor="@color/card_warning_text"
-                    android:layout_marginBottom="16dp" />
+                    android:fontFamily="monospace"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:padding="8dp"
+                    android:background="@color/code_bg"
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="com.google.android.material:material:1.11.0"
+                    android:textSize="14sp"
+                    android:fontFamily="monospace"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:padding="8dp"
+                    android:background="@color/code_bg"
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="androidx.navigation:navigation-fragment:2.7.7"
+                    android:textSize="14sp"
+                    android:fontFamily="monospace"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:padding="8dp"
+                    android:background="@color/code_bg"
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="androidx.exifinterface:exifinterface:1.3.7"
+                    android:textSize="14sp"
+                    android:fontFamily="monospace"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:padding="8dp"
+                    android:background="@color/code_bg"
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="androidx.constraintlayout:constraintlayout:2.1.4"
+                    android:textSize="14sp"
+                    android:fontFamily="monospace"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:padding="8dp"
+                    android:background="@color/code_bg" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Flag Submission -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/submission_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="4dp"
+            app:cardCornerRadius="16dp"
+            app:cardBackgroundColor="@color/card_bg"
+            app:strokeColor="#9C27B0"
+            app:strokeWidth="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Submit Flag"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:layout_marginBottom="12dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter API Key"
+                    android:hint="Enter Flag"
                     android:layout_marginBottom="12dp"
                     app:boxBackgroundMode="outline">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/api_key_input"
+                        android:id="@+id/flag_input"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
@@ -89,15 +173,15 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
-                    android:id="@+id/check_dependency_button"
+                    android:id="@+id/submit_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Check API Key"
+                    android:text="Submit Flag"
                     android:textSize="16sp"
                     android:layout_marginBottom="16dp" />
 
                 <TextView
-                    android:id="@+id/flag_text"
+                    android:id="@+id/result_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text=""
