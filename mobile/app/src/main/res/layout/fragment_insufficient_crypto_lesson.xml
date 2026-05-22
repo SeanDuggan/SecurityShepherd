@@ -30,7 +30,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Use DES encryption (56-bit key). Each secret is encrypted with a different key (0-8 characters). Use the hints to guess the keys and decrypt the secrets below."
+                    android:text="@string/use_des_encryption_56bit_key_each_secret"
                     android:textSize="14sp"
                     android:textColor="?android:attr/textColorSecondary" />
 
@@ -54,7 +54,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Encrypt / Decrypt Data"
+                    android:text="@string/encrypt_decrypt_data"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
@@ -63,7 +63,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Enter a key (0-8 characters), text, and optional hint. Click on secrets below to decrypt them."
+                    android:text="@string/enter_a_key_08_characters_text_and_optio"
                     android:textSize="14sp"
                     android:lineSpacingMultiplier="1.3"
                     android:layout_marginBottom="12dp" />
@@ -73,7 +73,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
-                    android:hint="Enter key (0-8 characters)"
+                    android:hint="@string/enter_key_08_characters"
                     app:boxBackgroundMode="outline"
                     app:counterEnabled="true"
                     app:counterMaxLength="8">
@@ -92,7 +92,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
-                    android:hint="Enter text"
+                    android:hint="@string/enter_text"
                     app:boxBackgroundMode="outline">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -107,7 +107,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
-                    android:hint="Enter hint (optional)"
+                    android:hint="@string/enter_hint_optional"
                     app:boxBackgroundMode="outline">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -130,14 +130,14 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_marginEnd="8dp"
-                        android:text="Encrypt" />
+                        android:text="@string/encrypt" />
 
                     <Button
                         android:id="@+id/decrypt_button"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Decrypt" />
+                        android:text="@string/decrypt" />
 
                 </LinearLayout>
 
@@ -151,7 +151,7 @@
                     android:textSize="12sp"
                     android:fontFamily="monospace"
                     android:visibility="gone"
-                    android:text="Output will appear here" />
+                    android:text="@string/output_will_appear_here" />
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -172,7 +172,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Encrypted Secrets"
+                    android:text="@string/encrypted_secrets"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
@@ -181,7 +181,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Decrypt these using the correct key:"
+                    android:text="@string/decrypt_these_using_the_correct_key"
                     android:textSize="14sp"
                     android:layout_marginBottom="16dp" />
 

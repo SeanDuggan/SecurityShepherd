@@ -29,7 +29,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Client-Side Injection 2"
+                    android:text="@string/clientside_injection_2"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
@@ -63,7 +63,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Product Search"
+                    android:text="@string/product_search"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
@@ -72,14 +72,14 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Search the product database. Can you discover the hidden 'secrets' table and extract the admin token?"
+                    android:text="@string/search_the_product_database_can_you_disc"
                     android:textSize="14sp"
                     android:layout_marginBottom="16dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Search products"
+                    android:hint="@string/search_products"
                     android:layout_marginBottom="12dp"
                     app:boxBackgroundMode="outline">
 
@@ -96,7 +96,7 @@
                     android:id="@+id/search_product_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Search Products"
+                    android:text="@string/search_products"
                     android:textSize="16sp" />
 
             </LinearLayout>
@@ -120,7 +120,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Results"
+                    android:text="@string/results"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
@@ -130,7 +130,7 @@
                     android:id="@+id/result_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Search results will appear here..."
+                    android:text="@string/search_results_will_appear_here"
                     android:textSize="14sp"
                     android:fontFamily="monospace"
                     android:textIsSelectable="true"
@@ -156,7 +156,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Submit Flag"
+                    android:text="@string/submit_flag"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
@@ -165,14 +165,14 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Once you've extracted the admin token from the secrets table, submit it as the flag:"
+                    android:text="@string/once_youve_extracted_the_admin_token_fro"
                     android:textSize="14sp"
                     android:layout_marginBottom="16dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Flag"
+                    android:hint="@string/flag"
                     android:layout_marginBottom="12dp"
                     app:boxBackgroundMode="outline">
 
@@ -189,7 +189,7 @@
                     android:id="@+id/submit_flag_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Submit Flag"
+                    android:text="@string/submit_flag"
                     android:textSize="16sp"
                     app:backgroundTint="@color/success_green" />
 

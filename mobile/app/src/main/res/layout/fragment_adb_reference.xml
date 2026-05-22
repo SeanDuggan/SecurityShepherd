@@ -29,7 +29,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ADB Command Reference"
+                    android:text="@string/adb_command_reference"
                     android:textSize="22sp"
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
@@ -38,7 +38,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Quick reference for Android Debug Bridge commands used in challenges. Tap any command to copy it to clipboard."
+                    android:text="@string/quick_reference_for_android_debug_bridge"
                     android:textSize="14sp"
                     android:lineSpacingMultiplier="1.3" />
 
@@ -63,7 +63,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Logcat Commands"
+                    android:text="@string/logcat_commands"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
@@ -85,7 +85,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="View all logs"
+                            android:text="@string/view_all_logs"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             android:layout_marginBottom="4dp" />
@@ -93,7 +93,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="adb logcat"
+                            android:text="@string/adb_logcat"
                             android:textSize="12sp"
                             android:fontFamily="monospace"
                             android:background="@color/code_bg"
@@ -105,7 +105,7 @@
                         style="@style/Widget.Material3.Button.IconButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="📋"
+                        android:text="@string/str_2"
                         android:layout_gravity="center_vertical" />
                 </LinearLayout>
 
@@ -125,7 +125,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Filter by tag"
+                            android:text="@string/filter_by_tag"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             android:layout_marginBottom="4dp" />
@@ -133,7 +133,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="adb logcat -s TAG_NAME"
+                            android:text="@string/adb_logcat_s_tagname"
                             android:textSize="12sp"
                             android:fontFamily="monospace"
                             android:background="@color/code_bg"
@@ -145,7 +145,7 @@
                         style="@style/Widget.Material3.Button.IconButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="📋"
+                        android:text="@string/str_2"
                         android:layout_gravity="center_vertical" />
                 </LinearLayout>
 
@@ -165,7 +165,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Search logs (PowerShell)"
+                            android:text="@string/search_logs_powershell"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             android:layout_marginBottom="4dp" />
@@ -173,7 +173,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="adb logcat | grep &quot;search_term&quot;"
+                            android:text="@string/adb_logcat_grep_quotsearchtermquot"
                             android:textSize="12sp"
                             android:fontFamily="monospace"
                             android:background="@color/code_bg"
@@ -185,7 +185,7 @@
                         style="@style/Widget.Material3.Button.IconButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="📋"
+                        android:text="@string/str_2"
                         android:layout_gravity="center_vertical" />
                 </LinearLayout>
 
@@ -204,7 +204,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Clear logs"
+                            android:text="@string/clear_logs"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             android:layout_marginBottom="4dp" />
@@ -212,7 +212,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="adb logcat -c"
+                            android:text="@string/adb_logcat_c"
                             android:textSize="12sp"
                             android:fontFamily="monospace"
                             android:background="@color/code_bg"
@@ -224,7 +224,7 @@
                         style="@style/Widget.Material3.Button.IconButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="📋"
+                        android:text="@string/str_2"
                         android:layout_gravity="center_vertical" />
                 </LinearLayout>
 
@@ -249,7 +249,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Basic ADB Commands"
+                    android:text="@string/basic_adb_commands"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
@@ -271,7 +271,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="List connected devices"
+                            android:text="@string/list_connected_devices"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             android:layout_marginBottom="4dp" />
@@ -279,7 +279,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="adb devices"
+                            android:text="@string/adb_devices"
                             android:textSize="12sp"
                             android:fontFamily="monospace"
                             android:background="@color/code_bg"
@@ -291,7 +291,7 @@
                         style="@style/Widget.Material3.Button.IconButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="📋"
+                        android:text="@string/str_2"
                         android:layout_gravity="center_vertical" />
                 </LinearLayout>
 
@@ -311,7 +311,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Open device shell"
+                            android:text="@string/open_device_shell"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             android:layout_marginBottom="4dp" />
@@ -319,7 +319,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="adb shell"
+                            android:text="@string/adb_shell"
                             android:textSize="12sp"
                             android:fontFamily="monospace"
                             android:background="@color/code_bg"
@@ -331,7 +331,7 @@
                         style="@style/Widget.Material3.Button.IconButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="📋"
+                        android:text="@string/str_2"
                         android:layout_gravity="center_vertical" />
                 </LinearLayout>
 
@@ -351,7 +351,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Install APK"
+                            android:text="@string/install_apk"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             android:layout_marginBottom="4dp" />
@@ -359,7 +359,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="adb install app.apk"
+                            android:text="@string/adb_install_appapk"
                             android:textSize="12sp"
                             android:fontFamily="monospace"
                             android:background="@color/code_bg"
@@ -371,7 +371,7 @@
                         style="@style/Widget.Material3.Button.IconButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="📋"
+                        android:text="@string/str_2"
                         android:layout_gravity="center_vertical" />
                 </LinearLayout>
 
@@ -390,7 +390,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Uninstall app"
+                            android:text="@string/uninstall_app"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             android:layout_marginBottom="4dp" />
@@ -398,7 +398,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="adb uninstall com.package.name"
+                            android:text="@string/adb_uninstall_compackagename"
                             android:textSize="12sp"
                             android:fontFamily="monospace"
                             android:background="@color/code_bg"
@@ -410,7 +410,7 @@
                         style="@style/Widget.Material3.Button.IconButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="📋"
+                        android:text="@string/str_2"
                         android:layout_gravity="center_vertical" />
                 </LinearLayout>
 
@@ -435,7 +435,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="File Operations"
+                    android:text="@string/file_operations"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
@@ -457,7 +457,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Pull database file"
+                            android:text="@string/pull_database_file"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             android:layout_marginBottom="4dp" />
@@ -465,7 +465,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="adb pull /data/data/com.owasp.app/databases/Users.db"
+                            android:text="@string/adb_pull_datadatacomowaspappdatabasesuse"
                             android:textSize="12sp"
                             android:fontFamily="monospace"
                             android:background="@color/code_bg"
@@ -477,7 +477,7 @@
                         style="@style/Widget.Material3.Button.IconButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="📋"
+                        android:text="@string/str_2"
                         android:layout_gravity="center_vertical" />
                 </LinearLayout>
 
@@ -497,7 +497,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Pull SharedPreferences"
+                            android:text="@string/pull_sharedpreferences"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             android:layout_marginBottom="4dp" />
@@ -505,7 +505,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="adb pull /data/data/com.owasp.app/shared_prefs/"
+                            android:text="@string/adb_pull_datadatacomowaspappsharedprefs"
                             android:textSize="12sp"
                             android:fontFamily="monospace"
                             android:background="@color/code_bg"
@@ -517,7 +517,7 @@
                         style="@style/Widget.Material3.Button.IconButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="📋"
+                        android:text="@string/str_2"
                         android:layout_gravity="center_vertical" />
                 </LinearLayout>
 
@@ -537,7 +537,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="List app files"
+                            android:text="@string/list_app_files"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             android:layout_marginBottom="4dp" />
@@ -545,7 +545,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="adb shell ls /data/data/com.owasp.app/"
+                            android:text="@string/adb_shell_ls_datadatacomowaspapp"
                             android:textSize="12sp"
                             android:fontFamily="monospace"
                             android:background="@color/code_bg"
@@ -557,7 +557,7 @@
                         style="@style/Widget.Material3.Button.IconButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="📋"
+                        android:text="@string/str_2"
                         android:layout_gravity="center_vertical" />
                 </LinearLayout>
 
@@ -576,7 +576,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="List databases"
+                            android:text="@string/list_databases"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             android:layout_marginBottom="4dp" />
@@ -584,7 +584,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="adb shell ls /data/data/com.owasp.app/databases/"
+                            android:text="@string/adb_shell_ls_datadatacomowaspappdatabase"
                             android:textSize="12sp"
                             android:fontFamily="monospace"
                             android:background="@color/code_bg"
@@ -596,7 +596,7 @@
                         style="@style/Widget.Material3.Button.IconButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="📋"
+                        android:text="@string/str_2"
                         android:layout_gravity="center_vertical" />
                 </LinearLayout>
 
@@ -621,7 +621,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Database Commands"
+                    android:text="@string/database_commands"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
@@ -643,7 +643,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Open SQLite database"
+                            android:text="@string/open_sqlite_database"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             android:layout_marginBottom="4dp" />
@@ -651,7 +651,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="adb shell sqlite3 /data/data/com.owasp.app/databases/Users.db"
+                            android:text="@string/adb_shell_sqlite3_datadatacomowaspappdat"
                             android:textSize="12sp"
                             android:fontFamily="monospace"
                             android:background="@color/code_bg"
@@ -663,7 +663,7 @@
                         style="@style/Widget.Material3.Button.IconButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="📋"
+                        android:text="@string/str_2"
                         android:layout_gravity="center_vertical" />
                 </LinearLayout>
 
@@ -683,7 +683,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Query database"
+                            android:text="@string/query_database"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             android:layout_marginBottom="4dp" />
@@ -691,7 +691,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="sqlite> SELECT * FROM users;"
+                            android:text="@string/sqlite_select_from_users"
                             android:textSize="12sp"
                             android:fontFamily="monospace"
                             android:background="@color/code_bg"
@@ -703,7 +703,7 @@
                         style="@style/Widget.Material3.Button.IconButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="📋"
+                        android:text="@string/str_2"
                         android:layout_gravity="center_vertical" />
                 </LinearLayout>
 
@@ -722,7 +722,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="View file contents"
+                            android:text="@string/view_file_contents"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             android:layout_marginBottom="4dp" />
@@ -730,7 +730,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="adb shell cat /data/data/com.owasp.app/shared_prefs/UserCredentials.xml"
+                            android:text="@string/adb_shell_cat_datadatacomowaspappsharedp"
                             android:textSize="12sp"
                             android:fontFamily="monospace"
                             android:background="@color/code_bg"
@@ -742,7 +742,7 @@
                         style="@style/Widget.Material3.Button.IconButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="📋"
+                        android:text="@string/str_2"
                         android:layout_gravity="center_vertical" />
                 </LinearLayout>
 
@@ -767,7 +767,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Package Management"
+                    android:text="@string/package_management"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
@@ -789,7 +789,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Find package name"
+                            android:text="@string/find_package_name"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             android:layout_marginBottom="4dp" />
@@ -797,7 +797,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="adb shell pm list packages | grep reverser"
+                            android:text="@string/adb_shell_pm_list_packages_grep_reverser"
                             android:textSize="12sp"
                             android:fontFamily="monospace"
                             android:background="@color/code_bg"
@@ -809,7 +809,7 @@
                         style="@style/Widget.Material3.Button.IconButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="📋"
+                        android:text="@string/str_2"
                         android:layout_gravity="center_vertical" />
                 </LinearLayout>
 
@@ -829,7 +829,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Get APK path"
+                            android:text="@string/get_apk_path"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             android:layout_marginBottom="4dp" />
@@ -837,7 +837,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="adb shell pm path com.owasp.app"
+                            android:text="@string/adb_shell_pm_path_comowaspapp"
                             android:textSize="12sp"
                             android:fontFamily="monospace"
                             android:background="@color/code_bg"
@@ -849,7 +849,7 @@
                         style="@style/Widget.Material3.Button.IconButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="📋"
+                        android:text="@string/str_2"
                         android:layout_gravity="center_vertical" />
                 </LinearLayout>
 
@@ -869,7 +869,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Pull APK file"
+                            android:text="@string/pull_apk_file"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             android:layout_marginBottom="4dp" />
@@ -877,7 +877,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="adb pull /data/app/com.owasp.app-*/base.apk"
+                            android:text="@string/adb_pull_dataappcomowaspappbaseapk"
                             android:textSize="12sp"
                             android:fontFamily="monospace"
                             android:background="@color/code_bg"
@@ -889,7 +889,7 @@
                         style="@style/Widget.Material3.Button.IconButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="📋"
+                        android:text="@string/str_2"
                         android:layout_gravity="center_vertical" />
                 </LinearLayout>
 
@@ -908,7 +908,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Clear app data"
+                            android:text="@string/clear_app_data"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             android:layout_marginBottom="4dp" />
@@ -916,7 +916,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="adb shell pm clear com.owasp.app"
+                            android:text="@string/adb_shell_pm_clear_comowaspapp"
                             android:textSize="12sp"
                             android:fontFamily="monospace"
                             android:background="@color/code_bg"
@@ -928,7 +928,7 @@
                         style="@style/Widget.Material3.Button.IconButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="📋"
+                        android:text="@string/str_2"
                         android:layout_gravity="center_vertical" />
                 </LinearLayout>
 

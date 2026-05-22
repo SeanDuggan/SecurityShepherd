@@ -29,7 +29,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Vulnerable SDK"
+                    android:text="@string/vulnerable_sdk"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
@@ -64,7 +64,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="SDK Investigation"
+                    android:text="@string/sdk_investigation"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
@@ -73,7 +73,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="The app uses a vulnerable third-party analytics SDK. Analyze the SDK initialization, check logs, and inspect the filesystem to find security issues."
+                    android:text="@string/the_app_uses_a_vulnerable_thirdparty_ana"
                     android:textSize="14sp"
                     android:layout_marginBottom="16dp" />
 
@@ -81,7 +81,7 @@
                     android:id="@+id/analyze_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Analyze SDK"
+                    android:text="@string/analyze_sdk"
                     android:textSize="16sp" />
 
             </LinearLayout>
@@ -108,7 +108,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Analysis Results"
+                    android:text="@string/analysis_results"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
@@ -144,7 +144,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Submit Flag"
+                    android:text="@string/submit_flag"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
@@ -153,14 +153,14 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Once you've exploited the supply chain vulnerability, enter the flag below:"
+                    android:text="@string/once_youve_exploited_the_supply_chain_vu"
                     android:textSize="14sp"
                     android:layout_marginBottom="16dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter Flag"
+                    android:hint="@string/enter_flag"
                     android:layout_marginBottom="12dp"
                     app:boxBackgroundMode="outline">
 
@@ -177,7 +177,7 @@
                     android:id="@+id/submit_flag_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Submit Flag"
+                    android:text="@string/submit_flag"
                     android:textSize="16sp"
                     android:layout_marginBottom="12dp" />
 

@@ -32,7 +32,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Extract sensitive data from unencrypted SQLite database. Pull Members.db from /data/data/com.owasp.app/databases/ and query for credentials."
+                    android:text="@string/extract_sensitive_data_from_unencrypted"
                     android:textSize="14sp"
                     android:textColor="?android:attr/textColorSecondary" />
 
@@ -43,7 +43,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Database Users"
+            android:text="@string/database_users"
             android:textSize="20sp"
             android:textStyle="bold"
             android:layout_marginBottom="16dp" />
@@ -64,7 +64,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Members stored in unencrypted SQLite database:"
+                android:text="@string/members_stored_in_unencrypted_sqlite_dat"
                 android:textSize="14sp"
                 android:textStyle="italic"
                 android:layout_marginBottom="12dp" />
@@ -78,7 +78,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="\nPasswords are hidden here but stored in plaintext in:\n/data/data/com.owasp.app/databases/Members.db"
+                android:text="@string/npasswords_are_hidden_here_but_stored_in"
                 android:textSize="12sp"
                 android:textStyle="italic"
                 android:textColor="?android:attr/textColorSecondary"

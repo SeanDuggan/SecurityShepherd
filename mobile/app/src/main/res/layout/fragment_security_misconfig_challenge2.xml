@@ -28,7 +28,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Security Misconfiguration 2: Backup Extraction"
+                    android:text="@string/security_misconfiguration_2_backup_extra"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
@@ -47,7 +47,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Stored User Preferences:"
+                    android:text="@string/stored_user_preferences"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     android:layout_marginBottom="8dp" />
@@ -63,7 +63,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Username: admin"
+                        android:text="@string/username_admin"
                         android:textSize="13sp"
                         android:fontFamily="monospace"
                         android:layout_marginBottom="4dp" />
@@ -71,7 +71,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Theme: Dark Mode"
+                        android:text="@string/theme_dark_mode"
                         android:textSize="13sp"
                         android:fontFamily="monospace"
                         android:layout_marginBottom="4dp" />
@@ -79,7 +79,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Language: English"
+                        android:text="@string/language_english"
                         android:textSize="13sp"
                         android:fontFamily="monospace"
                         android:layout_marginBottom="4dp" />
@@ -87,7 +87,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Secret Flag: [Encrypted]"
+                        android:text="@string/secret_flag_encrypted"
                         android:textSize="13sp"
                         android:fontFamily="monospace"
                         android:textColor="@color/error_text" />
@@ -96,7 +96,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Hint: This app allows backups. Use ADB to extract the app data and examine the backup file for stored preferences."
+                    android:text="@string/hint_this_app_allows_backups_use_adb_to"
                     android:textSize="12sp"
                     android:textStyle="italic"
                     android:textColor="?android:attr/textColorSecondary"
@@ -107,7 +107,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter Flag"
+                    android:hint="@string/enter_flag"
                     android:layout_marginBottom="12dp"
                     app:boxBackgroundMode="outline">
 
@@ -124,7 +124,7 @@
                     android:id="@+id/validate_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Validate Flag"
+                    android:text="@string/validate_flag"
                     android:textSize="16sp"
                     android:layout_marginBottom="8dp" />
 

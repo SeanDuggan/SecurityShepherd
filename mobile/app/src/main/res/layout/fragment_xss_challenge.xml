@@ -18,7 +18,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="WebView XSS"
+            android:text="@string/webview_xss"
             android:textSize="20sp"
             android:textStyle="bold"
             android:layout_marginBottom="8dp" />
@@ -39,7 +39,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Challenge"
+                    android:text="@string/challenge"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
@@ -48,7 +48,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="This app displays your profile information in a WebView. The flag is stored in the WebView's JavaScript context. Use Cross-Site Scripting (XSS) to extract it.\n\nObjective: Inject JavaScript to access and display the hidden flag."
+                    android:text="@string/this_app_displays_your_profile_informati"
                     android:textSize="14sp"
                     android:textColor="?android:attr/textColorSecondary" />
 
@@ -59,7 +59,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Edit Your Profile"
+            android:text="@string/edit_your_profile"
             android:textSize="20sp"
             android:textStyle="bold"
             android:layout_marginBottom="16dp" />
@@ -83,7 +83,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Display Name"
+                    android:hint="@string/display_name"
                     app:boxBackgroundMode="outline"
                     android:layout_marginBottom="12dp">
 
@@ -92,14 +92,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textPersonName"
-                        android:text="John Doe" />
+                        android:text="@string/john_doe" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Bio / About Me"
+                    android:hint="@string/bio_about_me"
                     app:boxBackgroundMode="outline"
                     android:layout_marginBottom="16dp">
 
@@ -110,7 +110,7 @@
                         android:inputType="textMultiLine"
                         android:lines="3"
                         android:gravity="top"
-                        android:text="Mobile security enthusiast" />
+                        android:text="@string/mobile_security_enthusiast" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -118,7 +118,7 @@
                     android:id="@+id/update_profile_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Update Profile"
+                    android:text="@string/update_profile"
                     android:textColor="@color/text_on_button"
                     android:backgroundTint="#4CAF50" />
 
@@ -130,7 +130,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Profile Preview"
+            android:text="@string/profile_preview"
             android:textSize="20sp"
             android:textStyle="bold"
             android:layout_marginBottom="16dp" />

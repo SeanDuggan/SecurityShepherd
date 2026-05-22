@@ -59,7 +59,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Extract EXIF metadata from images to discover location coordinates. Use ADB to pull the photo and examine its metadata."
+                    android:text="@string/extract_exif_metadata_from_images_to_dis"
                     android:textSize="14sp"
                     android:textColor="?android:attr/textColorSecondary" />
 
@@ -84,7 +84,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Photo Viewer"
+                    android:text="@string/photo_viewer"
                     android:textColor="@color/text_primary"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -129,7 +129,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Actions"
+                    android:text="@string/actions"
                     android:textColor="@color/text_primary"
                     android:textSize="18sp"
                     android:textStyle="bold"

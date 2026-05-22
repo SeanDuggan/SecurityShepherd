@@ -54,7 +54,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="User Search"
+                    android:text="@string/user_search"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
@@ -63,14 +63,14 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Find the hidden admin user!"
+                    android:text="@string/find_the_hidden_admin_user"
                     android:textSize="14sp"
                     android:layout_marginBottom="16dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Search username"
+                    android:hint="@string/search_username"
                     android:layout_marginBottom="12dp"
                     app:boxBackgroundMode="outline">
 
@@ -87,7 +87,7 @@
                     android:id="@+id/search_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Search Users"
+                    android:text="@string/search_users"
                     android:textSize="16sp" />
 
             </LinearLayout>
@@ -110,7 +110,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Results"
+                    android:text="@string/results"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
@@ -120,7 +120,7 @@
                     android:id="@+id/result_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Search results will appear here..."
+                    android:text="@string/search_results_will_appear_here"
                     android:textSize="14sp"
                     android:fontFamily="monospace"
                     android:textIsSelectable="true"

@@ -64,7 +64,7 @@
                         android:id="@+id/lessons_progress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="0 of 11 lessons completed"
+                        android:text="@string/s_0_of_11_lessons_completed"
                         android:textSize="14sp"
                         android:textColor="@color/text_primary"
                         android:gravity="center"
@@ -74,7 +74,7 @@
                         android:id="@+id/challenges_progress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="0 of 13 challenges completed"
+                        android:text="@string/s_0_of_13_challenges_completed"
                         android:textSize="14sp"
                         android:textColor="@color/text_primary"
                         android:gravity="center" />

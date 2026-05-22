@@ -33,7 +33,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Where to Find the Key"
+                    android:text="@string/where_to_find_the_key"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="@color/card_warning_accent"
@@ -42,7 +42,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="The key is hardcoded in the Java source code of this lesson fragment:\n\nFile: LessonFragment.java\nPackage: com.owasp.app.ui.lessons\nLocation: Inside the class as a string variable"
+                    android:text="@string/the_key_is_hardcoded_in_the_java_source"
                     android:textSize="14sp"
                     android:fontFamily="monospace" />
 
@@ -68,7 +68,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Verify Key"
+                    android:text="@string/verify_key"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
@@ -78,7 +78,7 @@
                     android:id="@+id/key_input_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter the key you found"
+                    android:hint="@string/enter_the_key_you_found"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_marginBottom="12dp">
 
@@ -95,7 +95,7 @@
                     android:id="@+id/verify_key_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Verify Key"
+                    android:text="@string/verify_key"
                     android:textColor="@color/text_on_button"
                     app:backgroundTint="@color/primary_blue"
                     app:cornerRadius="8dp"
@@ -108,7 +108,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Device Information"
+            android:text="@string/device_information"
             android:textSize="20sp"
             android:textStyle="bold"
             android:layout_marginBottom="16dp" />
@@ -132,7 +132,7 @@
                 android:id="@+id/textViewSerial"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Serial: Loading..."
+                android:text="@string/serial_loading"
                 android:textSize="14sp"
                 android:layout_marginBottom="4dp" />
 
@@ -140,7 +140,7 @@
                 android:id="@+id/textViewBuild"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Build: Loading..."
+                android:text="@string/build_loading"
                 android:textSize="14sp"
                 android:layout_marginBottom="4dp" />
 
@@ -148,7 +148,7 @@
                 android:id="@+id/textViewManufacturer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Manufacturer: Loading..."
+                android:text="@string/manufacturer_loading"
                 android:textSize="14sp"
                 android:layout_marginBottom="4dp" />
 
@@ -156,7 +156,7 @@
                 android:id="@+id/textViewBrand"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Brand: Loading..."
+                android:text="@string/brand_loading"
                 android:textSize="14sp"
                 android:layout_marginBottom="4dp" />
 
@@ -164,7 +164,7 @@
                 android:id="@+id/textViewSDK"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="SDK: Loading..."
+                android:text="@string/sdk_loading"
                 android:textSize="14sp" />
         </LinearLayout>
 

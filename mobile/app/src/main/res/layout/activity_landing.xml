@@ -28,7 +28,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="OWASP Security Shepherd Project"
+            android:text="@string/owasp_security_shepherd_project"
             android:textSize="18sp"
             android:textAlignment="center"
             android:textColor="#666666"
@@ -57,7 +57,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="This application is designed for educational purposes as part of the OWASP Security Shepherd project."
+            android:text="@string/this_application_is_designed_for_educati"
             android:textSize="16sp"
             android:textAlignment="center"
             android:textColor="#333333"
@@ -78,7 +78,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Licensed under GNU GPL v3"
+            android:text="@string/licensed_under_gnu_gpl_v3"
             android:textSize="12sp"
             android:textAlignment="center"
             android:textColor="#999999"

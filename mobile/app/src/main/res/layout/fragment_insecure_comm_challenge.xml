@@ -30,7 +30,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Network Traffic Analysis"
+                    android:text="@string/network_traffic_analysis"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
@@ -64,7 +64,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Network Monitor"
+                    android:text="@string/network_monitor"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
@@ -73,7 +73,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="This app makes multiple network requests. Start monitoring to capture all traffic and identify insecure communications."
+                    android:text="@string/this_app_makes_multiple_network_requests"
                     android:textSize="14sp"
                     android:layout_marginBottom="16dp" />
 
@@ -81,7 +81,7 @@
                     android:id="@+id/start_app_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Start Monitoring"
+                    android:text="@string/start_monitoring"
                     android:textSize="16sp"
                     android:layout_marginBottom="12dp" />
 
@@ -89,7 +89,7 @@
                     android:id="@+id/traffic_status"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Ready to monitor network traffic..."
+                    android:text="@string/ready_to_monitor_network_traffic"
                     android:textSize="14sp"
                     android:fontFamily="monospace"
                     android:padding="12dp"
@@ -119,7 +119,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Submit Flag"
+                    android:text="@string/submit_flag"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
@@ -128,14 +128,14 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Analyze the captured traffic in logcat. Find the request sent over HTTP (not HTTPS) and extract the session token."
+                    android:text="@string/analyze_the_captured_traffic_in_logcat_f"
                     android:textSize="14sp"
                     android:layout_marginBottom="16dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter Flag"
+                    android:hint="@string/enter_flag"
                     android:layout_marginBottom="12dp"
                     app:boxBackgroundMode="outline">
 
@@ -152,7 +152,7 @@
                     android:id="@+id/submit_flag_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Submit Flag"
+                    android:text="@string/submit_flag"
                     android:textSize="16sp"
                     android:layout_marginBottom="12dp" />
 

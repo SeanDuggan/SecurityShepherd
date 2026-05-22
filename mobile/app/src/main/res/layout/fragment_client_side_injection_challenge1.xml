@@ -29,7 +29,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Client-Side Injection 1"
+                    android:text="@string/clientside_injection_1"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
@@ -63,7 +63,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Account Login"
+                    android:text="@string/account_login"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
@@ -72,14 +72,14 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Login to access your account. Can you bypass the authentication and retrieve the admin password?"
+                    android:text="@string/login_to_access_your_account_can_you_byp"
                     android:textSize="14sp"
                     android:layout_marginBottom="16dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Username"
+                    android:hint="@string/username"
                     android:layout_marginBottom="12dp"
                     app:boxBackgroundMode="outline">
 
@@ -95,7 +95,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Password"
+                    android:hint="@string/password"
                     android:layout_marginBottom="16dp"
                     app:boxBackgroundMode="outline"
                     app:endIconMode="password_toggle">
@@ -113,7 +113,7 @@
                     android:id="@+id/login_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Login"
+                    android:text="@string/login"
                     android:textSize="16sp" />
 
             </LinearLayout>
@@ -137,7 +137,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Results"
+                    android:text="@string/results"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
@@ -147,7 +147,7 @@
                     android:id="@+id/result_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Login results will appear here..."
+                    android:text="@string/login_results_will_appear_here"
                     android:textSize="14sp"
                     android:fontFamily="monospace"
                     android:textIsSelectable="true"
@@ -173,7 +173,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Submit Flag"
+                    android:text="@string/submit_flag"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
@@ -182,14 +182,14 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Once you've retrieved the admin password, submit it as the flag:"
+                    android:text="@string/once_youve_retrieved_the_admin_password"
                     android:textSize="14sp"
                     android:layout_marginBottom="16dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Flag"
+                    android:hint="@string/flag"
                     android:layout_marginBottom="12dp"
                     app:boxBackgroundMode="outline">
 
@@ -206,7 +206,7 @@
                     android:id="@+id/submit_flag_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Submit Flag"
+                    android:text="@string/submit_flag"
                     android:textSize="16sp"
                     app:backgroundTint="@color/success_green" />
 

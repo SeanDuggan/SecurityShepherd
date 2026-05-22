@@ -34,7 +34,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Deep Link Content Loader"
+                    android:text="@string/deep_link_content_loader"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
@@ -43,7 +43,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="This app accepts deep links to load external content. For security, only trusted domains are allowed: example.com, trusted-site.com, and owasp.org"
+                    android:text="@string/this_app_accepts_deep_links_to_load_exte"
                     android:textSize="14sp"
                     android:textColor="?android:attr/textColorSecondary" />
 
@@ -54,7 +54,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Quick Links"
+            android:text="@string/quick_links"
             android:textSize="16sp"
             android:textStyle="bold"
             android:layout_marginBottom="12dp" />
@@ -70,7 +70,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Example.com"
+                android:text="@string/examplecom"
                 android:layout_marginEnd="8dp"
                 style="@style/Widget.Material3.Button.OutlinedButton" />
 
@@ -79,7 +79,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Trusted Site"
+                android:text="@string/trusted_site"
                 style="@style/Widget.Material3.Button.OutlinedButton" />
 
         </LinearLayout>
@@ -94,7 +94,7 @@
                 android:id="@+id/load_owasp_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="OWASP.org"
+                android:text="@string/owasporg"
                 style="@style/Widget.Material3.Button.OutlinedButton" />
 
         </LinearLayout>
@@ -103,7 +103,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Custom Deep Link"
+            android:text="@string/custom_deep_link"
             android:textSize="16sp"
             android:textStyle="bold"
             android:layout_marginBottom="12dp" />
@@ -127,7 +127,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Format: myapp://open?url=&lt;target_url&gt;"
+                    android:text="@string/format_myappopenurllttargeturlgt"
                     android:textSize="12sp"
                     android:fontFamily="monospace"
                     android:textColor="?android:attr/textColorSecondary"
@@ -136,7 +136,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter target URL"
+                    android:hint="@string/enter_target_url"
                     app:boxBackgroundMode="outline"
                     android:layout_marginBottom="12dp">
 
@@ -153,7 +153,7 @@
                     android:id="@+id/open_link_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Open Deep Link"
+                    android:text="@string/open_deep_link"
                     android:textColor="@color/text_on_button" />
 
             </LinearLayout>
@@ -164,7 +164,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Loaded Content"
+            android:text="@string/loaded_content"
             android:textSize="16sp"
             android:textStyle="bold"
             android:layout_marginBottom="12dp" />
@@ -190,7 +190,7 @@
                     android:id="@+id/content_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="No content loaded"
+                    android:text="@string/no_content_loaded"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
@@ -200,7 +200,7 @@
                     android:id="@+id/content_body"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Use the buttons above or enter a custom deep link to load content."
+                    android:text="@string/use_the_buttons_above_or_enter_a_custom"
                     android:textSize="14sp"
                     android:textColor="?android:attr/textColorSecondary" />
 
