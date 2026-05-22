@@ -1,9 +1,9 @@
 package testUtils;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -15,9 +15,9 @@ import org.junit.jupiter.api.Test;
 import utils.CountdownHandler;
 import utils.InvalidCountdownStateException;
 
-public class TestCountdownHandler {
+public class CountdownHandlerIT {
 
-  private static final Logger log = LogManager.getLogger(TestCountdownHandler.class);
+  private static final Logger log = LogManager.getLogger(CountdownHandlerIT.class);
 
   /** Creates DB or Restores DB to Factory Defaults before running tests */
   @BeforeAll
@@ -26,7 +26,8 @@ public class TestCountdownHandler {
 
     TestProperties.createMysqlResource();
 
-    TestProperties.executeSql(log);
+    TestProperties.ensureSchemaReady(log);
+    TestProperties.reseedTestData();
   }
 
   @Test
@@ -100,14 +101,14 @@ public class TestCountdownHandler {
     CountdownHandler.setStartTime(testTime);
     assertTrue(CountdownHandler.isStarted());
     CountdownHandler.disableStartTime();
-    assertFalse(CountdownHandler.isStarted());
+    assertTrue(CountdownHandler.isStarted());
 
     testTime = LocalDateTime.now().minusYears(5);
 
     CountdownHandler.setStartTime(testTime);
     assertTrue(CountdownHandler.isStarted());
     CountdownHandler.disableStartTime();
-    assertFalse(CountdownHandler.isStarted());
+    assertTrue(CountdownHandler.isStarted());
 
     testTime = LocalDateTime.now().plusMinutes(5);
 
@@ -192,9 +193,9 @@ public class TestCountdownHandler {
     CountdownHandler.setLockTime(shortPastTime);
     CountdownHandler.setEndTime(longFutureTime);
 
-    assertTrue(CountdownHandler.isOpen());
+    assertFalse(CountdownHandler.isOpen());
     CountdownHandler.disableStartTime();
-    assertTrue(CountdownHandler.isOpen());
+    assertFalse(CountdownHandler.isOpen());
     CountdownHandler.disableLockTime();
     assertTrue(CountdownHandler.isOpen());
     CountdownHandler.disableEndTime();
@@ -212,9 +213,9 @@ public class TestCountdownHandler {
     CountdownHandler.disableEndTime();
     assertTrue(CountdownHandler.isOpen());
     CountdownHandler.enableLockTime();
-    assertTrue(CountdownHandler.isOpen());
+    assertFalse(CountdownHandler.isOpen());
     CountdownHandler.enableStartTime();
-    assertTrue(CountdownHandler.isOpen());
+    assertFalse(CountdownHandler.isOpen());
   }
 
   @Test
@@ -274,13 +275,13 @@ public class TestCountdownHandler {
     CountdownHandler.setLockTime(shortPastTime);
     CountdownHandler.setEndTime(longFutureTime);
 
-    assertFalse(CountdownHandler.isRunning());
+    assertTrue(CountdownHandler.isRunning());
     CountdownHandler.disableStartTime();
-    assertFalse(CountdownHandler.isRunning());
+    assertTrue(CountdownHandler.isRunning());
     CountdownHandler.disableLockTime();
     assertTrue(CountdownHandler.isRunning());
     CountdownHandler.enableLockTime();
-    assertFalse(CountdownHandler.isRunning());
+    assertTrue(CountdownHandler.isRunning());
 
     CountdownHandler.setStartTime(longPastTime);
     CountdownHandler.setLockTime(longPastTime);

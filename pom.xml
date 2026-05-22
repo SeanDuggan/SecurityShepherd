@@ -60,7 +60,7 @@
 		<dependency>
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
-			<version>1.18.3</version>
+			<version>1.22.1</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/net.sf.jtidy/jtidy -->
 		<dependency>
@@ -244,7 +244,7 @@
 					</plugin>
 					<plugin>
 						<artifactId>maven-resources-plugin</artifactId>
-						<version>3.1.0</version>
+						<version>3.5.0</version>
 						<executions>
 							<execution>
 								<id>copy-sql-scripts</id>
@@ -266,7 +266,7 @@
 					</plugin>
 					<plugin>
 						<artifactId>maven-resources-plugin</artifactId>
-						<version>3.1.0</version>
+						<version>3.5.0</version>
 						<executions>
 							<execution>
 								<id>copy-mongo-scripts</id>
@@ -349,7 +349,7 @@
 					<plugin>
 						<groupId>io.fabric8</groupId>
 						<artifactId>docker-maven-plugin</artifactId>
-						<version>0.40.2</version>
+						<version>0.48.1</version>
 						<executions>
 							<execution>
 								<id>start</id>
@@ -440,7 +440,7 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
-				<version>3.3.1</version>
+				<version>3.5.0</version>
 				<executions>
 					<execution>
 						<id>copy-resources</id>
@@ -529,6 +529,20 @@
 							<sources>
 								<source>src/it/java</source>
 							</sources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>add-test-resource</id>
+						<phase>generate-test-resources</phase>
+						<goals>
+							<goal>add-test-resource</goal>
+						</goals>
+						<configuration>
+							<resources>
+								<resource>
+									<directory>src/it/resources</directory>
+								</resource>
+							</resources>
 						</configuration>
 					</execution>
 				</executions>

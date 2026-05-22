@@ -293,6 +293,11 @@ public class CountdownHandler {
     }
   }
 
+  public static void forceReload() {
+    isLoaded = false;
+    loadCountdowns();
+  }
+
   private static void loadCountdowns() {
 
     try {

@@ -1,95 +1,100 @@
 name: Build and Test
 on:
   push:
-    branches: [master, dev]
-    paths-ignore:
-      - '**.md'
-      - '.github/ISSUE_TEMPLATE'
-      - '.gitignore'
-      - 'provisioning'
-      - '.sonarcloud.properties'
-      - 'LICENSE'
-      - 'Vagrantfile'
+    branches:
+      - master
+      - dev
+      - "dev#*"
   pull_request:
-    branches: [master, dev]
-    paths-ignore:
-      - '**.md'
-      - '.github/ISSUE_TEMPLATE'
-      - '.gitignore'
-      - 'provisioning'
-      - '.sonarcloud.properties'
-      - 'LICENSE'
-      - 'Vagrantfile'
+    branches:
+      - master
+      - dev
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  lint-java:
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      src: ${{ steps.filter.outputs.src }}
+      java: ${{ steps.filter.outputs.java }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 #v3.0.2
+        id: filter
+        with:
+          filters: |
+            java:
+              - 'src/**/*.java'
+            src:
+              - 'src/**'
+              - 'pom.xml'
+              - 'docker-compose.yml'
+              - 'docker/**'
+              - '.env'
+
+  dependency-review:
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
+      - uses: actions/dependency-review-action@v4
         with:
-          java-version: '17'
-          distribution: 'temurin'
-      - name: Remove MobileShepherd before linting
-        run: rm -rf src/MobileShepherd
-      - name: Download Google Java Format
-        run: |
-          curl -L -o google-java-format.jar https://github.com/google/google-java-format/releases/download/v1.23.0/google-java-format-1.23.0-all-deps.jar
-      - name: Run Google Java Format Check
-        run: |
-          java -jar google-java-format.jar --set-exit-if-changed --skip-sorting-imports --skip-reflowing-long-strings $(find src/main src/it src/test -name "*.java" 2>/dev/null)
+          fail-on-severity: critical
+
+  lint-java:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.java == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '24'
+      - uses: axel-op/googlejavaformat-action@fe78db8a90171b6a836449f8d0e982d5d71e5c5a #v3.6.0
+        with:
+          args: "--set-exit-if-changed"
 
   build:
-    needs: lint-java
-    name: build
+    needs: detect-changes
+    if: needs.detect-changes.outputs.src == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Set up JDK 1.8
-        uses: actions/setup-java@v4
+      - uses: actions/setup-java@v4
         with:
-          java-version: 1.8
-          distribution: 'temurin'
-      - name: Build Maven Project
-        run: mvn clean package -DskipTests -Dmaven.test.skip=true -B
+          distribution: temurin
+          java-version: '8'
+          cache: maven
+      - name: Build Maven with Docker Profile
+        run: mvn clean install -Pdocker -DskipTests -B
+      - name: Docker Compose Build
+        run: docker compose build
 
   unit-tests:
-    needs: [lint-java, build]
+    needs: detect-changes
+    if: needs.detect-changes.outputs.src == 'true'
     runs-on: ubuntu-latest
-    continue-on-error: true  # Tests need investigation with MySQL 8.0 setup
-    services:
-      mysql:
-        image: mysql:8.0
-        env:
-          MYSQL_ROOT_PASSWORD: password
-          MYSQL_DATABASE: core
-        ports:
-          - '8888:3306'
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
       - uses: actions/checkout@v4
-      - name: Set up JDK 1.8
-        uses: actions/setup-java@v4
+      - uses: actions/setup-java@v4
         with:
-          java-version: 1.8
-          distribution: 'temurin'
-      - name: Start MYSQL Server
-        run: sudo /etc/init.d/mysql start
-      - name: Modify MySQL Connection Variables
-        run: |
-          sed -i "s/'@'localhost'/'@'%'/g" ${GITHUB_WORKSPACE}/src/main/resources/database/moduleSchemas.sql
-          sed -i 's/TEST_MYSQL_PORT=3306/TEST_MYSQL_PORT=8888/g' ${GITHUB_WORKSPACE}/.env
+          distribution: temurin
+          java-version: '8'
+          cache: maven
       - name: Run Unit Tests
-        run: mvn test -B -e -X
+        run: mvn test -B -e
 
   integration-tests:
-    needs: [lint-java, build]
+    needs: detect-changes
+    if: needs.detect-changes.outputs.src == 'true'
     runs-on: ubuntu-latest
-    continue-on-error: true  # Tests need investigation with MySQL 8.0 setup
     services:
       mysql:
-        image: mysql:8.0
+        image: mysql:5.7
         env:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: core
@@ -98,22 +103,21 @@ jobs:
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
       - uses: actions/checkout@v4
-      - name: Set up JDK 1.8
-        uses: actions/setup-java@v4
+      - uses: actions/setup-java@v4
         with:
-          java-version: 1.8
-          distribution: 'temurin'
+          distribution: temurin
+          java-version: '8'
+          cache: maven
       - name: Start MYSQL Server
         run: sudo /etc/init.d/mysql start
       - name: Modify MySQL Connection Variables
         run: |
           sed -i "s/'@'localhost'/'@'%'/g" ${GITHUB_WORKSPACE}/src/main/resources/database/moduleSchemas.sql
           sed -i 's/TEST_MYSQL_PORT=3306/TEST_MYSQL_PORT=8888/g' ${GITHUB_WORKSPACE}/.env
-      - name: Prepare Intergration Tests
+      - name: Prepare Integration Tests
         run: |
-          sudo apt-get update
           sudo apt-get -y install libargon2-1
           mvn -Pdocker validate
-      - name: Run Intergration Tests
+      - name: Run Integration Tests
         run: |
           mvn verify -DskipUTs=true -DmongoDocker -B

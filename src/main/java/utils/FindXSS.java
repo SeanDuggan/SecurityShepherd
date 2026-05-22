@@ -439,7 +439,7 @@ public class FindXSS {
           for (int i = 0; i < javascriptTriggers.length && !xssDetected; i++) {
             String javascriptTriggerValue = element.attr(javascriptTriggers[i]);
             if (!javascriptTriggerValue.isEmpty()) {
-              if (javascriptTriggerValue.startsWith("alert")) {
+              if (javascriptTriggerValue.contains("alert")) {
                 log.debug("Javascript Trigger XSS Detected");
                 xssDetected = true;
               }
