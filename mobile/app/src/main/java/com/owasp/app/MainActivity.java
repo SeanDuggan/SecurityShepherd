@@ -4,9 +4,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -25,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.owasp.app.databinding.ActivityMainBinding;
+import com.owasp.app.utils.AuthManager;
 import com.owasp.app.utils.FlagValidator;
 import com.owasp.app.utils.ProgressTracker;
 
@@ -149,7 +154,28 @@ public class MainActivity extends AppCompatActivity {
         });
 
         DrawerLayout drawer = binding.drawerLayout;
-        
+
+        // Wire up nav header auth UI (header is included directly in nav_drawer_layout)
+        TextView authStatus = findViewById(R.id.nav_header_auth_status);
+        Button authButton = findViewById(R.id.nav_header_auth_button);
+        updateNavHeader(authStatus, authButton);
+        authButton.setOnClickListener(v -> {
+            if (AuthManager.isAuthenticated(this)) {
+                AuthManager.logout(this);
+                updateNavHeader(authStatus, authButton);
+                Toast.makeText(this, "Signed out", Toast.LENGTH_SHORT).show();
+            } else {
+                showAuthDialog(authStatus, authButton);
+            }
+        });
+        // Refresh header when drawer opens
+        drawer.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                updateNavHeader(authStatus, authButton);
+            }
+        });
+
         // Initialize ProgressTracker
         progressTracker = new ProgressTracker(this);
         
@@ -182,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
                 R.id.nav_input_validation_lesson, R.id.nav_xss_challenge,
                 R.id.nav_privacy_lesson,
                 R.id.nav_client_side_injection_lesson, R.id.nav_client_side_injection_challenge1, R.id.nav_client_side_injection_challenge2,
-                R.id.nav_adb_reference
+                R.id.nav_adb_reference, R.id.nav_scoreboard
         ).setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
@@ -249,6 +275,11 @@ public class MainActivity extends AppCompatActivity {
         
         // ADB Reference
         items.add(new NavigationItem(4, "ADB Reference", R.drawable.ic_menu_code, R.id.nav_adb_reference));
+
+        // Scoreboard — only shown when signed in to a server
+        if (AuthManager.isAuthenticated(this)) {
+            items.add(new NavigationItem(6, "Scoreboard", R.drawable.ic_menu_home, R.id.nav_scoreboard));
+        }
         
         // Completed group - show all completed lessons and challenges
         NavigationItem completedGroup = new NavigationItem(5, "Completed", R.drawable.ic_menu_camera);
@@ -353,6 +384,112 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    private void updateNavHeader(TextView statusView, Button button) {
+        if (AuthManager.isAuthenticated(this)) {
+            String username = AuthManager.getUsername(this);
+            statusView.setText(getString(R.string.auth_status_online, username));
+            button.setText(R.string.auth_button_sign_out);
+        } else {
+            statusView.setText(R.string.auth_status_offline);
+            button.setText(R.string.auth_button_sign_in);
+        }
+    }
+
+    /** Called by HomeFragment to open the sign-in dialog from the home screen card. */
+    public void openAuthDialog() {
+        TextView authStatus = findViewById(R.id.nav_header_auth_status);
+        Button authButton = findViewById(R.id.nav_header_auth_button);
+        showAuthDialog(authStatus, authButton);
+    }
+
+    private void showAuthDialog(TextView statusView, Button button) {
+        final boolean[] isRegisterMode = {false};
+
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_auth, null);
+        EditText serverField  = dialogView.findViewById(R.id.auth_server_url);
+        EditText usernameField = dialogView.findViewById(R.id.auth_username);
+        EditText passwordField = dialogView.findViewById(R.id.auth_password);
+        EditText emailField   = dialogView.findViewById(R.id.auth_email);
+        View emailLabel       = dialogView.findViewById(R.id.auth_email_label);
+        TextView statusText   = dialogView.findViewById(R.id.auth_status_text);
+
+        // Pre-fill saved server URL
+        String savedServer = AuthManager.getServerUrl(this);
+        if (!savedServer.isEmpty()) serverField.setText(savedServer);
+        String savedUser = AuthManager.getUsername(this);
+        if (!savedUser.isEmpty()) usernameField.setText(savedUser);
+
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle(R.string.auth_dialog_title_login)
+                .setView(dialogView)
+                .setPositiveButton(R.string.auth_button_sign_in, null) // overridden below
+                .setNeutralButton(R.string.auth_switch_to_register, null)
+                .setNegativeButton(android.R.string.cancel, null)
+                .create();
+
+        dialog.setOnShowListener(d -> {
+            Button positive = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+            Button neutral  = dialog.getButton(AlertDialog.BUTTON_NEUTRAL);
+
+            positive.setOnClickListener(v -> {
+                String serverUrl = serverField.getText().toString().trim();
+                String username  = usernameField.getText().toString().trim();
+                String password  = passwordField.getText().toString();
+                String email     = emailField.getText().toString().trim();
+
+                if (TextUtils.isEmpty(serverUrl) || TextUtils.isEmpty(username)
+                        || TextUtils.isEmpty(password)) {
+                    statusText.setText("Please fill in all required fields");
+                    statusText.setVisibility(View.VISIBLE);
+                    return;
+                }
+
+                positive.setEnabled(false);
+                neutral.setEnabled(false);
+                statusText.setText("Connecting...");
+                statusText.setVisibility(View.VISIBLE);
+
+                AuthManager.AuthCallback callback = (success, message) -> {
+                    if (success) {
+                        updateNavHeader(statusView, button);
+                        dialog.dismiss();
+                        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+                    } else {
+                        positive.setEnabled(true);
+                        neutral.setEnabled(true);
+                        statusText.setText(message);
+                    }
+                };
+
+                if (isRegisterMode[0]) {
+                    AuthManager.register(this, serverUrl, username, password, email, callback);
+                } else {
+                    AuthManager.login(this, serverUrl, username, password, callback);
+                }
+            });
+
+            neutral.setOnClickListener(v -> {
+                isRegisterMode[0] = !isRegisterMode[0];
+                if (isRegisterMode[0]) {
+                    dialog.setTitle(getString(R.string.auth_dialog_title_register));
+                    positive.setText(R.string.auth_dialog_title_register);
+                    neutral.setText(R.string.auth_switch_to_login);
+                    emailField.setVisibility(View.VISIBLE);
+                    emailLabel.setVisibility(View.VISIBLE);
+                } else {
+                    dialog.setTitle(getString(R.string.auth_dialog_title_login));
+                    positive.setText(R.string.auth_button_sign_in);
+                    neutral.setText(R.string.auth_switch_to_register);
+                    emailField.setVisibility(View.GONE);
+                    emailLabel.setVisibility(View.GONE);
+                }
+                statusText.setVisibility(View.GONE);
+            });
+        });
+
+        dialog.show();
     }
 
     private void applyTheme() {

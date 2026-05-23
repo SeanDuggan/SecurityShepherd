@@ -9,14 +9,14 @@
     android:clickable="true"
     android:focusable="true">
 
-    <TextView
+    <ImageView
         android:id="@+id/status_icon"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:text="@string/str_3"
-        android:textSize="24sp"
-        android:gravity="center"
-        android:layout_marginEnd="12dp" />
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="12dp"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/ic_status_incomplete"
+        android:contentDescription="@string/not_started" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -47,7 +47,6 @@
             android:id="@+id/completion_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/completed_jan_1_2026"
             android:textSize="12sp"
             android:textColor="?android:attr/textColorTertiary"
             android:visibility="gone" />

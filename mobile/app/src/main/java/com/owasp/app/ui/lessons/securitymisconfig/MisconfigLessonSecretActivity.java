@@ -5,12 +5,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.owasp.app.R;
+import com.owasp.app.utils.FlagProvider;
 import com.owasp.app.utils.FlagValidator;
 import com.owasp.app.utils.ProgressTracker;
 
 public class MisconfigLessonSecretActivity extends AppCompatActivity {
-    
-    private static final String LESSON_KEY = "KEY{Exp0rt3d_C0mp0n3nt_Vuln3r4b1l1ty}";
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +23,15 @@ public class MisconfigLessonSecretActivity extends AppCompatActivity {
         TextView keyText = findViewById(R.id.secret_key_text);
         TextView messageText = findViewById(R.id.secret_message_text);
         
-        keyText.setText(LESSON_KEY);
+        keyText.setText("Loading...");
+        FlagProvider.getFlag(this, FlagValidator.Module.SECURITY_MISCONFIG_LESSON,
+                flagValue -> {
+                    keyText.setText(flagValue);
+                    FlagValidator.validateFlag(MisconfigLessonSecretActivity.this,
+                            FlagValidator.Module.SECURITY_MISCONFIG_LESSON,
+                            flagValue,
+                            correct -> android.util.Log.d("MisconfigLesson", "Server submission: " + correct));
+                });
         
         String message = "⚠️ SECURITY VULNERABILITY EXPLOITED!\n\n" +
                 "This activity was marked as 'exported=\"true\"' in AndroidManifest.xml, " +

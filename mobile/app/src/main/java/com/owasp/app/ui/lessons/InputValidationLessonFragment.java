@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.owasp.app.R;
 import com.owasp.app.databinding.FragmentInputValidationLessonBinding;
+import com.owasp.app.utils.FlagProvider;
 import com.owasp.app.utils.FlagValidator;
 import com.owasp.app.utils.ProgressTracker;
 
@@ -24,9 +25,8 @@ public class InputValidationLessonFragment extends Fragment {
     private static final String TAG = "DeepLinkLoader";
     private boolean fabExpanded = false;
     private ProgressTracker progressTracker;
+    private String currentFlag = "";
     
-    // Hidden flag accessible via validation bypass
-    private static final String FLAG = "KEY{1nput_V4l1d4t10n_Byp4ss3d}";
     private static final String ADMIN_URL = "https://admin.internal/dashboard";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -35,6 +35,10 @@ public class InputValidationLessonFragment extends Fragment {
         View root = binding.getRoot();
         
         progressTracker = new ProgressTracker(requireContext());
+        FlagProvider.getFlag(
+                requireContext(),
+                FlagValidator.Module.INPUT_VALIDATION_LESSON,
+                flagValue -> currentFlag = flagValue);
 
         // Quick link buttons
         binding.loadExampleButton.setOnClickListener(v -> 
@@ -135,15 +139,22 @@ public class InputValidationLessonFragment extends Fragment {
             
         } else if (url.contains("admin.internal")) {
             // Hidden admin content - only accessible via validation bypass!
+            String flag = currentFlag;
             title = "Admin Dashboard";
-            body = "ACCESS GRANTED\n\n" +
-                   "You successfully bypassed the URL validation!\n\n" +
-                   "The validation only checks if 'example.com' or 'trusted-site.com' appears " +
-                   "anywhere in the URL string, instead of properly validating the domain.\n\n" +
-                   "This allowed you to access restricted admin.internal content.\n\n" +
-                   "FLAG: " + FLAG;
+            body = "ACCESS GRANTED\n\n"
+                   + "You successfully bypassed the URL validation!\n\n"
+                   + "The validation only checks if 'example.com' or 'trusted-site.com' appears "
+                   + "anywhere in the URL string, instead of properly validating the domain.\n\n"
+                   + "This allowed you to access restricted admin.internal content.\n\n"
+                   + "FLAG: " + flag;
             cardColor = getResources().getColor(android.R.color.holo_green_light);
             Log.i(TAG, "Admin content accessed via bypass!");
+
+            progressTracker.markCompleted(FlagValidator.Module.INPUT_VALIDATION_LESSON);
+            FlagValidator.validateFlag(requireContext(), FlagValidator.Module.INPUT_VALIDATION_LESSON,
+                    currentFlag, correct -> Log.d(TAG, "Server submission: " + correct));
+            FloatingActionButton fabMarkComplete = requireActivity().findViewById(R.id.fab_mark_complete);
+            updateMarkCompleteFabAppearance(fabMarkComplete);
             
         } else {
             // Generic external content

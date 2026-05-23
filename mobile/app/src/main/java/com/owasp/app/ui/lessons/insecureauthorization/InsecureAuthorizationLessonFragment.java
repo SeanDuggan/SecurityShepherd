@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.owasp.app.R;
 import com.owasp.app.databinding.FragmentInsecureAuthorizationLessonBinding;
+import com.owasp.app.utils.FlagProvider;
 import com.owasp.app.utils.FlagValidator;
 import com.owasp.app.utils.ProgressTracker;
 
@@ -32,13 +33,11 @@ public class InsecureAuthorizationLessonFragment extends Fragment {
     private static final String PREFS_NAME = "UserSession";
     private boolean fabExpanded = false;
     private ProgressTracker progressTracker;
+    private String currentFlag = "";
     
     // Demo credentials
     private static final String DEMO_USERNAME = "testuser";
     private static final String DEMO_PASSWORD = "password123";
-    
-    // The flag that should only be accessible to admins
-    private static final String ADMIN_FLAG = "KEY{Pr1v1l3g3_Esc4l4t10n_Pwn3d}";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -47,6 +46,10 @@ public class InsecureAuthorizationLessonFragment extends Fragment {
 
         prefs = requireContext().getSharedPreferences(PREFS_NAME, android.content.Context.MODE_PRIVATE);
         progressTracker = new ProgressTracker(requireContext());
+        FlagProvider.getFlag(
+                requireContext(),
+                FlagValidator.Module.INSECURE_AUTH_LESSON,
+                flagValue -> currentFlag = flagValue);
 
         // Setup expandable FAB with command reference and OWASP link
         FloatingActionButton fab = requireActivity().findViewById(R.id.fab);
@@ -158,12 +161,19 @@ public class InsecureAuthorizationLessonFragment extends Fragment {
         // INSECURE: Authorization check relies on client-controlled value
         if ("admin".equals(role)) {
             // Admin access granted
+            String flag = currentFlag;
             binding.adminContentCard.setVisibility(View.VISIBLE);
-            binding.flagText.setText("🎉 Admin Flag: " + ADMIN_FLAG);
+            binding.flagText.setText("Admin Flag: " + flag);
             binding.accessDeniedText.setVisibility(View.GONE);
             
             Toast.makeText(getContext(), "Admin access granted! Flag revealed!", Toast.LENGTH_LONG).show();
-            Log.i("Authorization", "ADMIN ACCESS GRANTED - Flag revealed: " + ADMIN_FLAG);
+            Log.i("Authorization", "ADMIN ACCESS GRANTED - Flag revealed: " + flag);
+
+            progressTracker.markCompleted(FlagValidator.Module.INSECURE_AUTH_LESSON);
+            FlagValidator.validateFlag(requireContext(), FlagValidator.Module.INSECURE_AUTH_LESSON,
+                    flag, correct -> Log.d("Authorization", "Server submission: " + correct));
+            FloatingActionButton fabMarkComplete = requireActivity().findViewById(R.id.fab_mark_complete);
+            updateMarkCompleteFabAppearance(fabMarkComplete);
         } else {
             // Access denied
             binding.adminContentCard.setVisibility(View.VISIBLE);

@@ -19,6 +19,7 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.owasp.app.R;
 import com.owasp.app.databinding.FragmentInsufficientCryptoLessonBinding;
+import com.owasp.app.utils.FlagProvider;
 import com.owasp.app.utils.FlagValidator;
 import com.owasp.app.utils.ProgressTracker;
 
@@ -45,6 +46,7 @@ public class InsufficientCryptoLessonFragment extends Fragment {
     
     private boolean fabExpanded = false;
     private ProgressTracker progressTracker;
+    private String currentFlag = "";
 
     // Helper method to pad keys to 8 bytes for DES (DES requires exactly 8-byte keys)
     private static byte[] padKeyTo8Bytes(String key) {
@@ -86,11 +88,13 @@ public class InsufficientCryptoLessonFragment extends Fragment {
         
         progressTracker = new ProgressTracker(requireContext());
 
-        // Initialize encrypted secrets
-        initializeSecrets();
-        
-        // Display secrets
-        displaySecrets();
+        // Initialise secrets once the flag is available (FlagProvider fires on next tick offline)
+        FlagProvider.getFlag(requireContext(), FlagValidator.Module.INSUFFICIENT_CRYPTO_LESSON,
+                flagValue -> {
+                    currentFlag = flagValue;
+                    initializeSecrets();
+                    displaySecrets();
+                });
 
         // Setup FAB expansion
         FloatingActionButton fab = requireActivity().findViewById(R.id.fab);
@@ -140,7 +144,7 @@ public class InsufficientCryptoLessonFragment extends Fragment {
         encryptedSecrets.add(new EncryptedSecret("Secret 1", "Animal", "Some sheep have gone missing", "sheep"));
         encryptedSecrets.add(new EncryptedSecret("Secret 2", "Role", "Reallocating budget for new staff", "shepherd"));
         encryptedSecrets.add(new EncryptedSecret("Secret 3", "Not Human Food", "Grass is turning blue.", "grass"));
-        encryptedSecrets.add(new EncryptedSecret("Secret 4", "Material for warmth", "KEY{DES_Encrypt10n}", "wool"));
+        encryptedSecrets.add(new EncryptedSecret("Secret 4", "Material for warmth", currentFlag, "wool"));
     }
 
     private void displaySecrets() {
@@ -292,6 +296,8 @@ public class InsufficientCryptoLessonFragment extends Fragment {
             // Check if user found the flag
             if (decryptedText.contains("KEY{") && decryptedText.contains("}")) {
                 progressTracker.markCompleted(FlagValidator.Module.INSUFFICIENT_CRYPTO_LESSON);
+                FlagValidator.validateFlag(requireContext(), FlagValidator.Module.INSUFFICIENT_CRYPTO_LESSON,
+                        currentFlag, correct -> android.util.Log.d("CryptoLesson", "Server submission: " + correct));
                 Toast.makeText(requireContext(), "✓ Flag found! Lesson complete!", Toast.LENGTH_LONG).show();
             }
             
@@ -389,6 +395,8 @@ public class InsufficientCryptoLessonFragment extends Fragment {
             // Check if user found the flag
             if (decryptedText.contains("KEY{") && decryptedText.contains("}")) {
                 progressTracker.markCompleted(FlagValidator.Module.INSUFFICIENT_CRYPTO_LESSON);
+                FlagValidator.validateFlag(requireContext(), FlagValidator.Module.INSUFFICIENT_CRYPTO_LESSON,
+                        currentFlag, correct -> android.util.Log.d("CryptoLesson", "Server submission (2): " + correct));
                 Toast.makeText(requireContext(), "✓ Flag found! Lesson complete!", Toast.LENGTH_LONG).show();
             }
             

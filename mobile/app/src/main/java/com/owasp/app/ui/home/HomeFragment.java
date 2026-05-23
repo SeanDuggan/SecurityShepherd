@@ -9,7 +9,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.button.MaterialButton;
+import com.owasp.app.MainActivity;
 import com.owasp.app.databinding.FragmentHomeBinding;
+import com.owasp.app.utils.AuthManager;
 import com.owasp.app.utils.FlagValidator;
 import com.owasp.app.utils.ProgressTracker;
 
@@ -27,8 +30,41 @@ public class HomeFragment extends Fragment {
         progressTracker = new ProgressTracker(requireContext());
         
         updateProgressStats();
+        updateAuthCard();
 
         return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Refresh card state when returning to this screen (e.g. after sign-in/out)
+        updateAuthCard();
+        updateProgressStats();
+    }
+
+    private void updateAuthCard() {
+        TextView statusText = binding.getRoot().findViewById(com.owasp.app.R.id.home_auth_status_text);
+        MaterialButton authButton = binding.getRoot().findViewById(com.owasp.app.R.id.home_auth_button);
+        if (statusText == null || authButton == null) return;
+
+        if (AuthManager.isAuthenticated(requireContext())) {
+            String username = AuthManager.getUsername(requireContext());
+            statusText.setText("Signed in as " + username + " — flags update from server");
+            authButton.setText("Sign Out");
+            authButton.setOnClickListener(v -> {
+                AuthManager.logout(requireContext());
+                updateAuthCard();
+            });
+        } else {
+            statusText.setText("Offline mode — sign in for server-validated flags");
+            authButton.setText("Sign In to Server");
+            authButton.setOnClickListener(v -> {
+                if (getActivity() instanceof MainActivity) {
+                    ((MainActivity) getActivity()).openAuthDialog();
+                }
+            });
+        }
     }
     
     private void updateProgressStats() {

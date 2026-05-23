@@ -249,6 +249,14 @@ public class ProgressTracker {
     public void resetProgress() {
         prefs.edit().clear().apply();
     }
+
+    /**
+     * Clears all stored progress for any user. Call on logout so the next
+     * user starts with a clean state.
+     */
+    public static void clearAll(Context context) {
+        context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).edit().clear().apply();
+    }
     
     /**
      * Removes completion status for a specific module.

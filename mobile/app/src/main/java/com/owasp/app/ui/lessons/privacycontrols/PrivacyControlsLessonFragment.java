@@ -9,9 +9,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import android.content.Intent;
@@ -25,9 +27,12 @@ import androidx.core.content.FileProvider;
 import androidx.exifinterface.media.ExifInterface;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.owasp.app.R;
 import com.owasp.app.databinding.FragmentPrivacyControlsLessonBinding;
+import com.owasp.app.utils.FlagProvider;
 import com.owasp.app.utils.FlagValidator;
 import com.owasp.app.utils.ProgressTracker;
 
@@ -50,7 +55,7 @@ public class PrivacyControlsLessonFragment extends Fragment {
     
     // Flag hidden in preloaded image EXIF data
     private static final String PRELOADED_IMAGE = "privacy_sample.jpg";
-    private static final String FLAG = "KEY{3x1f_M3t4d4t4_L34k5_L0c4t10n}";
+    private String currentFlag = "";
 
     private final ActivityResultLauncher<Uri> takePictureLauncher = 
         registerForActivityResult(new ActivityResultContracts.TakePicture(), success -> {
@@ -99,21 +104,28 @@ public class PrivacyControlsLessonFragment extends Fragment {
             });
         }
         if (fabMarkComplete != null) {
-            fabMarkComplete.setOnClickListener(v -> {
-                toggleCompleteStatus();
-                updateMarkCompleteFabAppearance(fabMarkComplete);
-                collapseFab(fab, fabCommandRef, fabOwaspLink, fabMarkComplete);
-            });
+            fabMarkComplete.setVisibility(View.GONE);
         }
 
-        // Set initial FAB appearance based on completion status
-        updateMarkCompleteFabAppearance(fabMarkComplete);
-
-        // Load preloaded image with flag in EXIF
-        loadPreloadedImage();
+        // Load preloaded image with flag in EXIF — wait for flag before creating the image
+        FlagProvider.getFlag(requireContext(), FlagValidator.Module.PRIVACY_LESSON,
+                flagValue -> {
+                    currentFlag = flagValue;
+                    File outputFile = new File(requireContext().getFilesDir(), PRELOADED_IMAGE);
+                    if (outputFile.exists()) outputFile.delete();
+                    loadPreloadedImage();
+                });
 
         binding.btnTakePhoto.setOnClickListener(v -> checkCameraPermission());
         binding.btnLoadSample.setOnClickListener(v -> loadPreloadedImage());
+
+        // Wire up flag submission
+        MaterialButton btnSubmit = root.findViewById(R.id.btn_submit_flag);
+        TextInputEditText editFlag = root.findViewById(R.id.edit_flag);
+        TextView resultText = root.findViewById(R.id.text_flag_result);
+        if (btnSubmit != null) {
+            btnSubmit.setOnClickListener(v -> checkFlag(editFlag, resultText));
+        }
 
         return root;
     }
@@ -149,11 +161,13 @@ public class PrivacyControlsLessonFragment extends Fragment {
 
     private void loadPreloadedImage() {
         try {
-            // Copy preloaded image from assets to app storage
             File outputFile = new File(requireContext().getFilesDir(), PRELOADED_IMAGE);
             
             if (!outputFile.exists()) {
-                // Create image with EXIF metadata containing flag
+                if (currentFlag.isEmpty()) {
+                    binding.tvImageInfo.setText("Loading...");
+                    return;
+                }
                 createPreloadedImageWithFlag(outputFile);
             }
             
@@ -183,7 +197,7 @@ public class PrivacyControlsLessonFragment extends Fragment {
         exif.setAttribute(ExifInterface.TAG_MODEL, "Privacy Trainer");
         exif.setAttribute(ExifInterface.TAG_GPS_LATITUDE, "37.7749");
         exif.setAttribute(ExifInterface.TAG_GPS_LONGITUDE, "-122.4194");
-        exif.setAttribute(ExifInterface.TAG_IMAGE_DESCRIPTION, FLAG);
+        exif.setAttribute(ExifInterface.TAG_IMAGE_DESCRIPTION, currentFlag);
         exif.setAttribute(ExifInterface.TAG_USER_COMMENT, "This metadata should be stripped!");
         exif.setAttribute(ExifInterface.TAG_ARTIST, "Security Researcher");
         exif.setAttribute(ExifInterface.TAG_DATETIME, "2024:01:15 14:30:00");
@@ -307,31 +321,31 @@ public class PrivacyControlsLessonFragment extends Fragment {
                 .setPositiveButton("Close", null)
                 .show();
     }
-    
-    private void toggleCompleteStatus() {
-        boolean nowCompleted = progressTracker.toggleCompleted(FlagValidator.Module.PRIVACY_LESSON);
-        String message = nowCompleted ? "✓ Marked as complete!" : "○ Marked as incomplete";
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
-    }
-    
-    private void updateMarkCompleteFabAppearance(FloatingActionButton fabMarkComplete) {
-        if (fabMarkComplete == null) return;
-        
-        boolean isCompleted = progressTracker.isCompleted(FlagValidator.Module.PRIVACY_LESSON);
-        
-        if (isCompleted) {
-            // Red - will mark as incomplete
-            fabMarkComplete.setBackgroundTintList(android.content.res.ColorStateList.valueOf(
-                ContextCompat.getColor(requireContext(), R.color.security_red)));
-            fabMarkComplete.setContentDescription("Mark as Incomplete");
+
+    private void checkFlag(TextInputEditText editFlag, TextView resultText) {
+        if (editFlag == null || resultText == null) return;
+        String entered = editFlag.getText() != null ? editFlag.getText().toString().trim() : "";
+        if (entered.isEmpty()) {
+            resultText.setVisibility(View.VISIBLE);
+            resultText.setText("Please enter the flag from the EXIF metadata.");
+            resultText.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.holo_orange_dark));
+            return;
+        }
+        resultText.setVisibility(View.VISIBLE);
+        if (entered.equals(currentFlag)) {
+            resultText.setText("✓ Flag captured!");
+            resultText.setTextColor(ContextCompat.getColor(requireContext(), R.color.success_green));
+            if (!progressTracker.isCompleted(FlagValidator.Module.PRIVACY_LESSON)) {
+                progressTracker.markCompleted(FlagValidator.Module.PRIVACY_LESSON);
+                FlagValidator.validateFlag(requireContext(), FlagValidator.Module.PRIVACY_LESSON,
+                        currentFlag, correct -> Log.d("PrivacyLesson", "Server submission: " + correct));
+            }
         } else {
-            // Green - will mark as complete
-            fabMarkComplete.setBackgroundTintList(android.content.res.ColorStateList.valueOf(
-                ContextCompat.getColor(requireContext(), R.color.success_green)));
-            fabMarkComplete.setContentDescription("Mark as Complete");
+            resultText.setText("✗ Incorrect — check the EXIF Description field.");
+            resultText.setTextColor(ContextCompat.getColor(requireContext(), R.color.security_red));
         }
     }
-    
+
     private String getImageMetadata() {
         try {
             ExifInterface exif = new ExifInterface(currentPhotoPath);

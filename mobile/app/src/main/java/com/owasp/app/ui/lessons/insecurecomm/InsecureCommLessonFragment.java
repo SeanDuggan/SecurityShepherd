@@ -11,11 +11,15 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.owasp.app.R;
 import com.owasp.app.databinding.FragmentInsecureCommLessonBinding;
+import com.owasp.app.utils.FlagProvider;
 import com.owasp.app.utils.FlagValidator;
 import com.owasp.app.utils.ProgressTracker;
 
@@ -32,15 +36,9 @@ public class InsecureCommLessonFragment extends Fragment {
 
     private FragmentInsecureCommLessonBinding binding;
     private static final String TAG = "NetworkTraffic";
-    
-    // Obfuscated flag components - direct string parts
-    private static final String PART1 = "OWASP";
-    private static final String PART2 = "{H1TTP";
-    private static final String PART3 = "_Insec";
-    private static final String PART4 = "ure_F1";
-    private static final String PART5 = "nd}";
     private boolean fabExpanded = false;
     private ProgressTracker progressTracker;
+    private String currentFlag = "";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -49,6 +47,8 @@ public class InsecureCommLessonFragment extends Fragment {
         View root = binding.getRoot();
         
         progressTracker = new ProgressTracker(requireContext());
+        FlagProvider.getFlag(requireContext(), FlagValidator.Module.INSECURE_COMM_LESSON,
+                flagValue -> currentFlag = flagValue);
 
         // Setup FAB expansion
         FloatingActionButton fab = requireActivity().findViewById(R.id.fab);
@@ -75,17 +75,18 @@ public class InsecureCommLessonFragment extends Fragment {
         }
         
         if (fabMarkComplete != null) {
-            fabMarkComplete.setOnClickListener(v -> {
-                toggleCompleteStatus();
-                updateMarkCompleteFabAppearance(fabMarkComplete);
-                collapseFab(fab, fabCommandRef, fabOwaspLink, fabMarkComplete);
-            });
+            fabMarkComplete.setVisibility(View.GONE);
         }
 
-        // Set initial FAB appearance based on completion status
-        updateMarkCompleteFabAppearance(fabMarkComplete);
-
         binding.sendHttpButton.setOnClickListener(v -> sendInsecureRequest());
+
+        // Wire up flag submission
+        MaterialButton btnSubmit = root.findViewById(R.id.btn_submit_flag);
+        TextInputEditText editFlag = root.findViewById(R.id.edit_flag);
+        TextView resultText = root.findViewById(R.id.text_flag_result);
+        if (btnSubmit != null) {
+            btnSubmit.setOnClickListener(v -> checkFlag(editFlag, resultText));
+        }
 
         return root;
     }
@@ -165,8 +166,31 @@ public class InsecureCommLessonFragment extends Fragment {
     }
 
     private String decodeFlag() {
-        // Reconstruct flag from obfuscated parts at runtime
-        return PART1 + PART2 + PART3 + PART4 + PART5;
+        return currentFlag;
+    }
+
+    private void checkFlag(TextInputEditText editFlag, TextView resultText) {
+        if (editFlag == null || resultText == null) return;
+        String entered = editFlag.getText() != null ? editFlag.getText().toString().trim() : "";
+        if (entered.isEmpty()) {
+            resultText.setVisibility(View.VISIBLE);
+            resultText.setText("Please enter the intercepted API key.");
+            resultText.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.holo_orange_dark));
+            return;
+        }
+        resultText.setVisibility(View.VISIBLE);
+        if (entered.equals(currentFlag)) {
+            resultText.setText("✓ Flag captured!");
+            resultText.setTextColor(ContextCompat.getColor(requireContext(), R.color.success_green));
+            if (!progressTracker.isCompleted(FlagValidator.Module.INSECURE_COMM_LESSON)) {
+                progressTracker.markCompleted(FlagValidator.Module.INSECURE_COMM_LESSON);
+                FlagValidator.validateFlag(requireContext(), FlagValidator.Module.INSECURE_COMM_LESSON,
+                        currentFlag, correct -> Log.d(TAG, "Server submission: " + correct));
+            }
+        } else {
+            resultText.setText("✗ Incorrect — keep intercepting.");
+            resultText.setTextColor(ContextCompat.getColor(requireContext(), R.color.security_red));
+        }
     }
 
     private void toggleFabExpansion(FloatingActionButton mainFab, FloatingActionButton fab1, FloatingActionButton fab2, FloatingActionButton fab3) {
@@ -220,30 +244,6 @@ public class InsecureCommLessonFragment extends Fragment {
         builder.setView(dialogView);
         builder.setPositiveButton("Close", null);
         builder.show();
-    }
-    
-    private void toggleCompleteStatus() {
-        boolean nowCompleted = progressTracker.toggleCompleted(FlagValidator.Module.INSECURE_COMM_LESSON);
-        String message = nowCompleted ? "✓ Marked as complete!" : "○ Marked as incomplete";
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
-    }
-    
-    private void updateMarkCompleteFabAppearance(FloatingActionButton fabMarkComplete) {
-        if (fabMarkComplete == null) return;
-        
-        boolean isCompleted = progressTracker.isCompleted(FlagValidator.Module.INSECURE_COMM_LESSON);
-        
-        if (isCompleted) {
-            // Red - will mark as incomplete
-            fabMarkComplete.setBackgroundTintList(android.content.res.ColorStateList.valueOf(
-                androidx.core.content.ContextCompat.getColor(requireContext(), R.color.security_red)));
-            fabMarkComplete.setContentDescription("Mark as Incomplete");
-        } else {
-            // Green - will mark as complete
-            fabMarkComplete.setBackgroundTintList(android.content.res.ColorStateList.valueOf(
-                androidx.core.content.ContextCompat.getColor(requireContext(), R.color.success_green)));
-            fabMarkComplete.setContentDescription("Mark as Complete");
-        }
     }
 
     @Override

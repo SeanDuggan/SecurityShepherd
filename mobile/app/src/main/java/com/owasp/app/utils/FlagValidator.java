@@ -1,7 +1,21 @@
 package com.owasp.app.utils;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
+import androidx.preference.PreferenceManager;
+
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -185,5 +199,111 @@ public class FlagValidator {
      */
     public static String generateHash(String plaintext) {
         return sha256(plaintext);
+    }
+
+    // -------------------------------------------------------------------------
+    // Server-side validation
+    // -------------------------------------------------------------------------
+
+    /**
+     * Callback interface for asynchronous flag validation results.
+     *
+     * <p>{@link #onResult(boolean)} is always invoked on the main (UI) thread.
+     */
+    public interface ValidationCallback {
+        void onResult(boolean correct);
+    }
+
+    /**
+     * Validates a flag against the configured Shepherd server when server credentials are present
+     * in the app preferences ({@code server_preference}, {@code username_preference},
+     * {@code password_preference}). Falls back to local SHA-256 comparison when any preference is
+     * absent, so the app remains usable without a running server instance.
+     *
+     * <p>This method is non-blocking. The result is delivered on the main thread via
+     * {@code callback}.
+     *
+     * @param context  Application context used to read shared preferences.
+     * @param module   The module being validated.
+     * @param flag     The flag string submitted by the student.
+     * @param callback Receives {@code true} when the flag is correct, {@code false} otherwise.
+     */
+    public static void validateFlag(
+            Context context,
+            Module module,
+            String flag,
+            ValidationCallback callback) {
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String serverUrl  = prefs.getString("server_preference", "").trim();
+        String login      = prefs.getString("username_preference", "").trim();
+        String pwd        = prefs.getString("password_preference", "").trim();
+
+        if (serverUrl.isEmpty() || login.isEmpty() || pwd.isEmpty()) {
+            // No server configured — fall back to local validation immediately on the calling thread
+            Log.d(TAG, "No server configured, using local validation for " + module.getId());
+            boolean result = validateFlag(module, flag);
+            new Handler(Looper.getMainLooper()).post(() -> callback.onResult(result));
+            return;
+        }
+
+        final String endpointUrl = serverUrl.replaceAll("/+$", "") + "/mobileFlagSubmit";
+        final String moduleId    = module.getId();
+        final String trimmedFlag = flag.trim();
+        final Handler mainHandler = new Handler(Looper.getMainLooper());
+
+        new Thread(() -> {
+            boolean correct = false;
+            HttpURLConnection conn = null;
+            try {
+                String body =
+                        "login="    + URLEncoder.encode(login, "UTF-8")
+                        + "&pwd="      + URLEncoder.encode(pwd, "UTF-8")
+                        + "&moduleId=" + URLEncoder.encode(moduleId, "UTF-8")
+                        + "&flag="     + URLEncoder.encode(trimmedFlag, "UTF-8");
+
+                conn = (HttpURLConnection) new URL(endpointUrl).openConnection();
+                conn.setRequestMethod("POST");
+                conn.setDoOutput(true);
+                conn.setConnectTimeout(10_000);
+                conn.setReadTimeout(10_000);
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                conn.setRequestProperty("Content-Length", String.valueOf(body.length()));
+
+                try (OutputStream os = conn.getOutputStream()) {
+                    os.write(body.getBytes(StandardCharsets.UTF_8));
+                }
+
+                int status = conn.getResponseCode();
+                if (status == HttpURLConnection.HTTP_OK) {
+                    StringBuilder sb = new StringBuilder();
+                    try (BufferedReader reader =
+                                 new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
+                        String line;
+                        while ((line = reader.readLine()) != null) {
+                            sb.append(line);
+                        }
+                    }
+                    JSONObject json = new JSONObject(sb.toString());
+                    correct = json.optBoolean("correct", false);
+                    Log.d(TAG, "Server validation for " + moduleId + ": " + correct);
+                } else {
+                    Log.w(TAG, "Server returned HTTP " + status + " for " + moduleId
+                            + " — falling back to local validation");
+                    correct = validateFlag(module, trimmedFlag);
+                }
+            } catch (Exception e) {
+                Log.e(TAG, "Server validation failed for " + moduleId + ": " + e.getMessage()
+                        + " — falling back to local validation");
+                correct = validateFlag(module, trimmedFlag);
+            } finally {
+                if (conn != null) {
+                    conn.disconnect();
+                }
+            }
+
+            final boolean result = correct;
+            mainHandler.post(() -> callback.onResult(result));
+        }).start();
     }
 }

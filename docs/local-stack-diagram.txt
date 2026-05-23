@@ -1,0 +1,51 @@
+┌─────────────────────────────────────────────────────────────────┐
+│                    SECURITY SHEPHERD STACK                      │
+└─────────────────────────────────────────────────────────────────┘
+
+  ┌──────────────────┐          ┌──────────────────────────────┐
+  │  Android App     │          │  Tomcat 9  (localhost:8080)  │
+  │  (Emulator)      │          │  C:\tools\apache-tomcat-9    │
+  │                  │  HTTP    ├──────────────────────────────┤
+  │  10.0.2.2:8080 ──┼─────────►  /mobileRegister             │
+  │                  │          │  /mobileLogin                │
+  │  AuthManager     │◄─────────┤  /mobileFlagGet              │
+  │  FlagProvider    │  JSON    │  /mobileFlagSubmit           │
+  │  FlagValidator   │          └──────────┬───────────────────┘
+  └──────────────────┘                     │
+                                           │ JDBC
+                                           ▼
+                              ┌────────────────────────┐
+                              │  MariaDB 12.2          │
+                              │  schema: core          │
+                              │                        │
+                              │  users                 │
+                              │  modules               │
+                              │  results               │
+                              │  settings              │
+                              └────────────────────────┘
+
+  ┌─────────────────────────────────────────────────────────────┐
+  │  MOBILE API FLOW                                            │
+  │                                                             │
+  │  1. POST /mobileRegister  userName, passWord, userAddress   │
+  │         └─► {"success": true}                              │
+  │                                                             │
+  │  2. POST /mobileLogin     login, pwd                        │
+  │         └─► {"JSESSIONID": "...", "token": "..."}          │
+  │                                                             │
+  │  3. POST /mobileFlagGet   login, pwd, moduleId             │
+  │         └─► {"flag": "<HMAC-SHA512 unique per user>"}      │
+  │                                                             │
+  │  4. POST /mobileFlagSubmit  login, pwd, moduleId, flag     │
+  │         └─► {"correct": true|false}                        │
+  └─────────────────────────────────────────────────────────────┘
+
+  ┌─────────────────────────────────────────────────────────────┐
+  │  MODULE IDs (MobileModuleFlags.java)                        │
+  │                                                             │
+  │  client_side_injection_lesson                               │
+  │  poor_auth_lesson                                           │
+  │  insecure_auth_lesson                                       │
+  │  input_validation_lesson                                    │
+  │  supply_chain_lesson                                        │
+  └─────────────────────────────────────────────────────────────┘

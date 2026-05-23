@@ -1,9 +1,11 @@
 package com.owasp.app.ui.progress;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -153,9 +155,11 @@ public class ProgressFragment extends Fragment {
             holder.typeText.setText(item.type.toUpperCase());
 
             if (item.isCompleted) {
-                holder.statusIcon.setText("✓");
-                holder.statusIcon.setTextColor(holder.itemView.getContext()
-                        .getColor(android.R.color.holo_green_dark));
+                holder.statusIcon.setImageResource(R.drawable.ic_status_complete);
+                holder.statusIcon.setImageTintList(ColorStateList.valueOf(
+                        holder.itemView.getContext().getColor(android.R.color.holo_green_dark)));
+                holder.statusIcon.setContentDescription(
+                        holder.itemView.getContext().getString(R.string.mark_complete));
                 holder.statusText.setText("Completed");
                 holder.statusText.setTextColor(holder.itemView.getContext()
                         .getColor(android.R.color.holo_green_dark));
@@ -167,9 +171,11 @@ public class ProgressFragment extends Fragment {
                 holder.dateText.setText(completionInfo);
                 holder.dateText.setVisibility(View.VISIBLE);
             } else {
-                holder.statusIcon.setText("○");
-                holder.statusIcon.setTextColor(holder.itemView.getContext()
-                        .getColor(android.R.color.darker_gray));
+                holder.statusIcon.setImageResource(R.drawable.ic_status_incomplete);
+                holder.statusIcon.setImageTintList(ColorStateList.valueOf(
+                        holder.itemView.getContext().getColor(android.R.color.darker_gray)));
+                holder.statusIcon.setContentDescription(
+                        holder.itemView.getContext().getString(R.string.not_started));
                 holder.statusText.setText("Not Started");
                 holder.statusText.setTextColor(holder.itemView.getContext()
                         .getColor(android.R.color.darker_gray));
@@ -194,7 +200,7 @@ public class ProgressFragment extends Fragment {
         static class ViewHolder extends RecyclerView.ViewHolder {
             TextView nameText;
             TextView typeText;
-            TextView statusIcon;
+            ImageView statusIcon;
             TextView statusText;
             TextView dateText;
 
@@ -202,7 +208,7 @@ public class ProgressFragment extends Fragment {
                 super(itemView);
                 nameText = itemView.findViewById(R.id.module_name);
                 typeText = itemView.findViewById(R.id.module_type);
-                statusIcon = itemView.findViewById(R.id.status_icon);
+                statusIcon = (ImageView) itemView.findViewById(R.id.status_icon);
                 statusText = itemView.findViewById(R.id.status_text);
                 dateText = itemView.findViewById(R.id.completion_date);
             }

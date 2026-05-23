@@ -165,4 +165,10 @@
         android:label="Client-Side Injection Challenge 2"
         tools:layout="@layout/fragment_client_side_injection_challenge2" />
 
+    <fragment
+        android:id="@+id/nav_scoreboard"
+        android:name="com.owasp.app.ui.scoreboard.ScoreboardFragment"
+        android:label="@string/menu_scoreboard"
+        tools:layout="@layout/fragment_scoreboard" />
+
 </navigation>

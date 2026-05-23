@@ -51,6 +51,9 @@ SOFTWARE_VERSIONS_AUDIT.md
 # Level creation guide (local reference documentation)
 HOW-TO-CREATE-NEW-LEVEL.md
 
+# Lesson win condition flowcharts (local reference)
+LESSON_FLOWCHARTS.md
+
 # Test artifacts written to project root by IT challenges
 briefcase.pulp
 json.xml

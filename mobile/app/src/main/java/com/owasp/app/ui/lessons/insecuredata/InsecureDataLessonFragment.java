@@ -15,11 +15,15 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.owasp.app.R;
 import com.owasp.app.databinding.FragmentInsecureDataLessonBinding;
+import com.owasp.app.utils.FlagProvider;
 import com.owasp.app.utils.FlagValidator;
 import com.owasp.app.utils.ProgressTracker;
 
@@ -31,6 +35,7 @@ public class InsecureDataLessonFragment extends Fragment {
     private SQLiteDatabase membersDb = null;
     private boolean fabExpanded = false;
     private ProgressTracker progressTracker;
+    private String currentFlag = "";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -64,20 +69,25 @@ public class InsecureDataLessonFragment extends Fragment {
         }
         
         if (fabMarkComplete != null) {
-            fabMarkComplete.setOnClickListener(v -> {
-                toggleCompleteStatus();
-                updateMarkCompleteFabAppearance(fabMarkComplete);
-                collapseFab(fab, fabCommandRef, fabOwaspLink, fabMarkComplete);
-            });
+            fabMarkComplete.setVisibility(View.GONE);
         }
 
-        // Set initial FAB appearance based on completion status
-        updateMarkCompleteFabAppearance(fabMarkComplete);
-
-        // Create insecure database for demonstration
+        // Create insecure database for demonstration; seed users once flag is available
         createDatabase();
-        insertUsers();
-        displayUsers();
+        FlagProvider.getFlag(requireContext(), FlagValidator.Module.IDS_LESSON,
+                flagValue -> {
+                    currentFlag = flagValue;
+                    insertUsers();
+                    displayUsers();
+                });
+
+        // Wire up credential submit button
+        MaterialButton btnSubmit = root.findViewById(R.id.btn_submit_credentials);
+        TextInputEditText editCredentials = root.findViewById(R.id.edit_credentials);
+        TextView resultText = root.findViewById(R.id.text_credential_result);
+        if (btnSubmit != null) {
+            btnSubmit.setOnClickListener(v -> checkCredentials(editCredentials, resultText));
+        }
 
         return root;
     }
@@ -107,7 +117,8 @@ public class InsecureDataLessonFragment extends Fragment {
         if (membersDb != null) {
             try {
                 membersDb.execSQL("DELETE FROM Members;");
-                membersDb.execSQL("INSERT INTO Members (name, password) VALUES ('Admin','Battery777');");
+                membersDb.execSQL("INSERT INTO Members (name, password) VALUES ('Admin', ?);",
+                        new Object[]{currentFlag});
                 membersDb.execSQL("INSERT INTO Members (name, password) VALUES ('john_doe','password123');");
                 membersDb.execSQL("INSERT INTO Members (name, password) VALUES ('alice_smith','welcome2024');");
                 membersDb.execSQL("INSERT INTO Members (name, password) VALUES ('bob_johnson','qwerty456');");
@@ -226,27 +237,58 @@ public class InsecureDataLessonFragment extends Fragment {
         builder.show();
     }
     
-    private void toggleCompleteStatus() {
-        boolean nowCompleted = progressTracker.toggleCompleted(FlagValidator.Module.IDS_LESSON);
-        String message = nowCompleted ? "✓ Marked as complete!" : "○ Marked as incomplete";
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
-    }
-    
-    private void updateMarkCompleteFabAppearance(FloatingActionButton fabMarkComplete) {
-        if (fabMarkComplete == null) return;
-        
-        boolean isCompleted = progressTracker.isCompleted(FlagValidator.Module.IDS_LESSON);
-        
-        if (isCompleted) {
-            // Red - will mark as incomplete
-            fabMarkComplete.setBackgroundTintList(android.content.res.ColorStateList.valueOf(
-                androidx.core.content.ContextCompat.getColor(requireContext(), R.color.security_red)));
-            fabMarkComplete.setContentDescription("Mark as Incomplete");
+    private void checkCredentials(TextInputEditText editCredentials, TextView resultText) {
+        if (editCredentials == null || resultText == null) return;
+        String input = editCredentials.getText() != null ? editCredentials.getText().toString().trim() : "";
+        int colonIdx = input.indexOf(':');
+        if (colonIdx <= 0 || colonIdx == input.length() - 1) {
+            resultText.setVisibility(View.VISIBLE);
+            resultText.setText("Please enter credentials as username:password");
+            resultText.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.holo_orange_dark));
+            return;
+        }
+        String enteredName = input.substring(0, colonIdx);
+        String enteredPassword = input.substring(colonIdx + 1);
+
+        if (membersDb == null) {
+            resultText.setVisibility(View.VISIBLE);
+            resultText.setText("Database not ready, please wait.");
+            return;
+        }
+
+        Cursor cursor = membersDb.rawQuery(
+                "SELECT name, password FROM Members WHERE name = ?",
+                new String[]{enteredName});
+        if (!cursor.moveToFirst()) {
+            cursor.close();
+            resultText.setVisibility(View.VISIBLE);
+            resultText.setText("✗ Invalid credentials.");
+            resultText.setTextColor(ContextCompat.getColor(requireContext(), R.color.security_red));
+            return;
+        }
+        String dbName = cursor.getString(0);
+        String dbPassword = cursor.getString(1);
+        cursor.close();
+
+        if (!enteredPassword.equals(dbPassword)) {
+            resultText.setVisibility(View.VISIBLE);
+            resultText.setText("✗ Wrong password.");
+            resultText.setTextColor(ContextCompat.getColor(requireContext(), R.color.security_red));
+            return;
+        }
+
+        resultText.setVisibility(View.VISIBLE);
+        if (dbName.equalsIgnoreCase("Admin")) {
+            resultText.setText("✓ Flag captured!");
+            resultText.setTextColor(ContextCompat.getColor(requireContext(), R.color.success_green));
+            if (!progressTracker.isCompleted(FlagValidator.Module.IDS_LESSON)) {
+                progressTracker.markCompleted(FlagValidator.Module.IDS_LESSON);
+                FlagValidator.validateFlag(requireContext(), FlagValidator.Module.IDS_LESSON,
+                        currentFlag, correct -> Log.d("IDSLesson", "Server submission: " + correct));
+            }
         } else {
-            // Green - will mark as complete
-            fabMarkComplete.setBackgroundTintList(android.content.res.ColorStateList.valueOf(
-                androidx.core.content.ContextCompat.getColor(requireContext(), R.color.success_green)));
-            fabMarkComplete.setContentDescription("Mark as Complete");
+            resultText.setText("✗ Valid user — but not admin.");
+            resultText.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.holo_orange_dark));
         }
     }
 

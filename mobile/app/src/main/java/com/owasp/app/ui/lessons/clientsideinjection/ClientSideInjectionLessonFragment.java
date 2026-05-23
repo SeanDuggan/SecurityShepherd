@@ -22,6 +22,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.owasp.app.R;
 import com.owasp.app.databinding.FragmentClientSideInjectionLessonBinding;
 import com.owasp.app.ui.lessons.clientsideinjection.helpers.DatabaseHelper;
+import com.owasp.app.utils.AuthManager;
+import com.owasp.app.utils.FlagProvider;
 import com.owasp.app.utils.FlagValidator;
 import com.owasp.app.utils.ProgressTracker;
 
@@ -32,9 +34,11 @@ public class ClientSideInjectionLessonFragment extends Fragment {
     private static final String TAG = "ClientSideInjection";
     private boolean fabExpanded = false;
     private ProgressTracker progressTracker;
-    
-    // Hidden flag for successful SQL injection
-    private static final String HIDDEN_FLAG = "KEY{CL13NT_S1D3_SQL_1NJ3CT10N}";
+
+    // The flag seeded into the SQLite DB. In offline mode this is the static
+    // plaintext value; in online mode FlagProvider replaces it with the
+    // server-generated user-specific HMAC after the view is created.
+    private String currentFlag = "";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -44,8 +48,18 @@ public class ClientSideInjectionLessonFragment extends Fragment {
 
         // Initialize database
         dbHelper = new DatabaseHelper(requireContext());
-        initializeDatabase();
         progressTracker = new ProgressTracker(requireContext());
+
+        // Seed with offline flag immediately so the lesson is usable right away,
+        // then asynchronously replace with the dynamic server flag if online.
+        FlagProvider.getFlag(
+                requireContext(),
+                FlagValidator.Module.CLIENT_SIDE_INJECTION_LESSON,
+                flag -> {
+                    if (!isAdded()) return;
+                    currentFlag = flag;
+                    initializeDatabase(flag);
+                });
 
         // Setup expandable FAB with command reference and OWASP link
         FloatingActionButton fab = requireActivity().findViewById(R.id.fab);
@@ -70,8 +84,8 @@ public class ClientSideInjectionLessonFragment extends Fragment {
         }
         if (fabMarkComplete != null) {
             fabMarkComplete.setOnClickListener(v -> {
-                toggleCompleteStatus();
-                updateMarkCompleteFabAppearance(fabMarkComplete);
+                Toast.makeText(requireContext(),
+                        "Complete the SQL injection to earn this!", Toast.LENGTH_SHORT).show();
                 collapseFab(fab, fabCommandRef, fabOwaspLink, fabMarkComplete);
             });
         }
@@ -85,7 +99,7 @@ public class ClientSideInjectionLessonFragment extends Fragment {
         return root;
     }
 
-    private void initializeDatabase() {
+    private void initializeDatabase(String flagValue) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         
         // Clear existing data
@@ -98,7 +112,7 @@ public class ClientSideInjectionLessonFragment extends Fragment {
         insertUser(db, "charlie", "charlie@app.com", "Charlie Brown", false);
         
         // Insert hidden admin user with flag (obscure username)
-        insertUser(db, "sys_root", "root@system.internal", HIDDEN_FLAG, true);
+        insertUser(db, "sys_root", "root@system.internal", flagValue, true);
         
         db.close();
     }
@@ -149,8 +163,10 @@ public class ClientSideInjectionLessonFragment extends Fragment {
                 
                 // Check if flag was found
                 if (fullName.contains("KEY{")) {
-                    results.append("\n🎉 SUCCESS! You found the hidden flag!\n");
+                    results.append("\nSUCCESS! You found the hidden flag!\n");
                     results.append("Flag: ").append(fullName).append("\n");
+                    results.append("Validating against server...\n");
+                    submitFlagToServer(fullName);
                 }
             }
             
@@ -219,10 +235,42 @@ public class ClientSideInjectionLessonFragment extends Fragment {
                 .show();
     }
     
-    private void toggleCompleteStatus() {
-        boolean nowCompleted = progressTracker.toggleCompleted(FlagValidator.Module.CLIENT_SIDE_INJECTION_LESSON);
-        String message = nowCompleted ? "✓ Marked as complete!" : "○ Marked as incomplete";
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
+    /**
+     * Submits the discovered flag to the Shepherd server for validation.
+     * Falls back to local SHA-256 comparison when no server is configured.
+     * Marks the lesson complete and updates the FAB appearance on success.
+     */
+    private void submitFlagToServer(String flag) {
+        // In case the DB was seeded before FlagProvider returned, use the
+        // most recent flag value rather than the one passed by the search results.
+        String flagToSubmit = currentFlag.isEmpty() ? flag : currentFlag;
+        FlagValidator.validateFlag(
+                requireContext(),
+                FlagValidator.Module.CLIENT_SIDE_INJECTION_LESSON,
+                flagToSubmit,
+                correct -> {
+                    if (!isAdded()) return;
+                    if (correct) {
+                        progressTracker.markCompleted(FlagValidator.Module.CLIENT_SIDE_INJECTION_LESSON);
+                        FloatingActionButton fabMarkComplete =
+                                requireActivity().findViewById(R.id.fab_mark_complete);
+                        updateMarkCompleteFabAppearance(fabMarkComplete);
+                        new androidx.appcompat.app.AlertDialog.Builder(requireContext())
+                                .setTitle("Lesson Complete")
+                                .setMessage("Correct flag validated! You have successfully demonstrated "
+                                        + "a client-side SQL injection attack.\n\n"
+                                        + "Progress: "
+                                        + progressTracker.getCompletedChallengesCount()
+                                        + "/"
+                                        + progressTracker.getTotalChallengesCount()
+                                        + " modules completed")
+                                .setPositiveButton("OK", null)
+                                .show();
+                    } else {
+                        Toast.makeText(requireContext(),
+                                "Flag incorrect — keep trying!", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
     
     private void updateMarkCompleteFabAppearance(FloatingActionButton fabMarkComplete) {

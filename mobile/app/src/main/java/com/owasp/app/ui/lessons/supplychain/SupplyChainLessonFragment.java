@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.owasp.app.R;
 import com.owasp.app.databinding.FragmentSupplyChainLessonBinding;
+import com.owasp.app.utils.FlagProvider;
 import com.owasp.app.utils.FlagValidator;
 import com.owasp.app.utils.ProgressTracker;
 
@@ -33,10 +34,10 @@ public class SupplyChainLessonFragment extends Fragment {
     // CVE-2024-XXXX: Debug mode exposes sensitive EXIF data processing keys
     private static final String VULNERABLE_LIB = "androidx.exifinterface:exifinterface:1.3.7";
     private static final String EXIF_DEBUG_KEY = "exif_debug_processor_key_1337";
-    private static final String FLAG = "KEY{Vuln3r4bl3_D3p3nd3ncy}";
     
     private boolean fabExpanded = false;
     private ProgressTracker progressTracker;
+    private String currentFlag = "";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -45,6 +46,10 @@ public class SupplyChainLessonFragment extends Fragment {
         View root = binding.getRoot();
         
         progressTracker = new ProgressTracker(requireContext());
+        FlagProvider.getFlag(
+                requireContext(),
+                FlagValidator.Module.SUPPLY_CHAIN_LESSON,
+                flagValue -> currentFlag = flagValue);
 
         // Setup expandable FAB with command reference and OWASP link
         FloatingActionButton fab = requireActivity().findViewById(R.id.fab);
@@ -113,30 +118,40 @@ public class SupplyChainLessonFragment extends Fragment {
             return;
         }
 
-        if (enteredFlag.equals(FLAG)) {
-            // Correct flag!
-            binding.submissionCard.setCardBackgroundColor(getResources().getColor(android.R.color.holo_green_light));
-            binding.resultText.setText("SUCCESS!\n\nFlag: " + FLAG + "\n\nYou successfully identified the vulnerable dependency (" + VULNERABLE_LIB + ") which had debug mode enabled, exposing internal processing keys.\n\nOWASP Mobile Top 10 M6: Insufficient Supply Chain Security");
-            binding.resultText.setVisibility(View.VISIBLE);
-            
-            Toast.makeText(getContext(), "Correct flag! Challenge completed!", Toast.LENGTH_LONG).show();
-            
-            binding.submitButton.setEnabled(false);
-            binding.flagInput.setEnabled(false);
-        } else {
-            // Incorrect flag
-            binding.submissionCard.setCardBackgroundColor(getResources().getColor(android.R.color.holo_red_light));
-            binding.resultText.setVisibility(View.GONE);
-            
-            Toast.makeText(getContext(), "Incorrect flag", Toast.LENGTH_SHORT).show();
-            
-            binding.flagInput.setText("");
-            
-            // Reset card color after delay
-            binding.getRoot().postDelayed(() -> {
-                binding.submissionCard.setCardBackgroundColor(getResources().getColor(R.color.card_bg));
-            }, 2000);
-        }
+        binding.submitButton.setEnabled(false);
+
+        FlagValidator.validateFlag(
+                requireContext(),
+                FlagValidator.Module.SUPPLY_CHAIN_LESSON,
+                enteredFlag,
+                correct -> {
+                    if (correct) {
+                        binding.submissionCard.setCardBackgroundColor(
+                                getResources().getColor(android.R.color.holo_green_light));
+                        binding.resultText.setText(
+                                "SUCCESS!\n\nFlag: " + enteredFlag + "\n\nYou successfully identified"
+                                + " the vulnerable dependency (" + VULNERABLE_LIB + ") which had"
+                                + " debug mode enabled, exposing internal processing keys.\n\n"
+                                + "OWASP Mobile Top 10 M6: Insufficient Supply Chain Security");
+                        binding.resultText.setVisibility(View.VISIBLE);
+                        Toast.makeText(getContext(), "Correct flag! Lesson completed!", Toast.LENGTH_LONG).show();
+                        progressTracker.markCompleted(FlagValidator.Module.SUPPLY_CHAIN_LESSON);
+                        binding.flagInput.setEnabled(false);
+                        FloatingActionButton fabMarkComplete =
+                                requireActivity().findViewById(R.id.fab_mark_complete);
+                        updateMarkCompleteFabAppearance(fabMarkComplete);
+                    } else {
+                        binding.submitButton.setEnabled(true);
+                        binding.submissionCard.setCardBackgroundColor(
+                                getResources().getColor(android.R.color.holo_red_light));
+                        binding.resultText.setVisibility(View.GONE);
+                        Toast.makeText(getContext(), "Incorrect flag", Toast.LENGTH_SHORT).show();
+                        binding.flagInput.setText("");
+                        binding.getRoot().postDelayed(() ->
+                                binding.submissionCard.setCardBackgroundColor(
+                                        getResources().getColor(R.color.card_bg)), 2000);
+                    }
+                });
     }
 
     private void toggleFabExpansion(FloatingActionButton mainFab, FloatingActionButton fab1, FloatingActionButton fab2, FloatingActionButton fab3) {

@@ -15,12 +15,24 @@
             android:gravity="bottom" />
     </item>
     
-    <!-- Shepherd and sheep image -->
+    <!-- Shepherd and sheep image — anchored to bottom so sheep/grass always visible -->
     <item 
-        android:gravity="center_horizontal|top"
-        android:top="0dp">
+        android:gravity="center_horizontal|bottom"
+        android:bottom="0dp">
         <bitmap
             android:src="@drawable/shepherd_and_sheep_v2"
-            android:gravity="center_horizontal|top" />
+            android:gravity="center_horizontal|bottom" />
+    </item>
+
+    <!-- Dark gradient scrim at the bottom so text is legible over the sheep image -->
+    <item
+        android:gravity="bottom"
+        android:height="80dp">
+        <shape>
+            <gradient
+                android:startColor="#00000000"
+                android:endColor="#DD000000"
+                android:angle="270" />
+        </shape>
     </item>
 </layer-list>

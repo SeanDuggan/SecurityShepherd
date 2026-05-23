@@ -213,7 +213,7 @@ public class SecurityMisconfigLessonFragment extends Fragment {
                     
                     // Status indicator and activity name
                     TextView nameView = new TextView(requireContext());
-                    String statusIcon = isExported ? "🔴" : "🟢";
+                    String statusIcon = isExported ? "VULN" : "SAFE";
                     String statusText = isExported ? "EXPORTED" : "Safe";
                     String activityName = activity.name.replace("com.owasp.app.", "");
                     

@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.owasp.app.R;
 import com.owasp.app.databinding.FragmentPoorAuthLessonBinding;
+import com.owasp.app.utils.FlagProvider;
 import com.owasp.app.utils.FlagValidator;
 import com.owasp.app.utils.ProgressTracker;
 
@@ -43,6 +44,7 @@ public class PoorAuthLessonFragment extends Fragment {
     private int attemptCount = 0;
     private boolean fabExpanded = false;
     private ProgressTracker progressTracker;
+    private String currentFlag = "";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -51,6 +53,10 @@ public class PoorAuthLessonFragment extends Fragment {
         View root = binding.getRoot();
         
         progressTracker = new ProgressTracker(requireContext());
+        FlagProvider.getFlag(
+                requireContext(),
+                FlagValidator.Module.POOR_AUTH_LESSON,
+                flagValue -> currentFlag = flagValue);
 
         // Setup FAB expansion
         FloatingActionButton fab = requireActivity().findViewById(R.id.fab);
@@ -114,14 +120,20 @@ public class PoorAuthLessonFragment extends Fragment {
 
         if (enteredPinHash != null && enteredPinHash.equals(HARDCODED_PIN_HASH)) {
             // Successful authentication
-            String flag = d(); // Decode flag at runtime
+            String flag = currentFlag.isEmpty() ? d() : currentFlag;
             
             binding.demoCard.setCardBackgroundColor(getResources().getColor(android.R.color.holo_green_light));
-            binding.flagText.setText("✓ Authentication Successful!\n\nFlag: " + flag);
+            binding.flagText.setText("\u2713 Authentication Successful!\n\nFlag: " + flag);
             binding.flagText.setVisibility(View.VISIBLE);
             
             Toast.makeText(getContext(), "Access Granted! Flag revealed!", Toast.LENGTH_LONG).show();
             Log.d(TAG, "Authentication successful! Flag: " + flag);
+            
+            progressTracker.markCompleted(FlagValidator.Module.POOR_AUTH_LESSON);
+            FloatingActionButton fabMarkComplete = requireActivity().findViewById(R.id.fab_mark_complete);
+            updateMarkCompleteFabAppearance(fabMarkComplete);
+            FlagValidator.validateFlag(requireContext(), FlagValidator.Module.POOR_AUTH_LESSON,
+                    flag, correct -> Log.d(TAG, "Server submission result: " + correct));
             
             binding.verifyButton.setEnabled(false);
             binding.pinInput.setEnabled(false);

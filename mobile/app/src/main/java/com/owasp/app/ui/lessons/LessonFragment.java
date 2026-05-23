@@ -16,14 +16,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.owasp.app.R;
 import com.owasp.app.databinding.FragmentLessonBinding;
+import com.owasp.app.utils.FlagProvider;
 import com.owasp.app.utils.FlagValidator;
 import com.owasp.app.utils.ProgressTracker;
 
 public class LessonFragment extends Fragment {
 
-    // TODO: Find this flag using reverse engineering!
-    private static final String HIDDEN_FLAG = "KEY{R3v3rs3_Eng1n33r1ng_M4st3r_2024}";
-    
+    private String currentFlag = "";
     private FragmentLessonBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -55,6 +54,8 @@ public class LessonFragment extends Fragment {
         TextInputEditText keyInput = binding.keyInput;
         Button verifyButton = binding.verifyKeyButton;
         ProgressTracker progressTracker = new ProgressTracker(requireContext());
+        FlagProvider.getFlag(requireContext(), FlagValidator.Module.RE_LESSON,
+                flagValue -> currentFlag = flagValue);
 
         verifyButton.setOnClickListener(v -> {
             String enteredKey = keyInput.getText() != null ? keyInput.getText().toString().trim() : "";
@@ -64,9 +65,11 @@ public class LessonFragment extends Fragment {
                 return;
             }
             
-            if (enteredKey.equals(HIDDEN_FLAG)) {
+            if (enteredKey.equals(currentFlag)) {
                 // Correct key!
                 progressTracker.markCompleted(FlagValidator.Module.RE_LESSON);
+                FlagValidator.validateFlag(requireContext(), FlagValidator.Module.RE_LESSON,
+                        enteredKey, correct -> android.util.Log.d("RELesson", "Server submission: " + correct));
                 Toast.makeText(requireContext(), "✓ Correct! Lesson marked as complete!", Toast.LENGTH_LONG).show();
                 keyInput.setText("");
             } else {
