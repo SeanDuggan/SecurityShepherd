@@ -15,7 +15,7 @@ public class LandingActivity extends AppCompatActivity {
 
         Button enterAppButton = findViewById(R.id.enter_app_button);
         enterAppButton.setOnClickListener(v -> {
-            Intent intent = new Intent(LandingActivity.this, MainActivity.class);
+            Intent intent = new Intent(LandingActivity.this, LoginActivity.class);
             startActivity(intent);
             finish();
         });

@@ -157,6 +157,17 @@ https://www.owasp.org/index.php/OWASP_Security_Shepherd </string>
     <string name="actions">Actions</string>
     <string name="cancel">Cancel</string>
     <string name="login">Login</string>
+    <!-- Login screen -->
+    <string name="login_get_started">Get Started</string>
+    <string name="login_step1">1) Set up your proxy (e.g. Burp Suite) to intercept traffic.</string>
+    <string name="login_step2">2) Register an account or sign in with your existing credentials.</string>
+    <string name="login_step3_signin">3) Sign in below.</string>
+    <string name="login_step3_register">3) Register below.</string>
+    <string name="login_continue_offline">Continue without signing in (offline mode)</string>
+    <string name="login_error_fill_fields">Please fill in Server URL, Username and Password.</string>
+    <string name="login_connecting">Connecting\u2026</string>
+    <string name="login_ctf_rules_title">CTF Rules</string>
+    <string name="login_ctf_rules_body">• With great power comes great responsibility — only use these skills ethically and legally.\n• Do not attempt to bypass platform mechanisms (login, registration, scoreboard, admin console).\n• Automated exploitation tools are forbidden.\n• Collaborate and share knowledge — bonus points for helping others.\n• Have fun!</string>
     <string name="logout">Logout</string>
     <string name="username">Username</string>
     <string name="password">Password</string>

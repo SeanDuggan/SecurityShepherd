@@ -1,5 +1,6 @@
 package com.owasp.app.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
+import com.owasp.app.LoginActivity;
 import com.owasp.app.MainActivity;
 import com.owasp.app.databinding.FragmentHomeBinding;
 import com.owasp.app.utils.AuthManager;
@@ -60,9 +62,9 @@ public class HomeFragment extends Fragment {
             statusText.setText("Offline mode — sign in for server-validated flags");
             authButton.setText("Sign In to Server");
             authButton.setOnClickListener(v -> {
-                if (getActivity() instanceof MainActivity) {
-                    ((MainActivity) getActivity()).openAuthDialog();
-                }
+                Intent intent = new Intent(requireActivity(), LoginActivity.class);
+                intent.putExtra(LoginActivity.EXTRA_FROM_APP, true);
+                startActivity(intent);
             });
         }
     }
