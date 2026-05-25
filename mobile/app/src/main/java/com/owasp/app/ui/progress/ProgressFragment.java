@@ -158,8 +158,7 @@ public class ProgressFragment extends Fragment {
                 holder.statusIcon.setImageResource(R.drawable.ic_status_complete);
                 holder.statusIcon.setImageTintList(ColorStateList.valueOf(
                         holder.itemView.getContext().getColor(android.R.color.holo_green_dark)));
-                holder.statusIcon.setContentDescription(
-                        holder.itemView.getContext().getString(R.string.mark_complete));
+                holder.statusIcon.setContentDescription("Completed");
                 holder.statusText.setText("Completed");
                 holder.statusText.setTextColor(holder.itemView.getContext()
                         .getColor(android.R.color.holo_green_dark));

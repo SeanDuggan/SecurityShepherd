@@ -55,22 +55,6 @@
         app:elevation="6dp"
         app:srcCompat="@android:drawable/ic_menu_view" />
 
-    <!-- Mini FAB for Mark Complete -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_mark_complete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="@dimen/fab_margin"
-        android:layout_marginBottom="216dp"
-        android:visibility="gone"
-        android:contentDescription="@string/mark_complete"
-        app:fabSize="mini"
-        app:tint="@color/white"
-        app:backgroundTint="@color/success_green"
-        app:elevation="6dp"
-        app:srcCompat="@android:drawable/btn_star_big_on" />
-
     <!-- Main FAB with Material 3 styling -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"

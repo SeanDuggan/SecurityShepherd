@@ -64,32 +64,22 @@ public class InputValidationLessonFragment extends Fragment {
         FloatingActionButton fab = requireActivity().findViewById(R.id.fab);
         FloatingActionButton fabCommandRef = requireActivity().findViewById(R.id.fab_command_reference);
         FloatingActionButton fabOwaspLink = requireActivity().findViewById(R.id.fab_owasp_link);
-        FloatingActionButton fabMarkComplete = requireActivity().findViewById(R.id.fab_mark_complete);
 
         if (fab != null) {
-            fab.setOnClickListener(v -> toggleFabExpansion(fab, fabCommandRef, fabOwaspLink, fabMarkComplete));
+            fab.setOnClickListener(v -> toggleFabExpansion(fab, fabCommandRef, fabOwaspLink));
         }
         if (fabCommandRef != null) {
             fabCommandRef.setOnClickListener(v -> {
                 showDetailedInfo();
-                collapseFab(fab, fabCommandRef, fabOwaspLink, fabMarkComplete);
+                collapseFab(fab, fabCommandRef, fabOwaspLink);
             });
         }
         if (fabOwaspLink != null) {
             fabOwaspLink.setOnClickListener(v -> {
                 openOwaspTop10Link();
-                collapseFab(fab, fabCommandRef, fabOwaspLink, fabMarkComplete);
+                collapseFab(fab, fabCommandRef, fabOwaspLink);
             });
         }
-        if (fabMarkComplete != null) {
-            fabMarkComplete.setOnClickListener(v -> {
-                toggleCompleteStatus();
-                updateMarkCompleteFabAppearance(fabMarkComplete);
-                collapseFab(fab, fabCommandRef, fabOwaspLink, fabMarkComplete);
-            });
-        }
-
-        updateMarkCompleteFabAppearance(fabMarkComplete);
 
         return root;
     }
@@ -153,8 +143,6 @@ public class InputValidationLessonFragment extends Fragment {
             progressTracker.markCompleted(FlagValidator.Module.INPUT_VALIDATION_LESSON);
             FlagValidator.validateFlag(requireContext(), FlagValidator.Module.INPUT_VALIDATION_LESSON,
                     currentFlag, correct -> Log.d(TAG, "Server submission: " + correct));
-            FloatingActionButton fabMarkComplete = requireActivity().findViewById(R.id.fab_mark_complete);
-            updateMarkCompleteFabAppearance(fabMarkComplete);
             
         } else {
             // Generic external content
@@ -179,23 +167,21 @@ public class InputValidationLessonFragment extends Fragment {
         Toast.makeText(getContext(), "URL validation failed", Toast.LENGTH_SHORT).show();
     }
 
-    private void toggleFabExpansion(FloatingActionButton mainFab, FloatingActionButton fab1, FloatingActionButton fab2, FloatingActionButton fab3) {
+    private void toggleFabExpansion(FloatingActionButton mainFab, FloatingActionButton fab1, FloatingActionButton fab2) {
         fabExpanded = !fabExpanded;
         if (fabExpanded) {
             if (fab1 != null) fab1.setVisibility(View.VISIBLE);
             if (fab2 != null) fab2.setVisibility(View.VISIBLE);
-            if (fab3 != null) fab3.setVisibility(View.VISIBLE);
             if (mainFab != null) mainFab.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
         } else {
-            collapseFab(mainFab, fab1, fab2, fab3);
+            collapseFab(mainFab, fab1, fab2);
         }
     }
 
-    private void collapseFab(FloatingActionButton mainFab, FloatingActionButton fab1, FloatingActionButton fab2, FloatingActionButton fab3) {
+    private void collapseFab(FloatingActionButton mainFab, FloatingActionButton fab1, FloatingActionButton fab2) {
         fabExpanded = false;
         if (fab1 != null) fab1.setVisibility(View.GONE);
         if (fab2 != null) fab2.setVisibility(View.GONE);
-        if (fab3 != null) fab3.setVisibility(View.GONE);
         if (mainFab != null) mainFab.setImageResource(android.R.drawable.ic_menu_help);
     }
 
@@ -230,38 +216,13 @@ public class InputValidationLessonFragment extends Fragment {
                 .show();
     }
     
-    private void toggleCompleteStatus() {
-        boolean nowCompleted = progressTracker.toggleCompleted(FlagValidator.Module.INPUT_VALIDATION_LESSON);
-        String message = nowCompleted ? "✓ Marked as complete!" : "○ Marked as incomplete";
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
-    }
-    
-    private void updateMarkCompleteFabAppearance(FloatingActionButton fabMarkComplete) {
-        if (fabMarkComplete == null) return;
-        
-        boolean isCompleted = progressTracker.isCompleted(FlagValidator.Module.INPUT_VALIDATION_LESSON);
-        
-        if (isCompleted) {
-            // Red - will mark as incomplete
-            fabMarkComplete.setBackgroundTintList(android.content.res.ColorStateList.valueOf(
-                androidx.core.content.ContextCompat.getColor(requireContext(), R.color.security_red)));
-            fabMarkComplete.setContentDescription("Mark as Incomplete");
-        } else {
-            // Green - will mark as complete
-            fabMarkComplete.setBackgroundTintList(android.content.res.ColorStateList.valueOf(
-                androidx.core.content.ContextCompat.getColor(requireContext(), R.color.success_green)));
-            fabMarkComplete.setContentDescription("Mark as Complete");
-        }
-    }
 
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
         FloatingActionButton fab = requireActivity().findViewById(R.id.fab);
         FloatingActionButton fabCommandRef = requireActivity().findViewById(R.id.fab_command_reference);
         FloatingActionButton fabOwaspLink = requireActivity().findViewById(R.id.fab_owasp_link);
-        FloatingActionButton fabMarkComplete = requireActivity().findViewById(R.id.fab_mark_complete);
-        collapseFab(fab, fabCommandRef, fabOwaspLink, fabMarkComplete);
+        collapseFab(fab, fabCommandRef, fabOwaspLink);
         binding = null;
     }
 }

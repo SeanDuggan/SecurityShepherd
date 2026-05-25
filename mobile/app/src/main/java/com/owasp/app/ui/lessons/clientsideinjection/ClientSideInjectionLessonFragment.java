@@ -65,33 +65,22 @@ public class ClientSideInjectionLessonFragment extends Fragment {
         FloatingActionButton fab = requireActivity().findViewById(R.id.fab);
         FloatingActionButton fabCommandRef = requireActivity().findViewById(R.id.fab_command_reference);
         FloatingActionButton fabOwaspLink = requireActivity().findViewById(R.id.fab_owasp_link);
-        FloatingActionButton fabMarkComplete = requireActivity().findViewById(R.id.fab_mark_complete);
 
         if (fab != null) {
-            fab.setOnClickListener(v -> toggleFabExpansion(fab, fabCommandRef, fabOwaspLink, fabMarkComplete));
+            fab.setOnClickListener(v -> toggleFabExpansion(fab, fabCommandRef, fabOwaspLink));
         }
         if (fabCommandRef != null) {
             fabCommandRef.setOnClickListener(v -> {
                 showDetailedInfo();
-                collapseFab(fab, fabCommandRef, fabOwaspLink, fabMarkComplete);
+                collapseFab(fab, fabCommandRef, fabOwaspLink);
             });
         }
         if (fabOwaspLink != null) {
             fabOwaspLink.setOnClickListener(v -> {
                 openOwaspTop10Link();
-                collapseFab(fab, fabCommandRef, fabOwaspLink, fabMarkComplete);
+                collapseFab(fab, fabCommandRef, fabOwaspLink);
             });
         }
-        if (fabMarkComplete != null) {
-            fabMarkComplete.setOnClickListener(v -> {
-                Toast.makeText(requireContext(),
-                        "Complete the SQL injection to earn this!", Toast.LENGTH_SHORT).show();
-                collapseFab(fab, fabCommandRef, fabOwaspLink, fabMarkComplete);
-            });
-        }
-
-        // Set initial FAB appearance based on completion status
-        updateMarkCompleteFabAppearance(fabMarkComplete);
 
         // Setup search button
         binding.searchButton.setOnClickListener(v -> performSearch());
@@ -187,23 +176,21 @@ public class ClientSideInjectionLessonFragment extends Fragment {
         }
     }
 
-    private void toggleFabExpansion(FloatingActionButton mainFab, FloatingActionButton fab1, FloatingActionButton fab2, FloatingActionButton fab3) {
+    private void toggleFabExpansion(FloatingActionButton mainFab, FloatingActionButton fab1, FloatingActionButton fab2) {
         fabExpanded = !fabExpanded;
         if (fabExpanded) {
             if (fab1 != null) fab1.setVisibility(View.VISIBLE);
             if (fab2 != null) fab2.setVisibility(View.VISIBLE);
-            if (fab3 != null) fab3.setVisibility(View.VISIBLE);
             if (mainFab != null) mainFab.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
         } else {
-            collapseFab(mainFab, fab1, fab2, fab3);
+            collapseFab(mainFab, fab1, fab2);
         }
     }
 
-    private void collapseFab(FloatingActionButton mainFab, FloatingActionButton fab1, FloatingActionButton fab2, FloatingActionButton fab3) {
+    private void collapseFab(FloatingActionButton mainFab, FloatingActionButton fab1, FloatingActionButton fab2) {
         fabExpanded = false;
         if (fab1 != null) fab1.setVisibility(View.GONE);
         if (fab2 != null) fab2.setVisibility(View.GONE);
-        if (fab3 != null) fab3.setVisibility(View.GONE);
         if (mainFab != null) mainFab.setImageResource(android.R.drawable.ic_menu_help);
     }
 
@@ -252,9 +239,6 @@ public class ClientSideInjectionLessonFragment extends Fragment {
                     if (!isAdded()) return;
                     if (correct) {
                         progressTracker.markCompleted(FlagValidator.Module.CLIENT_SIDE_INJECTION_LESSON);
-                        FloatingActionButton fabMarkComplete =
-                                requireActivity().findViewById(R.id.fab_mark_complete);
-                        updateMarkCompleteFabAppearance(fabMarkComplete);
                         new androidx.appcompat.app.AlertDialog.Builder(requireContext())
                                 .setTitle("Lesson Complete")
                                 .setMessage("Correct flag validated! You have successfully demonstrated "
@@ -273,32 +257,13 @@ public class ClientSideInjectionLessonFragment extends Fragment {
                 });
     }
     
-    private void updateMarkCompleteFabAppearance(FloatingActionButton fabMarkComplete) {
-        if (fabMarkComplete == null) return;
-        
-        boolean isCompleted = progressTracker.isCompleted(FlagValidator.Module.CLIENT_SIDE_INJECTION_LESSON);
-        
-        if (isCompleted) {
-            // Red - will mark as incomplete
-            fabMarkComplete.setBackgroundTintList(android.content.res.ColorStateList.valueOf(
-                androidx.core.content.ContextCompat.getColor(requireContext(), R.color.security_red)));
-            fabMarkComplete.setContentDescription("Mark as Incomplete");
-        } else {
-            // Green - will mark as complete
-            fabMarkComplete.setBackgroundTintList(android.content.res.ColorStateList.valueOf(
-                androidx.core.content.ContextCompat.getColor(requireContext(), R.color.success_green)));
-            fabMarkComplete.setContentDescription("Mark as Complete");
-        }
-    }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         FloatingActionButton fab = requireActivity().findViewById(R.id.fab);
         FloatingActionButton fabCommandRef = requireActivity().findViewById(R.id.fab_command_reference);
         FloatingActionButton fabOwaspLink = requireActivity().findViewById(R.id.fab_owasp_link);
-        FloatingActionButton fabMarkComplete = requireActivity().findViewById(R.id.fab_mark_complete);
-        collapseFab(fab, fabCommandRef, fabOwaspLink, fabMarkComplete);
+        collapseFab(fab, fabCommandRef, fabOwaspLink);
         if (dbHelper != null) {
             dbHelper.close();
         }

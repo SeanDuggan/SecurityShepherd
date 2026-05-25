@@ -5,9 +5,9 @@
         <item name="colorPrimary">@color/primary_light_blue_dark</item>
         <item name="colorPrimaryVariant">@color/primary_blue_dark</item>
         <item name="colorOnPrimary">@color/black</item>
-        <!-- Secondary brand color (Security Green for success) -->
-        <item name="colorSecondary">@color/shepherd_light_green_dark</item>
-        <item name="colorSecondaryVariant">@color/shepherd_green_dark</item>
+        <!-- Secondary brand color (Purple to match primary palette) -->
+        <item name="colorSecondary">@color/primary_light_blue_dark</item>
+        <item name="colorSecondaryVariant">@color/primary_blue_dark</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Tertiary brand color (Warning Orange) -->
         <item name="colorTertiary">@color/warning_orange_light_dark</item>

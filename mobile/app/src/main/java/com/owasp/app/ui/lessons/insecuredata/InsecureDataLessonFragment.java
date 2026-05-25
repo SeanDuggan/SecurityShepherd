@@ -48,28 +48,23 @@ public class InsecureDataLessonFragment extends Fragment {
         FloatingActionButton fab = requireActivity().findViewById(R.id.fab);
         FloatingActionButton fabCommandRef = requireActivity().findViewById(R.id.fab_command_reference);
         FloatingActionButton fabOwaspLink = requireActivity().findViewById(R.id.fab_owasp_link);
-        FloatingActionButton fabMarkComplete = requireActivity().findViewById(R.id.fab_mark_complete);
         
         if (fab != null) {
-            fab.setOnClickListener(v -> toggleFabExpansion(fab, fabCommandRef, fabOwaspLink, fabMarkComplete));
+            fab.setOnClickListener(v -> toggleFabExpansion(fab, fabCommandRef, fabOwaspLink));
         }
         
         if (fabCommandRef != null) {
             fabCommandRef.setOnClickListener(v -> {
                 showDetailedInfo();
-                collapseFab(fab, fabCommandRef, fabOwaspLink, fabMarkComplete);
+                collapseFab(fab, fabCommandRef, fabOwaspLink);
             });
         }
         
         if (fabOwaspLink != null) {
             fabOwaspLink.setOnClickListener(v -> {
                 openOwaspTop10Link();
-                collapseFab(fab, fabCommandRef, fabOwaspLink, fabMarkComplete);
+                collapseFab(fab, fabCommandRef, fabOwaspLink);
             });
-        }
-        
-        if (fabMarkComplete != null) {
-            fabMarkComplete.setVisibility(View.GONE);
         }
 
         // Create insecure database for demonstration; seed users once flag is available
@@ -184,24 +179,22 @@ public class InsecureDataLessonFragment extends Fragment {
         }
     }
 
-    private void toggleFabExpansion(FloatingActionButton mainFab, FloatingActionButton fab1, FloatingActionButton fab2, FloatingActionButton fab3) {
+    private void toggleFabExpansion(FloatingActionButton mainFab, FloatingActionButton fab1, FloatingActionButton fab2) {
         fabExpanded = !fabExpanded;
         
         if (fabExpanded) {
             if (fab1 != null) fab1.setVisibility(View.VISIBLE);
             if (fab2 != null) fab2.setVisibility(View.VISIBLE);
-            if (fab3 != null) fab3.setVisibility(View.VISIBLE);
             if (mainFab != null) mainFab.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
         } else {
-            collapseFab(mainFab, fab1, fab2, fab3);
+            collapseFab(mainFab, fab1, fab2);
         }
     }
 
-    private void collapseFab(FloatingActionButton mainFab, FloatingActionButton fab1, FloatingActionButton fab2, FloatingActionButton fab3) {
+    private void collapseFab(FloatingActionButton mainFab, FloatingActionButton fab1, FloatingActionButton fab2) {
         fabExpanded = false;
         if (fab1 != null) fab1.setVisibility(View.GONE);
         if (fab2 != null) fab2.setVisibility(View.GONE);
-        if (fab3 != null) fab3.setVisibility(View.GONE);
         if (mainFab != null) mainFab.setImageResource(android.R.drawable.ic_menu_help);
     }
 
@@ -300,8 +293,7 @@ public class InsecureDataLessonFragment extends Fragment {
         FloatingActionButton fab = requireActivity().findViewById(R.id.fab);
         FloatingActionButton fabCommandRef = requireActivity().findViewById(R.id.fab_command_reference);
         FloatingActionButton fabOwaspLink = requireActivity().findViewById(R.id.fab_owasp_link);
-        FloatingActionButton fabMarkComplete = requireActivity().findViewById(R.id.fab_mark_complete);
-        collapseFab(fab, fabCommandRef, fabOwaspLink, fabMarkComplete);
+        collapseFab(fab, fabCommandRef, fabOwaspLink);
         
         if (membersDb != null) {
             membersDb.close();

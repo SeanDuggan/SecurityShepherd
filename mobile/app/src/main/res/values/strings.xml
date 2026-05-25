@@ -111,8 +111,7 @@ https://www.owasp.org/index.php/OWASP_Security_Shepherd </string>
     <!-- Home screen -->
     <string name="home_welcome_title">Welcome to OWASP Mobile Shepherd</string>
     <string name="home_welcome_description">An Android App that hosts the Mobile Lesson and Challenge content from the OWASP Security Shepherd Project.</string>
-    <string name="home_getting_started_title">Getting Started</string>
-    <string name="home_getting_started_steps">1. Open the menu (☰) to navigate\n2. Start with a lesson to learn concepts\n3. Apply your knowledge in challenges\n4. Use logcat and debugging tools\n5. Find the keys!</string>
+
 
     <!-- Progress screen -->
     <string name="your_progress">Your Progress</string>
@@ -144,7 +143,6 @@ https://www.owasp.org/index.php/OWASP_Security_Shepherd </string>
     <string name="flag">Flag</string>
     <string name="results">Results</string>
     <string name="challenge_info">Challenge Info</string>
-    <string name="mark_complete">Mark Complete</string>
     <string name="help_and_information">Help and Information</string>
     <string name="about">About</string>
     <string name="hints">Hints</string>
@@ -166,8 +164,7 @@ https://www.owasp.org/index.php/OWASP_Security_Shepherd </string>
     <string name="login_continue_offline">Continue without signing in (offline mode)</string>
     <string name="login_error_fill_fields">Please fill in Server URL, Username and Password.</string>
     <string name="login_connecting">Connecting\u2026</string>
-    <string name="login_ctf_rules_title">CTF Rules</string>
-    <string name="login_ctf_rules_body">• With great power comes great responsibility — only use these skills ethically and legally.\n• Do not attempt to bypass platform mechanisms (login, registration, scoreboard, admin console).\n• Automated exploitation tools are forbidden.\n• Collaborate and share knowledge — bonus points for helping others.\n• Have fun!</string>
+
     <string name="logout">Logout</string>
     <string name="username">Username</string>
     <string name="password">Password</string>

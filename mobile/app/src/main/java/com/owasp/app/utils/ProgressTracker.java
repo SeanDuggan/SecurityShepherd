@@ -28,6 +28,10 @@ public class ProgressTracker {
     public static void setGlobalCompletionListener(CompletionChangeListener listener) {
         globalListener = listener;
     }
+
+    public static CompletionChangeListener getGlobalCompletionListener() {
+        return globalListener;
+    }
     
     public ProgressTracker(Context context) {
         this.prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);

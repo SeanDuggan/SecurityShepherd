@@ -105,19 +105,10 @@ public class LessonFragment extends Fragment {
         // bestPracticesSection.setVisibility(View.GONE);
         additionalSection.setVisibility(View.GONE);
         
-        ProgressTracker tracker = new ProgressTracker(requireContext());
-        boolean isCompleted = tracker.isCompleted(FlagValidator.Module.RE_LESSON);
-        String buttonText = isCompleted ? "Mark as Incomplete" : "Mark as Complete";
-        
         AlertDialog dialog = new AlertDialog.Builder(requireContext())
                 .setTitle("Reverse Engineering")
                 .setView(dialogView)
                 .setPositiveButton("Close", null)
-                .setNeutralButton(buttonText, (d, which) -> {
-                    boolean nowCompleted = tracker.toggleCompleted(FlagValidator.Module.RE_LESSON);
-                    String message = nowCompleted ? "✓ Marked as complete!" : "○ Marked as incomplete";
-                    Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
-                })
                 .show();
     }
 

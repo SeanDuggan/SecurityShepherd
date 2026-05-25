@@ -98,18 +98,10 @@ public class InsecureData2Fragment extends Fragment {
         // bestPracticesSection.setVisibility(View.GONE);
         additionalSection.setVisibility(View.GONE);
         
-        boolean isCompleted = progressTracker.isCompleted(FlagValidator.Module.IDS_CHALLENGE_2);
-        String buttonText = isCompleted ? "Mark as Incomplete" : "Mark as Complete";
-        
         new AlertDialog.Builder(requireContext())
                 .setTitle("Insecure Data Storage - SharedPreferences")
                 .setView(dialogView)
                 .setPositiveButton("Close", null)
-                .setNeutralButton(buttonText, (d, which) -> {
-                    boolean nowCompleted = progressTracker.toggleCompleted(FlagValidator.Module.IDS_CHALLENGE_2);
-                    String message = nowCompleted ? "✓ Marked as complete!" : "○ Marked as incomplete";
-                    Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
-                })
                 .show();
     }
 

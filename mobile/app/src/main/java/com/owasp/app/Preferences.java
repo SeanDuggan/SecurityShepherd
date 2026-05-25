@@ -2,12 +2,14 @@ package com.owasp.app;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
+import com.owasp.app.utils.ProgressTracker;
 
 /**
  * This file is part of the Security Shepherd Project.
@@ -80,6 +82,32 @@ public class Preferences extends AppCompatActivity {
                         startActivity(browserIntent);
                         return true;
                     }
+                });
+            }
+
+            // Set up reset progress preference listener
+            Preference resetProgressPreference = findPreference("reset_progress_preference");
+            if (resetProgressPreference != null) {
+                resetProgressPreference.setOnPreferenceClickListener(preference -> {
+                    new AlertDialog.Builder(requireContext())
+                            .setTitle("Reset All Progress")
+                            .setMessage("This will mark all lessons and challenges as incomplete. This cannot be undone.\n\nAre you sure?")
+                            .setPositiveButton("Reset", (dialog, which) -> {
+                                ProgressTracker tracker = new ProgressTracker(requireContext());
+                                tracker.resetProgress();
+                                ProgressTracker.CompletionChangeListener listener =
+                                        ProgressTracker.getGlobalCompletionListener();
+                                if (listener != null) {
+                                    listener.onCompletionChanged();
+                                }
+                                android.widget.Toast.makeText(
+                                        requireContext(),
+                                        "All progress has been reset",
+                                        android.widget.Toast.LENGTH_SHORT).show();
+                            })
+                            .setNegativeButton("Cancel", null)
+                            .show();
+                    return true;
                 });
             }
         }

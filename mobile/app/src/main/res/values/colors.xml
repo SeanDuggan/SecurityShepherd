@@ -48,6 +48,8 @@
     
     <color name="card_error_bg">#FFEBEE</color>
     <color name="card_error_text">#C62828</color>
+
+    <color name="progress_box_bg">#E8F5E9</color>
     
     <color name="card_warning_bg">#FFF3E0</color>
     <color name="card_warning_text">#E65100</color>
@@ -76,7 +78,7 @@
     <!-- Button colors -->
     <color name="colorPrimary">#2196F3</color>
     <color name="colorAccent">#FF9800</color>
-    <color name="colorSecondary">#4CAF50</color>
+    <color name="colorSecondary">#8E24AA</color>
     
     <!-- Progress tracking colors -->
     <color name="success_green">#4CAF50</color>

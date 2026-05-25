@@ -41,6 +41,15 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="Progress">
+
+        <Preference
+            android:key="reset_progress_preference"
+            android:title="Reset All Progress"
+            android:summary="Mark all lessons and challenges as incomplete" />
+
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="Support">
 
         <Preference

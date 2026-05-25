@@ -199,42 +199,6 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- CTF Rules card — mirrors the web app's rules section -->
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            style="@style/Widget.Material3.CardView.Elevated"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp"
-            app:cardBackgroundColor="#FFF3CD">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/login_ctf_rules_title"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="#856404"
-                    android:layout_marginBottom="8dp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/login_ctf_rules_body"
-                    android:textSize="13sp"
-                    android:textColor="#856404"
-                    android:lineSpacingMultiplier="1.4" />
-
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
         <!-- Continue offline link -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/login_offline_button"
