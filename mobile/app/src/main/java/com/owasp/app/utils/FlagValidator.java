@@ -61,6 +61,10 @@ public class FlagValidator {
         // Insecure Communication
         INSECURE_COMM_LESSON("insecure_comm_lesson", TYPE_LESSON),
         INSECURE_COMM_CHALLENGE("insecure_comm_challenge", TYPE_CHALLENGE),
+
+        // Insufficient Cryptography
+        INSUFFICIENT_CRYPTO_LESSON("insufficient_crypto_lesson", TYPE_LESSON),
+        INSUFFICIENT_CRYPTO_CHALLENGE("insufficient_crypto_challenge", TYPE_CHALLENGE),
         
         // Security Misconfiguration
         SECURITY_MISCONFIG_LESSON("security_misconfig_lesson", TYPE_LESSON),
@@ -105,6 +109,7 @@ public class FlagValidator {
         put(Module.INSECURE_AUTH_LESSON, "2efe8cef55f8d57015fe7bebb24b83aefbc4a0493e8c664ad27cb7489a870eb5");
         put(Module.SUPPLY_CHAIN_LESSON, "739ce3ad0ac005fa38217ede45ab070932024b011b5fe5c0cbb41ef55dc2d03d");
         put(Module.INSECURE_COMM_LESSON, "3be3cd78ecb04af3f1ac5c82569faf0fd86ddbe9f4cfd44ad3368d88e05d7ea2");
+        put(Module.INSUFFICIENT_CRYPTO_LESSON, "637dac318ce0fb277f8fde0edb9b33b55e9a0737aaceed1022bd9cfb8162bb80");
         put(Module.SECURITY_MISCONFIG_LESSON, "aaa7eb57d471bf3ee33592ae2194788ef87b1c27c32aece710b55c8487942bee");
         put(Module.INPUT_VALIDATION_LESSON, "777cc0c09a611929f1f310259231bbadf0eaebdc23b2453fb05075c19122a6b7");
         put(Module.PRIVACY_LESSON, "aea1550ffa9752f8b49e64b7782871d0f83df65b8521c9d75206b0d621239577");

@@ -59,6 +59,8 @@ final class MobileModuleFlags {
     m.put("ids_lesson", "Battery777");
     // Insecure Communication (M5) — flag transmitted as HTTP API key header
     m.put("insecure_comm_lesson", "OWASP{H1TTP_Insecure_F1nd}");
+    // Insufficient Cryptography (M6) — flag encrypted with weak DES key
+    m.put("insufficient_crypto_lesson", "KEY{DES_Encrypt10n}");
     BASE_FLAGS = Collections.unmodifiableMap(m);
 
     Map<String, String> ids = new HashMap<>();
@@ -70,6 +72,7 @@ final class MobileModuleFlags {
     // New mobile-specific modules added to the platform
     ids.put("insecure_auth_lesson",       "0f40ae03b9339cb88fbd834213ee1c597791274a");
     ids.put("insecure_comm_lesson",       "a76d11ebd575aecfba5d69441cbd90c95e8abe31");
+    ids.put("insufficient_crypto_lesson", "3385d879b0da97597e16e5c8a7511a6ec331d1d9");
     ids.put("security_misconfig_lesson",  "c85dad7f468a333e53edaca90a435528db76d118");
     ids.put("input_validation_lesson",    "708b76213e50409e138fc68eba81ed7ec8fccf08");
     ids.put("privacy_lesson",             "952c4c3785d8bd8d51bb0d0161c3f6997dd01863");
