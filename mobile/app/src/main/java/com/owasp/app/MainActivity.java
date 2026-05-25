@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
         NAV_TO_MODULE_MAP.put(R.id.nav_insecure_authorization_lesson, FlagValidator.Module.INSECURE_AUTH_LESSON);
         // NAV_TO_MODULE_MAP.put(R.id.nav_supply_chain_lesson, FlagValidator.Module.SUPPLY_CHAIN_LESSON); // TODO: Develop proper functionality
         NAV_TO_MODULE_MAP.put(R.id.nav_insecure_comm_lesson, FlagValidator.Module.INSECURE_COMM_LESSON);
-        NAV_TO_MODULE_MAP.put(R.id.nav_insufficient_crypto_lesson, FlagValidator.Module.INSUFFICIENT_CRYPTO_LESSON);
         NAV_TO_MODULE_MAP.put(R.id.nav_security_misconfig_lesson, FlagValidator.Module.SECURITY_MISCONFIG_LESSON);
         NAV_TO_MODULE_MAP.put(R.id.nav_input_validation_lesson, FlagValidator.Module.INPUT_VALIDATION_LESSON);
         NAV_TO_MODULE_MAP.put(R.id.nav_privacy_lesson, FlagValidator.Module.PRIVACY_LESSON);
@@ -69,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
         NAV_TO_MODULE_MAP.put(R.id.nav_poor_auth_challenge, FlagValidator.Module.POOR_AUTH_CHALLENGE);
         // NAV_TO_MODULE_MAP.put(R.id.nav_supply_chain_challenge, FlagValidator.Module.SUPPLY_CHAIN_CHALLENGE); // TODO: Develop proper functionality
         NAV_TO_MODULE_MAP.put(R.id.nav_insecure_comm_challenge, FlagValidator.Module.INSECURE_COMM_CHALLENGE);
-        NAV_TO_MODULE_MAP.put(R.id.nav_insufficient_crypto_challenge, FlagValidator.Module.INSUFFICIENT_CRYPTO_CHALLENGE);
         NAV_TO_MODULE_MAP.put(R.id.nav_security_misconfig_challenge2, FlagValidator.Module.SECURITY_MISCONFIG_CHALLENGE_2);
         NAV_TO_MODULE_MAP.put(R.id.nav_xss_challenge, FlagValidator.Module.XSS_CHALLENGE);
         NAV_TO_MODULE_MAP.put(R.id.nav_client_side_injection_challenge1, FlagValidator.Module.CLIENT_SIDE_INJECTION_CHALLENGE_1);
@@ -200,10 +198,10 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_lesson, R.id.nav_insecure_data_lesson, R.id.nav_poor_auth_lesson, R.id.nav_insecure_authorization_lesson, R.id.nav_insecure_comm_lesson, R.id.nav_insufficient_crypto_lesson, R.id.nav_security_misconfig_lesson,
+                R.id.nav_home, R.id.nav_lesson, R.id.nav_insecure_data_lesson, R.id.nav_poor_auth_lesson, R.id.nav_insecure_authorization_lesson, R.id.nav_insecure_comm_lesson, R.id.nav_security_misconfig_lesson,
                 R.id.nav_challenge1, R.id.nav_challenge2, R.id.nav_challenge3,
             R.id.nav_insecure_data1, R.id.nav_insecure_data2,
-                R.id.nav_poor_auth_challenge, R.id.nav_insecure_comm_challenge, R.id.nav_insufficient_crypto_challenge,
+                R.id.nav_poor_auth_challenge, R.id.nav_insecure_comm_challenge,
                 R.id.nav_security_misconfig_challenge2,
                 R.id.nav_input_validation_lesson, R.id.nav_xss_challenge,
                 R.id.nav_privacy_lesson,
@@ -229,7 +227,6 @@ public class MainActivity extends AppCompatActivity {
         addChildIfNotCompleted(lessonsGroup, new NavigationItem(24, "Insecure Authorization", 0, R.id.nav_insecure_authorization_lesson));
         // addChildIfNotCompleted(lessonsGroup, new NavigationItem(25, "Supply Chain Security", 0, R.id.nav_supply_chain_lesson)); // TODO: Develop proper functionality
         addChildIfNotCompleted(lessonsGroup, new NavigationItem(26, "Insecure Communication", 0, R.id.nav_insecure_comm_lesson));
-        addChildIfNotCompleted(lessonsGroup, new NavigationItem(27, "Insufficient Cryptography", 0, R.id.nav_insufficient_crypto_lesson));
         addChildIfNotCompleted(lessonsGroup, new NavigationItem(28, "Security Misconfiguration", 0, R.id.nav_security_misconfig_lesson));
         addChildIfNotCompleted(lessonsGroup, new NavigationItem(29, "Input Validation", 0, R.id.nav_input_validation_lesson));
         addChildIfNotCompleted(lessonsGroup, new NavigationItem(30, "Privacy Controls", 0, R.id.nav_privacy_lesson));
@@ -256,7 +253,6 @@ public class MainActivity extends AppCompatActivity {
         addChildIfNotCompleted(challengesGroup, new NavigationItem(47, "Poor Authentication", 0, R.id.nav_poor_auth_challenge));
         // addChildIfNotCompleted(challengesGroup, new NavigationItem(48, "Supply Chain Security", 0, R.id.nav_supply_chain_challenge)); // TODO: Develop proper functionality
         addChildIfNotCompleted(challengesGroup, new NavigationItem(49, "Insecure Communication", 0, R.id.nav_insecure_comm_challenge));
-        addChildIfNotCompleted(challengesGroup, new NavigationItem(50, "Insufficient Cryptography", 0, R.id.nav_insufficient_crypto_challenge));
         
         // Security Misconfiguration sub-group
         NavigationItem securityMisconfigGroup = new NavigationItem(51, "Security Misconfiguration", 0);
@@ -308,7 +304,6 @@ public class MainActivity extends AppCompatActivity {
         if (navId == R.id.nav_insecure_authorization_lesson) return "Insecure Authorization";
         // if (navId == R.id.nav_supply_chain_lesson) return "Supply Chain Security"; // TODO: Develop proper functionality
         if (navId == R.id.nav_insecure_comm_lesson) return "Insecure Communication";
-        if (navId == R.id.nav_insufficient_crypto_lesson) return "Insufficient Cryptography";
         if (navId == R.id.nav_security_misconfig_lesson) return "Security Misconfiguration";
         if (navId == R.id.nav_input_validation_lesson) return "Input Validation";
         if (navId == R.id.nav_privacy_lesson) return "Privacy Controls";
@@ -321,7 +316,6 @@ public class MainActivity extends AppCompatActivity {
         if (navId == R.id.nav_poor_auth_challenge) return "Poor Auth Challenge";
         // if (navId == R.id.nav_supply_chain_challenge) return "Supply Chain Challenge"; // TODO: Develop proper functionality
         if (navId == R.id.nav_insecure_comm_challenge) return "Insecure Comm Challenge";
-        if (navId == R.id.nav_insufficient_crypto_challenge) return "Crypto Challenge";
         if (navId == R.id.nav_security_misconfig_challenge2) return "Security Misconfig Challenge";
         if (navId == R.id.nav_xss_challenge) return "XSS Challenge";
         if (navId == R.id.nav_client_side_injection_challenge1) return "Client Injection Challenge 1";
