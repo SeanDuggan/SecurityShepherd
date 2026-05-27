@@ -20,9 +20,10 @@ import java.util.Map;
 /**
  * Provides the correct flag string for each mobile module in both offline and online modes.
  *
- * <p><b>Offline mode</b> — when no server credentials are configured, a static plaintext flag is
- * returned immediately. These values can be read from the APK, which is acceptable for offline
- * (unauthenticated) training use.
+ * <p><b>Offline mode</b> — when no server credentials are configured, an empty string is returned
+ * for all modules except the Reverse Engineering lesson, which retains a static offline flag for
+ * introductory use. Lessons are still explorable offline, but flag submission requires a server
+ * login so that completion is validated server-side.
  *
  * <p><b>Online mode</b> — when the student is signed in, the server-generated user-specific flag
  * is fetched from {@code /mobileFlagGet}. This flag is an HMAC of the base flag keyed with the
@@ -37,45 +38,15 @@ public class FlagProvider {
     private static final String TAG = "FlagProvider";
 
     /**
-     * Offline (static) flag values — returned when no server is configured.
-     * Mirrors the base flags in the server's {@code MobileModuleFlags} class.
+     * Offline (static) flag values — only the Reverse Engineering lesson retains a static flag
+     * for offline/introductory use. All other lessons require a server login to obtain a flag.
      */
     private static final Map<FlagValidator.Module, String> OFFLINE_FLAGS = new HashMap<>();
 
     static {
         OFFLINE_FLAGS.put(
-                FlagValidator.Module.CLIENT_SIDE_INJECTION_LESSON,
-                "KEY{CL13NT_S1D3_SQL_1NJ3CT10N}");
-        OFFLINE_FLAGS.put(
-                FlagValidator.Module.POOR_AUTH_LESSON,
-                "Taco_Snores_On_A_Couch");
-        OFFLINE_FLAGS.put(
-                FlagValidator.Module.INSECURE_AUTH_LESSON,
-                "KEY{Pr1v1l3g3_Esc4l4t10n_Pwn3d}");
-        OFFLINE_FLAGS.put(
-                FlagValidator.Module.INPUT_VALIDATION_LESSON,
-                "KEY{1nput_V4l1d4t10n_Byp4ss3d}");
-        OFFLINE_FLAGS.put(
-                FlagValidator.Module.SUPPLY_CHAIN_LESSON,
-                "KEY{Vuln3r4bl3_D3p3nd3ncy}");
-        OFFLINE_FLAGS.put(
                 FlagValidator.Module.RE_LESSON,
                 "KEY{R3v3rs3_Eng1n33r1ng_M4st3r_2024}");
-        OFFLINE_FLAGS.put(
-                FlagValidator.Module.SECURITY_MISCONFIG_LESSON,
-                "KEY{Exp0rt3d_C0mp0n3nt_Vuln3r4b1l1ty}");
-        OFFLINE_FLAGS.put(
-                FlagValidator.Module.PRIVACY_LESSON,
-                "KEY{3x1f_M3t4d4t4_L34k5_L0c4t10n}");
-        OFFLINE_FLAGS.put(
-                FlagValidator.Module.IDS_LESSON,
-                "Battery777");
-        OFFLINE_FLAGS.put(
-                FlagValidator.Module.INSECURE_COMM_LESSON,
-                "OWASP{H1TTP_Insecure_F1nd}");
-        OFFLINE_FLAGS.put(
-                FlagValidator.Module.INSUFFICIENT_CRYPTO_LESSON,
-                "KEY{DES_Encrypt10n}");
     }
 
     public interface FlagCallback {
@@ -102,14 +73,19 @@ public class FlagProvider {
         String offlineFlag = OFFLINE_FLAGS.containsKey(module) ? OFFLINE_FLAGS.get(module) : "";
 
         if (!AuthManager.isAuthenticated(ctx)) {
-            Log.d(TAG, "Offline mode — returning static flag for " + module.getId());
+            if (offlineFlag.isEmpty()) {
+                Log.d(TAG, "Offline mode — no static flag for " + module.getId()
+                        + "; sign in to a Shepherd server to obtain a flag");
+            } else {
+                Log.d(TAG, "Offline mode — returning static flag for " + module.getId());
+            }
             new Handler(Looper.getMainLooper()).post(() -> callback.onFlag(offlineFlag));
             return;
         }
 
         String serverUrl = AuthManager.getServerUrl(ctx);
         String login     = AuthManager.getUsername(ctx);
-        String pwd       = AuthManager.getPassword(ctx);
+        String sessionCookie = AuthManager.getMobileSessionCookie(ctx);
         String endpoint  = serverUrl.replaceAll("/+$", "") + "/mobileFlagGet";
         final Handler mainHandler = new Handler(Looper.getMainLooper());
 
@@ -118,7 +94,6 @@ public class FlagProvider {
             HttpURLConnection conn = null;
             try {
                 String body = "login="    + URLEncoder.encode(login, "UTF-8")
-                        + "&pwd="      + URLEncoder.encode(pwd, "UTF-8")
                         + "&moduleId=" + URLEncoder.encode(module.getId(), "UTF-8");
 
                 conn = (HttpURLConnection) new URL(endpoint).openConnection();
@@ -127,6 +102,9 @@ public class FlagProvider {
                 conn.setConnectTimeout(10_000);
                 conn.setReadTimeout(10_000);
                 conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                if (!sessionCookie.isEmpty()) {
+                    conn.setRequestProperty("Cookie", sessionCookie);
+                }
 
                 try (OutputStream os = conn.getOutputStream()) {
                     os.write(body.getBytes(StandardCharsets.UTF_8));

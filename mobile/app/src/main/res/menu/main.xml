@@ -12,12 +12,6 @@
         android:title="@string/action_settings"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_owasp_top10"
-        android:orderInCategory="100"
-        android:title="@string/action_owasp_top10"
-        app:showAsAction="never" />
-
-    <item
         android:id="@+id/action_exit"
         android:orderInCategory="100"
         android:title="@string/action_exit"

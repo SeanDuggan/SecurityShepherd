@@ -38,6 +38,10 @@
     <color name="card_success_bg">#1A3A1A</color>
     <color name="card_success_text">#81C784</color>
     <color name="card_success_stroke">#66BB6A</color>
+
+    <!-- Code / monospace path banner -->
+    <color name="card_code_bg">#0D1117</color>
+    <color name="card_code_text">#7EE787</color>
     <color name="card_success_accent">#81C784</color>
     
     <color name="card_danger_bg">#4A1A2A</color>

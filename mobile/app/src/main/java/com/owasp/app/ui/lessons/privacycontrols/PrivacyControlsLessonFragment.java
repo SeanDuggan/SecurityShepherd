@@ -288,6 +288,8 @@ public class PrivacyControlsLessonFragment extends Fragment {
 
     private void showDetailedInfo() {
         View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_lesson_info, null);
+        TextView moduleBanner = dialogView.findViewById(R.id.module_path_banner);
+        if (moduleBanner != null) moduleBanner.setText("com.owasp.privacy_controls");
         
         android.widget.TextView introText = dialogView.findViewById(R.id.intro_text);
         // android.widget.TextView vulnerabilitiesText = dialogView.findViewById(R.id.vulnerabilities_text);

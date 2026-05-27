@@ -166,6 +166,8 @@ public class SupplyChainLessonFragment extends Fragment {
 
     private void showDetailedInfo() {
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_lesson_info, null);
+        TextView moduleBanner = dialogView.findViewById(R.id.module_path_banner);
+        if (moduleBanner != null) moduleBanner.setText("com.owasp.supply_chain");
         
         TextView introText = dialogView.findViewById(R.id.intro_text);
         // TextView vulnerabilitiesText = dialogView.findViewById(R.id.vulnerabilities_text);

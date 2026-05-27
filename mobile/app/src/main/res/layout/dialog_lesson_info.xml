@@ -10,6 +10,21 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <!-- Module path banner -->
+        <TextView
+            android:id="@+id/module_path_banner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:background="@color/card_code_bg"
+            android:fontFamily="monospace"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:textColor="@color/card_code_text"
+            android:textSize="12sp" />
+
         <!-- Introduction Section -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"

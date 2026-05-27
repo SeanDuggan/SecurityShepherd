@@ -13,7 +13,6 @@
 
     <!-- Action bar -->
     <string name="action_settings">Settings</string>
-    <string name="action_owasp_top10">OWASP Mobile Top 10 2024</string>
     <string name="action_adb_reference">ADB Commands</string>
     <string name="action_exit">Exit</string>
 

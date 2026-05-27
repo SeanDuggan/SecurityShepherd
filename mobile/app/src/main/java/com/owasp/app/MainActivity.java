@@ -213,6 +213,15 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+
+        // Hide FAB on the Home screen; show it on all other destinations
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            if (destination.getId() == R.id.nav_home) {
+                binding.appBarMain.fab.hide();
+            } else {
+                binding.appBarMain.fab.show();
+            }
+        });
     }
 
     private List<NavigationItem> createNavigationItems() {
@@ -363,12 +372,6 @@ public class MainActivity extends AppCompatActivity {
                     Intent goToSettings = new Intent(this, Preferences.class);
                     startActivity(goToSettings);
                 Toast.makeText(this, "Settings Selected", Toast.LENGTH_SHORT).show();
-                }
-                return true;
-            case R.id.action_owasp_top10: {
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, 
-                        android.net.Uri.parse("https://owasp.org/www-project-mobile-top-10/"));
-                    startActivity(browserIntent);
                 }
                 return true;
             case R.id.action_exit:

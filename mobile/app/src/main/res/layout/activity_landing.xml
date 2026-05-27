@@ -14,6 +14,7 @@
 
         <!-- Welcome Title -->
         <TextView
+            android:id="@+id/landing_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/landing_title"
@@ -26,6 +27,7 @@
 
         <!-- Subtitle -->
         <TextView
+            android:id="@+id/landing_subtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/owasp_security_shepherd_project"
@@ -36,6 +38,7 @@
 
         <!-- Warning Box -->
         <LinearLayout
+            android:id="@+id/landing_warning_box"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -55,6 +58,7 @@
 
         <!-- Description -->
         <TextView
+            android:id="@+id/landing_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/this_application_is_designed_for_educati"
@@ -76,6 +80,7 @@
 
         <!-- License Info -->
         <TextView
+            android:id="@+id/landing_license"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/licensed_under_gnu_gpl_v3"

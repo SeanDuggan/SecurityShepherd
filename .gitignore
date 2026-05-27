@@ -34,6 +34,8 @@ Thumbs.db
 # Working documentation (local notes only)
 COMMIT-NOTES.md
 CHANGELOG.md
+IDEAS.md
+**/IDEAS.md
 
 # MobileShepherd challenge solutions and flags (NEVER commit these!)
 **/CHALLENGE_SOLUTIONS.txt

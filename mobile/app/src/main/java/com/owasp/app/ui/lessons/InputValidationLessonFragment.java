@@ -193,6 +193,8 @@ public class InputValidationLessonFragment extends Fragment {
 
     private void showDetailedInfo() {
         View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_lesson_info, null);
+        TextView moduleBanner = dialogView.findViewById(R.id.module_path_banner);
+        if (moduleBanner != null) moduleBanner.setText("com.owasp.input_validation");
         
         TextView introText = dialogView.findViewById(R.id.intro_text);
         // TextView vulnerabilitiesText = dialogView.findViewById(R.id.vulnerabilities_text);

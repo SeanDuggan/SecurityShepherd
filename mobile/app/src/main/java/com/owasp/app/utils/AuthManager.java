@@ -17,6 +17,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Manages online/offline authentication state for the Security Shepherd mobile app.
@@ -41,6 +43,8 @@ public class AuthManager {
     private static final String PREF_AUTH_LOGGED_IN = "auth_logged_in";
     /** Preference key for the cached web JSESSIONID used by the scoreboard WebView. */
     private static final String PREF_WEB_SESSION_COOKIE = "auth_web_session_cookie";
+    /** Preference key for the JSESSIONID captured at mobile login, used in API requests. */
+    private static final String PREF_MOBILE_SESSION_COOKIE = "auth_mobile_session_cookie";
 
     public interface AuthCallback {
         /** Always invoked on the main thread. */
@@ -73,6 +77,16 @@ public class AuthManager {
     public static String getPassword(Context ctx) {
         return PreferenceManager.getDefaultSharedPreferences(ctx)
                 .getString("password_preference", "").trim();
+    }
+
+    /**
+     * Returns the JSESSIONID captured during the last successful mobile login, formatted as
+     * a ready-to-use Cookie header value (e.g. {@code "JSESSIONID=abc123"}), or empty string
+     * if not yet obtained.
+     */
+    public static String getMobileSessionCookie(Context ctx) {
+        return PreferenceManager.getDefaultSharedPreferences(ctx)
+                .getString(PREF_MOBILE_SESSION_COOKIE, "");
     }
 
     /**
@@ -148,12 +162,28 @@ public class AuthManager {
 
                 String responseBody = sb.toString();
                 if (status == HttpURLConnection.HTTP_OK && !responseBody.startsWith("ERROR")) {
+                    // Capture the JSESSIONID for subsequent mobile API calls — avoids re-sending
+                    // the raw password on every flag request.
+                    String mobileCookie = "";
+                    Map<String, List<String>> respHeaders = conn.getHeaderFields();
+                    if (respHeaders != null) {
+                        List<String> setCookies = respHeaders.get("Set-Cookie");
+                        if (setCookies != null) {
+                            for (String c : setCookies) {
+                                if (c.regionMatches(true, 0, "JSESSIONID=", 0, 11)) {
+                                    mobileCookie = c.split(";")[0];
+                                    break;
+                                }
+                            }
+                        }
+                    }
                     // Persist credentials and logged-in flag only
                     PreferenceManager.getDefaultSharedPreferences(ctx).edit()
                             .putString("server_preference", serverUrl.trim())
                             .putString("username_preference", username.trim())
                             .putString("password_preference", password.trim())
                             .putBoolean(PREF_AUTH_LOGGED_IN, true)
+                            .putString(PREF_MOBILE_SESSION_COOKIE, mobileCookie)
                             .apply();
                     Log.d(TAG, "Login successful for: " + username);
                     mainHandler.post(() -> callback.onResult(true, "Signed in as " + username));
@@ -250,6 +280,7 @@ public class AuthManager {
         PreferenceManager.getDefaultSharedPreferences(ctx).edit()
                 .putBoolean(PREF_AUTH_LOGGED_IN, false)
                 .remove(PREF_WEB_SESSION_COOKIE)
+                .remove(PREF_MOBILE_SESSION_COOKIE)
                 .apply();
         // Clear local lesson progress so the next user starts with a clean slate
         ProgressTracker.clearAll(ctx);
