@@ -28,15 +28,6 @@
                 android:padding="16dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/network_traffic_analysis"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="?android:attr/textColorPrimary"
-                    android:layout_marginBottom="16dp" />
-
-                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/insecure_comm_challenge_desc"
@@ -69,13 +60,6 @@
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
                     android:layout_marginBottom="12dp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/this_app_makes_multiple_network_requests"
-                    android:textSize="14sp"
-                    android:layout_marginBottom="16dp" />
 
                 <Button
                     android:id="@+id/start_app_button"
@@ -124,13 +108,6 @@
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
                     android:layout_marginBottom="12dp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/analyze_the_captured_traffic_in_logcat_f"
-                    android:textSize="14sp"
-                    android:layout_marginBottom="16dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"

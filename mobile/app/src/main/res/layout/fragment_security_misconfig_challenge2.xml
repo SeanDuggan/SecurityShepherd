@@ -26,15 +26,6 @@
                 android:padding="16dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/security_misconfiguration_2_backup_extra"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="?android:attr/textColorPrimary"
-                    android:layout_marginBottom="8dp" />
-
-                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/security_misconfig_challenge2_description"
@@ -92,17 +83,6 @@
                         android:fontFamily="monospace"
                         android:textColor="@color/error_text" />
                 </LinearLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/hint_this_app_allows_backups_use_adb_to"
-                    android:textSize="12sp"
-                    android:textStyle="italic"
-                    android:textColor="?android:attr/textColorSecondary"
-                    android:background="#FFF3E0"
-                    android:padding="12dp"
-                    android:layout_marginBottom="16dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"

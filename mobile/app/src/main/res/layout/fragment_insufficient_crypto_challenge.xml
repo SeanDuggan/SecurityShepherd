@@ -27,15 +27,6 @@
                 android:padding="16dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/insufficient_cryptography_challenge"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="?android:attr/textColorPrimary"
-                    android:layout_marginBottom="12dp" />
-
-                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/insufficient_crypto_challenge_desc"
@@ -69,14 +60,6 @@
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
-                    android:layout_marginBottom="12dp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/once_youve_identified_all_cryptographic"
-                    android:textSize="14sp"
-                    android:lineSpacingMultiplier="1.3"
                     android:layout_marginBottom="12dp" />
 
                 <com.google.android.material.textfield.TextInputLayout

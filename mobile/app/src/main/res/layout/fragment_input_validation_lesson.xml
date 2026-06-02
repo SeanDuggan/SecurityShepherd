@@ -34,15 +34,6 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/deep_link_content_loader"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="?android:attr/textColorPrimary"
-                    android:layout_marginBottom="8dp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:text="@string/this_app_accepts_deep_links_to_load_exte"
                     android:textSize="14sp"
                     android:textColor="?android:attr/textColorSecondary" />

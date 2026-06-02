@@ -27,15 +27,6 @@
                 android:padding="16dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/clientside_injection_1"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="?android:attr/textColorPrimary"
-                    android:layout_marginBottom="16dp" />
-
-                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/client_side_injection_challenge1_description"
@@ -68,13 +59,6 @@
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
                     android:layout_marginBottom="8dp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/login_to_access_your_account_can_you_byp"
-                    android:textSize="14sp"
-                    android:layout_marginBottom="16dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
@@ -178,13 +162,6 @@
                     android:textStyle="bold"
                     android:textColor="?android:attr/textColorPrimary"
                     android:layout_marginBottom="8dp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/once_youve_retrieved_the_admin_password"
-                    android:textSize="14sp"
-                    android:layout_marginBottom="16dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"

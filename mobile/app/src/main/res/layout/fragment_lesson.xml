@@ -14,41 +14,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            style="@style/Widget.Material3.CardView.Outlined"
-            app:cardCornerRadius="16dp"
-            app:cardBackgroundColor="@color/card_warning_bg"
-            app:strokeColor="@color/card_warning_stroke"
-            app:strokeWidth="2dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/where_to_find_the_key"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/card_warning_accent"
-                    android:layout_marginBottom="8dp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/the_key_is_hardcoded_in_the_java_source"
-                    android:textSize="14sp"
-                    android:fontFamily="monospace" />
-
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
         <!-- Key Verification Section -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"

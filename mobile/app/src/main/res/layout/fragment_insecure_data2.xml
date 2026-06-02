@@ -25,15 +25,6 @@
                 android:padding="16dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/insecure_data_storage_2"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="?android:attr/textColorPrimary"
-                    android:layout_marginBottom="16dp" />
-
-                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/insecure_data2_description"
@@ -89,40 +80,6 @@
                     android:layout_height="wrap_content"
                     android:text="@string/validate_flag"
                     android:textSize="16sp" />
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardElevation="4dp"
-            app:cardCornerRadius="16dp"
-            app:cardBackgroundColor="@color/card_info_bg">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/challenge_info"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/card_info_text"
-                    android:layout_marginBottom="8dp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/sharedpreferences_stores_data_in_plain_x"
-                    android:textSize="13sp"
-                    android:textColor="@color/card_info_text"
-                    android:lineSpacingMultiplier="1.2" />
 
             </LinearLayout>
 
