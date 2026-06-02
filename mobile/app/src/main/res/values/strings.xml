@@ -230,21 +230,21 @@ https://www.owasp.org/index.php/OWASP_Security_Shepherd </string>
     <string name="enter_the_key_you_found">Enter the key you found</string>
 
     <!-- Challenge 1 -->
-    <string name="reverse_engineering_1_description">Analyze the application package and identify the required key through reverse-engineering techniques.</string>
+    <string name="reverse_engineering_1_description">The key is hardcoded in the Java source code of this app. Decompile the APK to find it.</string>
     <string name="reverse_engineering_1_hint">Hint: The key is stored as a simple string constant in one of the Java classes. Try searching for "flag" or "key" in the decompiled code.</string>
     <string name="reverse_engineering_1_input_hint">Enter key here</string>
     <string name="reverse_engineering_1_success">Key validated successfully.</string>
     <string name="reverse_engineering_1_failure">The key is incorrect. Please try again.</string>
 
     <!-- Challenge 2 -->
-    <string name="reverse_engineering_2_description">Locate an encoded key within the application and determine the appropriate method to decode it.</string>
+    <string name="reverse_engineering_2_description">A key is hidden in this app but has been encoded before storage. Decompile the APK, locate the encoded value, and decode it to recover the key.</string>
     <string name="reverse_engineering_2_hint">Hint: Look for Base64 encoded strings or other common encoding schemes. The key might be split across multiple variables or methods.</string>
     <string name="reverse_engineering_2_input_hint">Enter Key</string>
     <string name="reverse_engineering_2_success">Key decoded and validated successfully.</string>
     <string name="reverse_engineering_2_failure">The submitted value is incorrect. Review the decoding method and try again.</string>
 
     <!-- Challenge 3 -->
-    <string name="reverse_engineering_3_description">Perform advanced reverse-engineering analysis to recover a key protected by layered obfuscation techniques.</string>
+    <string name="reverse_engineering_3_description">The key in this app is assembled at runtime using obfuscated logic. Analyse the bytecode or use dynamic instrumentation to reconstruct it.</string>
     <string name="reverse_engineering_3_input_hint">Enter Key</string>
     <string name="reverse_engineering_3_success">Key validated successfully.</string>
     <string name="reverse_engineering_3_failure">Incorrect. This one requires deep analysis.</string>
@@ -262,7 +262,7 @@ https://www.owasp.org/index.php/OWASP_Security_Shepherd </string>
 
     <!-- Challenge 1 - SQLite hash cracking -->
     <string name="insecure_data_storage_1">Insecure Data Storage 1</string>
-    <string name="insecure_data1_description">A password hash is stored in a SQLite database. The value is hashed with MD5 rather than encoded. Recover the original password from the hash and submit it as the key.</string>
+    <string name="insecure_data1_description">This app stores a password in a local SQLite database. The password has been hashed, but the algorithm is weak. Extract the database and crack the hash to find the key.</string>
     <string name="this_challenge_shows_password_hash_crack">This challenge shows password hash cracking. The app stores a password hash in a database - your goal is to crack the hash and find the original password.</string>
     <string name="extract_sensitive_data_from_unencrypted">Data is stored in plaintext in a local SQLite database. Get access to this data to find the key.</string>
     <string name="database_users">Database Users</string>
@@ -271,7 +271,7 @@ https://www.owasp.org/index.php/OWASP_Security_Shepherd </string>
 
     <!-- Challenge 2 - SharedPreferences -->
     <string name="insecure_data_storage_2">Insecure Data Storage 2</string>
-    <string name="insecure_data2_description">Sensitive credentials are stored in Android SharedPreferences. Although commonly used, SharedPreferences data is saved as plain XML and can be extracted. Retrieve the XML file and identify the secret key in the stored entries.</string>
+    <string name="insecure_data2_description">This app saves sensitive credentials to a SharedPreferences file. Extract the file from the device to find the key.</string>
     <string name="sharedpreferences_stores_data_in_plain_x">SharedPreferences stores data in plain XML files that can be easily extracted. Many developers mistakenly believe this is secure storage. Extract the preferences file to find API keys, tokens, and the secret flag.</string>
 
 
@@ -284,7 +284,7 @@ https://www.owasp.org/index.php/OWASP_Security_Shepherd </string>
     <string name="poor_auth_vulnerabilities">- Weak security questions (easily guessable)\n- Passwords logged in plaintext\n- Credentials in world-readable files\n- Weak temporary passwords\n- Verbose error messages\n- Debug logs in production</string>
 
     <!-- Challenge 1 -->
-    <string name="poor_auth_challenge_description">This scenario includes multiple authentication weaknesses:\n\n- Weak security questions with easily discoverable answers\n- Sensitive information logged to logcat\n- Personal details written to files\n- Weak temporary password generation\n\nThe account is locked. Use the password reset workflow, identify the security question answers from logs and files, reset the password, authenticate, and retrieve the key.</string>
+    <string name="poor_auth_challenge_description">An account in this app is locked. The password reset workflow leaks the answers to its security questions through logs and local files. Recover the answers, reset the password, and authenticate to retrieve the key.</string>
     <string name="poor_authentication">Poor Authentication</string>
     <string name="forgot_password">Forgot Password?</string>
     <string name="password_reset">Password Reset</string>
@@ -333,7 +333,7 @@ https://www.owasp.org/index.php/OWASP_Security_Shepherd </string>
     <string name="supply_chain_vulnerabilities">Common Issues:\n\n- Using dependencies with known vulnerabilities\n- Not verifying SDK authenticity\n- Hardcoded API keys in libraries\n- Insecure data collection by third parties\n- Excessive permissions requested by SDKs\n- Outdated dependencies not updated for years</string>
 
     <!-- Challenge 1 - Vulnerable third-party SDK -->
-    <string name="supply_chain_challenge_desc">The application uses a vulnerable third-party analytics SDK from "ThirdPartyAnalytics Inc." The SDK is significantly outdated (16 months old) and contains multiple security issues:\n\n- Known CVEs (CVE-2023-45678, CVE-2024-12345)\n- Hardcoded backdoor authentication token\n- Insecure telemetry data storage\n- Base64-encoded credentials in logs\n\nAnalyze SDK initialization, review logcat output, inspect the application files directory, and retrieve the hidden key.</string>
+    <string name="supply_chain_challenge_desc">This app bundles an outdated third-party analytics SDK that contains a known backdoor. Trigger the SDK initialisation and examine its output to retrieve the key.</string>
     <string name="owasp_mobile_top_10_m6_insufficient_supp">OWASP Mobile Top 10: M6 - Insufficient Supply Chain Security</string>
     <string name="this_application_uses_several_thirdparty">This app bundles a third-party library that has a known vulnerability. Identify the vulnerable dependency and exploit it to retrieve the key.</string>
     <string name="vulnerable_sdk">Vulnerable SDK</string>
@@ -359,7 +359,7 @@ https://www.owasp.org/index.php/OWASP_Security_Shepherd </string>
     <string name="insecure_comm_vulnerabilities">Common Issues:\n\n- Sending credentials over HTTP\n- Accepting invalid/self-signed certificates\n- Using weak cipher suites or deprecated TLS versions\n- Disabling certificate pinning for convenience\n- Sensitive data in URLs (visible in logs/history)\n- Mixed HTTP/HTTPS sessions exposing session tokens</string>
 
     <!-- Challenge 1 - HTTP traffic interception -->
-    <string name="insecure_comm_challenge_desc">The application sends network requests to multiple endpoints. Some use HTTPS (secure), while others use HTTP (insecure).\n\nMonitor network traffic using logcat, identify requests sent over HTTP, and extract the session token transmitted in plaintext.</string>
+    <string name="insecure_comm_challenge_desc">This app sends traffic to multiple endpoints, some over HTTP. Set up a proxy and capture the unencrypted request to find the key.</string>
     <string name="network_traffic_analysis">Network Traffic Analysis</string>
     <string name="network_monitor">Network Monitor</string>
     <string name="this_app_makes_multiple_network_requests">This app makes multiple network requests. Start monitoring to capture all traffic and identify insecure communications.</string>
@@ -382,7 +382,7 @@ https://www.owasp.org/index.php/OWASP_Security_Shepherd </string>
     <string name="insufficient_crypto_vulnerabilities">Common Crypto Vulnerabilities:\n\n- Deprecated algorithms: DES, RC4, MD5, SHA-1\n- Insufficient key length: Keys &lt; 128 bits\n- ECB mode: Pattern analysis attacks\n- Hardcoded keys: Keys in source code\n- Static IVs: Initialization vector reuse\n- Poor key derivation: Simple hashing for keys\n- Insecure random: Predictable Random() instead of SecureRandom\n- No salt: Password hashing without random salt</string>
 
     <!-- Challenge 1 - DES/ECB cracking -->
-    <string name="insufficient_crypto_challenge_desc">The application performs cryptographic operations with multiple vulnerabilities:\n\n- ECB Mode: Electronic Codebook mode reveals patterns in encrypted data\n- MD5 Key Derivation: Using MD5 to generate encryption keys\n- Insecure Random: Predictable Random() with fixed seed instead of SecureRandom\n- Static IV: Reusing the same initialization vector for all encryptions\n\nAnalyze the cryptographic implementation by reviewing logcat output and decompiled code, identify the weaknesses, and extract the hidden key.</string>
+    <string name="insufficient_crypto_challenge_desc">This app encrypts data with a weak algorithm and a short key. Identify the cryptographic weaknesses and break the encryption to recover the key.</string>
     <string name="insufficient_cryptography_challenge">Insufficient Cryptography Challenge</string>
     <string name="once_youve_identified_all_cryptographic">Once you\'ve identified all cryptographic vulnerabilities and extracted the hidden flag, submit it below.</string>
     <string name="enter_flag_format_owasp">Enter flag (format: OWASP{...})</string>
@@ -426,7 +426,7 @@ https://www.owasp.org/index.php/OWASP_Security_Shepherd </string>
     <string name="find_security_misconfigurations_in_andro">This app has been misconfigured in ways that expose it to attack. Examine the app\'s configuration to find the key.</string>
 
     <!-- Challenge 1 - ADB backup extraction -->
-    <string name="security_misconfig_challenge2_description">This application has backup enabled (android:allowBackup="true"), allowing app data to be extracted using Android Debug Bridge.\n\nUse ADB to create a backup of this app\'s data, extract the backup file, and find the key stored in SharedPreferences.\n\nSteps:\n1. Create backup: adb backup -f backup.ab -noapk com.owasp.app\n2. Convert .ab to .tar: Use abe.jar or android-backup-extractor\n3. Extract tar: tar -xvf backup.tar\n4. Find SharedPreferences XML files\n5. Locate the key in the preferences\n\nThe key is stored in plain text in the SharedPreferences!</string>
+    <string name="security_misconfig_challenge2_description">This app has ADB backup enabled. Extract a backup of the app data and examine the contents to find the key stored in plaintext.</string>
     <string name="stored_user_preferences">Stored User Preferences:</string>
     <string name="username_admin">Username: admin</string>
     <string name="theme_dark_mode">Theme: Dark Mode</string>
@@ -446,7 +446,7 @@ https://www.owasp.org/index.php/OWASP_Security_Shepherd </string>
     <!-- Challenge 1 - XSS WebView -->
     <string name="webview_xss">WebView XSS</string>
     <string name="challenge">Challenge</string>
-    <string name="this_app_displays_your_profile_informati">This app displays your profile information in a WebView. The flag is stored in the WebView\'s JavaScript context. Use Cross-Site Scripting (XSS) to extract it.\n\nObjective: Inject JavaScript to access and display the hidden flag.</string>
+    <string name="this_app_displays_your_profile_informati">This app renders user-supplied profile data inside a WebView without sanitising it. Inject a script to read the hidden key from the JavaScript context.</string>
     <string name="edit_your_profile">Edit Your Profile</string>
     <string name="display_name">Display Name</string>
     <string name="john_doe">John Doe</string>
@@ -501,7 +501,7 @@ https://www.owasp.org/index.php/OWASP_Security_Shepherd </string>
 
     <!-- Challenge 1 - Auth bypass -->
     <string name="clientside_injection_1">Client-Side Injection 1</string>
-    <string name="client_side_injection_challenge1_description">Exploit SQL injection in a login form to bypass authentication and retrieve the admin password.\n\nGoal: Use SQL injection to login as admin and discover the hidden key (admin password).</string>
+    <string name="client_side_injection_challenge1_description">This app authenticates users against a local SQLite database using a query built with string concatenation. Bypass the login to retrieve the admin password.</string>
     <string name="client_side_injection_challenge1_intro">A vulnerable login workflow builds SQL queries through string concatenation. User accounts are stored in a SQLite database with usernames, passwords, roles, and balance data.\n\nObjective:\n1. Identify the SQL injection vulnerability\n2. Bypass the authentication mechanism\n3. Retrieve the administrator account password\n4. Submit the password as the key\n\nThe weakness exists because user input is concatenated directly into SQL queries without proper validation or parameterization.</string>
     <string name="client_side_injection_challenge1_vulnerabilities">Vulnerable Code Pattern:\n\nString query = "SELECT * FROM accounts WHERE username = \'" + username + "\' AND password = \'" + password + "\'";\n\nThis allows attackers to:\n- Break out of the query context\n- Inject their own SQL logic\n- Bypass authentication checks\n- Retrieve data from any user\n\nExample Attack:\nUsername: admin\'--\nPassword: (anything)\n\nResulting Query:\nSELECT * FROM accounts WHERE username = \'admin\'--\' AND password = \'....\'\n\nThe -- comments out the password check!</string>
     <string name="account_login">Account Login</string>
@@ -511,7 +511,7 @@ https://www.owasp.org/index.php/OWASP_Security_Shepherd </string>
 
     <!-- Challenge 2 - UNION injection -->
     <string name="clientside_injection_2">Client-Side Injection 2</string>
-    <string name="client_side_injection_challenge2_description">Search the product database and extract the administrator token from the hidden \'secrets\' table.</string>
+    <string name="client_side_injection_challenge2_description">This app searches a product database using unsanitised input. Use a UNION-based injection to query the hidden secrets table and extract the admin token.</string>
     <string name="client_side_injection_challenge2_intro">A product search feature contains a SQL injection vulnerability. Unlike basic authentication bypass, this challenge requires UNION-based injection to query a separate table.\n\nDatabase Structure:\n- products table: name, category, price, stock\n- secrets table: secret_key, secret_value (HIDDEN)\n\nObjective:\n1. Identify the number of columns in the products query\n2. Use UNION SELECT to query the secrets table\n3. Extract the admin_token value\n4. Submit it as the key\n\nRequired concepts:\n- UNION SQL operator\n- Column count matching\n- Cross-table data extraction</string>
     <string name="client_side_injection_challenge2_vulnerabilities" formatted="false">Vulnerable Code:\n\nString query = "SELECT name, category, price, stock FROM products WHERE name LIKE \'%" + input + "%\'";\n\nUNION-Based Injection allows:\n- Combining results from multiple queries\n- Accessing tables not in original query\n- Bypassing application logic\n- Extracting data from hidden tables\n\nAttack Requirements:\n1. Match column count in UNION\n2. Match data types (use NULL for unknowns)\n3. Terminate original query properly\n4. Know or guess target table name\n\nExample Attack:\n\' UNION SELECT secret_key, secret_value, NULL, NULL FROM secrets--</string>
     <string name="product_search">Product Search</string>
