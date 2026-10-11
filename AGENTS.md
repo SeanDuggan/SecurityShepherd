@@ -18,17 +18,17 @@ Security improvements should only be made to the **platform infrastructure** (au
 
 ## Code style
 
-All Java code MUST be formatted with [Google Java Format](https://github.com/google/google-java-format). CI enforces this via `axel-op/googlejavaformat-action` and will reject unformatted code.
+All Java code MUST be formatted with [Google Java Format](https://github.com/google/google-java-format), bound to the Maven build via [Spotless](https://github.com/diffplug/spotless) and pinned in `pom.xml`. CI enforces this with `mvn spotless:check` (the `lint-java` job) and will reject unformatted code.
 
 Before committing Java changes, run:
 
 ```bash
-google-java-format --replace <changed-files>
+mvn spotless:apply
 ```
 
 ## Java version
 
-The project targets **Java 8**. All code must compile against Java 8, even though CI uses Java 24 for linting. Do not use Java 9+ APIs or language features.
+The project targets **Java 8**. All code must compile against Java 8, even though CI uses Java 17 for linting and building. Do not use Java 9+ APIs or language features.
 
 ## Build and test
 
@@ -57,6 +57,14 @@ docker run -d --name secshep_test_db \
 
 The docker-compose `db` service is **not suitable for quick test runs** — it requires `mvn -Pdocker validate` first to generate SQL init scripts, and those scripts run on first container startup to create all challenge schemas.
 
+### Docker DB init fails with SQL syntax error
+
+If the MariaDB container exits immediately with `ERROR 1064 (42000) at line 181` referencing a `CREATE PROCEDURE` statement, this is a **stale Docker image cache** issue, not a bug in the SQL.
+
+The SQL source files have `DELIMITER` statements commented out (for compatibility with tools that don't support `DELIMITER`). A build script (`docker/scripts/convert-sql-scripts.sh`) uncomments them when Maven copies the files to `docker/mariadb/target/`. If Docker reuses a cached image from before the conversion ran, the procedures fail to parse.
+
+Fix: `docker compose build --no-cache db && docker compose up -d db`
+
 ### Test credentials
 
 Tests read DB connection details from `.env` via dotenv. The key values:
@@ -75,6 +83,35 @@ TEST_MYSQL_PASSWORD=CowSaysMoo mvn test -B
 ```
 
 Do not commit `.env` changes that break CI.
+
+### First-time app setup
+
+After `docker compose up`, the app redirects to `https://localhost/setup.jsp` for initial database configuration. **Ask the user before performing setup** — they may prefer to configure it themselves via the browser. If they ask you to do it:
+
+1. Get the auth token:
+   ```bash
+   docker exec secshep_tomcat cat /usr/local/tomcat/conf/SecurityShepherd.auth
+   ```
+2. Submit the setup via curl (the TLS cert is self-signed, use `-k`):
+   ```bash
+   curl -k -s -X POST https://localhost/setup \
+     -d "dbhost=secshep_mariadb" \
+     -d "dbport=3306" \
+     -d "dbuser=root" \
+     -d "dbpass=CowSaysMoo" \
+     -d "dboverride=override" \
+     -d "dbauth=<AUTH_TOKEN>" \
+     -d "mhost=secshep_mongo" \
+     -d "mport=27017"
+   ```
+
+The setup servlet parameter names (from `Setup.java`) are:
+- `dbhost`, `dbport`, `dbuser`, `dbpass` — MySQL/MariaDB connection
+- `dboverride` — set to `override` to reinitialize schemas
+- `dbauth` — the auth token (NOT `authToken`)
+- `mhost`, `mport` — MongoDB connection (required, even if not using mongo challenges)
+
+The hostname must be the **Docker container name** (e.g. `secshep_mariadb`), not `localhost`, since the Tomcat container connects over the Docker network.
 
 ## Git workflow
 

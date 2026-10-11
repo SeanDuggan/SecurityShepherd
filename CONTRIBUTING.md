@@ -11,23 +11,29 @@ To add a new feature or fix a bug in Shepherd, create a fork or branch from the 
 If you're working on an issue from the backlog, call your branch dev#{issueNumber}
 
 ## Code Format
-Shepherd enforces [Google Java Format](https://github.com/google/google-java-format) via CI. Pull requests with incorrectly formatted Java files will fail the `lint-java` check.
+Shepherd enforces [Google Java Format](https://github.com/google/google-java-format) via [Spotless](https://github.com/diffplug/spotless), bound to the Maven build. The format version is pinned in `pom.xml`, so local and CI use the exact same formatter. Pull requests with incorrectly formatted Java files will fail the `lint-java` check (`mvn spotless:check`).
 
 ### Formatting your code
 
-**Option 1 — Command line (recommended):**
-
-Download the [google-java-format JAR](https://github.com/google/google-java-format/releases) and run:
+**Option 1 — Maven (recommended):**
 
 ```bash
-java -jar google-java-format-1.25.2-all-deps.jar --replace $(find src -name "*.java")
+# Reformat all Java sources in place
+mvn spotless:apply
+
+# Verify formatting without changing files (this is what CI runs)
+mvn spotless:check
 ```
+
+`mvn verify` also runs `spotless:check` automatically, so unformatted code fails the build before you push.
 
 **Option 2 — IDE plugins:**
 
 - **IntelliJ IDEA / Android Studio:** Install the [google-java-format plugin](https://plugins.jetbrains.com/plugin/8527-google-java-format) and enable it under *Settings → google-java-format*.
 - **Eclipse:** Import the [Eclipse style config](https://github.com/google/styleguide/blob/gh-pages/eclipse-java-google-style.xml) under *Preferences → Java → Code Style → Formatter*.
 - **VS Code:** Use the [Google Java Format extension](https://marketplace.visualstudio.com/items?itemName=ilkka.google-java-format) or configure the built-in formatter.
+
+IDE plugins should be set to the same Google Java Format version pinned in `pom.xml` (`spotless-maven-plugin` → `<googleJavaFormat><version>`) to avoid producing output that differs from CI.
 
 Always format before committing to avoid CI failures.
 
@@ -42,6 +48,18 @@ Install ZenHub for your browser and click the ZenHub tab that will appear in thi
 
 ## How do I setup my dev environment?
 [Like This](https://github.com/OWASP/SecurityShepherd/wiki/Create-a-Security-Shepherd-Dev-Environment)
+
+## Development Workflow
+See [docs/development-workflow.md](docs/development-workflow.md) for the full development cycle, including how to:
+- Create your branch and make changes
+- Build and test your changes in the runtime environment using Docker
+- Run the automated test suite
+
+## Running Tests
+See [docs/testing.md](docs/testing.md) for instructions on running unit and integration tests with Docker.
+
+## Database Configuration
+See [docs/database-configuration.md](docs/database-configuration.md) for connection pooling configuration and database setup.
 
 ## Is there a Definition of Done?
 *Work in Progess*  

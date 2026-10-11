@@ -19,6 +19,7 @@ import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Locale;
@@ -40,6 +41,8 @@ public class Setup extends HttpServlet {
 
   private static final Logger log = LogManager.getLogger(Setup.class);
   private static final long serialVersionUID = -892181347446991016L;
+
+  private static volatile Boolean installedCached = null;
 
   public void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
@@ -95,12 +98,14 @@ public class Setup extends HttpServlet {
         driverType = "com.mysql.jdbc.Driver";
       }
 
-      if (!dbHost.isEmpty() && !dbPort.isEmpty()) {
-        // Both db host and db port provided, use them
-        connectionURL = "jdbc:mysql://" + dbHost + ":" + dbPort + "/";
-        saveMysqlProperties = true;
+      if (dbHost.isEmpty() != dbPort.isEmpty()) {
+        // Only one of db host and db port provided, we need both or neither
+
+        htmlOutput += "If you override db host and db port, both must be entered!";
+        validateInput = false;
+        connectionURL = "";
       } else if (dbHost.isEmpty() && dbPort.isEmpty()) {
-        // Both db host and db port are missing, good, load from props file instead
+        // Both db host and db port are missing, load from props file instead
         connectionURL = mysql_props.getProperty("databaseConnectionURL");
         String databaseSchema = mysql_props.getProperty("databaseSchema");
 
@@ -213,7 +218,15 @@ public class Setup extends HttpServlet {
         log.error("Authorization mismatch: " + auth + " does not equal " + dbAuth);
 
       } else {
-        // Test the user's entered database properties
+        // Test the user's entered database properties. Use DriverManager directly instead of
+        // the pool: setup is a one-shot credential check that runs before database.properties
+        // exists, and routing it through a pooled DataSource keyed on (url, user) would
+        // silently reuse a stale pool when the password changes between setup attempts.
+        //
+        // Append connectTimeout=5000 so a typo'd host or unreachable port fails fast (matching
+        // ConnectionPool's 5s default) instead of hanging on the OS's default TCP connect
+        // timeout — DriverManager has no built-in timeout and the setup page would otherwise
+        // appear to freeze.
         Boolean connectionSuccess = false;
         log.debug("Attempting to connect to database");
         log.debug(
@@ -228,10 +241,14 @@ public class Setup extends HttpServlet {
                 + ", dbPass="
                 + (dbPass != null ? "[PRESENT]" : "NULL"));
 
-        try {
-          Connection conn =
-              Database.getConnection(driverType, connectionURL, dbOptions, dbUser, dbPass);
-          Database.closeConnection(conn);
+        String testJdbcUrl;
+        if (dbOptions != null && !dbOptions.isEmpty()) {
+          testJdbcUrl = connectionURL + "?" + dbOptions + "&connectTimeout=5000";
+        } else {
+          testJdbcUrl = connectionURL + "?connectTimeout=5000";
+        }
+
+        try (Connection conn = DriverManager.getConnection(testJdbcUrl, dbUser, dbPass)) {
           connectionSuccess = true;
           log.debug("Database connection successful");
 
@@ -307,6 +324,7 @@ public class Setup extends HttpServlet {
             // Clean up File as it is not needed anymore. Will Cause a new one to be
             // generated next time too
             removeAuthFile();
+            resetInstalledCache();
           }
 
           if (enableMongoChallenge.equalsIgnoreCase("enable")) {
@@ -375,27 +393,58 @@ public class Setup extends HttpServlet {
     out.close();
   }
 
+  /**
+   * Validates that db host and port are either both provided or both empty. Returns null if valid,
+   * or an error message if invalid.
+   */
+  static String validateHostPort(String dbHost, String dbPort) {
+    if (dbHost == null) dbHost = "";
+    if (dbPort == null) dbPort = "";
+    if (dbHost.isEmpty() != dbPort.isEmpty()) {
+      return "If you override db host and db port, both must be entered!";
+    }
+    return null;
+  }
+
   public static boolean isInstalled() {
-    boolean isInstalled = false;
+    Boolean cached = installedCached;
+    if (cached != null) {
+      return cached;
+    }
 
-    Properties prop = getDBProps();
-
-    if (prop != null) {
-
-      try (Connection coreConnection = Database.getCoreConnection(null)) {
-        if (coreConnection != null) {
-          isInstalled = true;
-        }
-      } catch (SQLException e) {
-        log.info("isInstalled got SQL exception " + e.toString() + ", assuming not installed.");
+    synchronized (Setup.class) {
+      cached = installedCached;
+      if (cached != null) {
+        return cached;
       }
-    }
 
-    if (!isInstalled) {
-      generateAuth();
-    }
+      boolean installed = false;
 
-    return isInstalled;
+      Properties prop = getDBProps();
+
+      if (prop != null) {
+        try (Connection coreConnection = Database.getCoreConnection(null)) {
+          if (coreConnection != null) {
+            installed = true;
+          }
+        } catch (SQLException e) {
+          log.info("isInstalled got SQL exception " + e.toString() + ", assuming not installed.");
+        }
+      }
+
+      if (installed) {
+        installedCached = true;
+      } else {
+        generateAuth();
+      }
+
+      return installed;
+    }
+  }
+
+  /** Clear the cached installation status so the next call re-evaluates. */
+  public static void resetInstalledCache() {
+    installedCached = null;
   }
 
   public static Properties getDBProps() {
@@ -455,21 +504,25 @@ public class Setup extends HttpServlet {
     String data = FileUtils.readFileToString(file, Charset.defaultCharset());
 
     log.debug("Initializing core database");
-    Connection databaseConnection = Database.getDatabaseConnection(null, true);
-    Statement psProcToexecute = databaseConnection.createStatement();
-    psProcToexecute.executeUpdate(data);
+    try (Connection databaseConnection = Database.getDatabaseConnection(null, true)) {
+      try (Statement psProcToexecute = databaseConnection.createStatement()) {
+        psProcToexecute.executeUpdate(data);
+      }
 
-    try {
-      file =
-          new File(getClass().getClassLoader().getResource("/database/moduleSchemas.sql").toURI());
-    } catch (Exception e) {
-      throw new IOException("Failed to load moduleSchemas.sql", e);
+      try {
+        file =
+            new File(
+                getClass().getClassLoader().getResource("/database/moduleSchemas.sql").toURI());
+      } catch (Exception e) {
+        throw new IOException("Failed to load moduleSchemas.sql", e);
+      }
+      data = FileUtils.readFileToString(file, Charset.defaultCharset());
+      log.debug("Initializing module database");
+
+      try (Statement psProcToexecute = databaseConnection.createStatement()) {
+        psProcToexecute.executeUpdate(data);
+      }
     }
-    data = FileUtils.readFileToString(file, Charset.defaultCharset());
-    log.debug("Initializing module database");
-
-    psProcToexecute = databaseConnection.createStatement();
-    psProcToexecute.executeUpdate(data);
   }
 
   private synchronized void executeMongoScript() throws IOException {
@@ -508,9 +561,10 @@ public class Setup extends HttpServlet {
 
     data = FileUtils.readFileToString(file, Charset.defaultCharset());
 
-    Connection databaseConnection = Database.getDatabaseConnection(null, true);
-    Statement psProcToexecute = databaseConnection.createStatement();
-    psProcToexecute.executeUpdate(data);
+    try (Connection databaseConnection = Database.getDatabaseConnection(null, true);
+        Statement psProcToexecute = databaseConnection.createStatement()) {
+      psProcToexecute.executeUpdate(data);
+    }
   }
 
   private synchronized void openUnsafeLevels() {

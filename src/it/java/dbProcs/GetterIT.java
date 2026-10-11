@@ -1,5 +1,9 @@
 package dbProcs;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
@@ -30,7 +34,7 @@ import utils.ScoreboardStatus;
 public class GetterIT {
 
   private static final Logger log = LogManager.getLogger(GetterIT.class);
-  private static String lang = new String("en_GB");
+  private static String lang = "en_GB";
   private static Locale locale = new Locale(lang);
   private static String applicationRoot = new String();
   private static final int totalNumberOfModulesInShepherd = 58;
@@ -226,8 +230,8 @@ public class GetterIT {
 
   @Test
   public void testAuthUserCorrectUpperCaseCredentials() {
-    String userName = new String("authWithGoodUpperCaseCreds");
-    String password = new String("goodPassword");
+    String userName = "authWithGoodUpperCaseCreds";
+    String password = "goodPassword";
 
     try {
       String user[] = Getter.authUser(applicationRoot, userName, password);
@@ -253,8 +257,8 @@ public class GetterIT {
   @Test
   public void testAuthUserCorrectLongUsername() {
     // Here is a pretty long username
-    String userName = new String("göödUsernämeWithÅDecentOKLengthÖ");
-    String password = new String("goodPassword");
+    String userName = "göödUsernämeWithÅDecentOKLengthÖ";
+    String password = "goodPassword";
 
     try {
       String user[] = Getter.authUser(applicationRoot, userName, password);
@@ -280,8 +284,8 @@ public class GetterIT {
   @Test
   public void testAuthUserBadLongUsername() {
     // Here is a pretty long username
-    String userName = new String("badUsernameWithAnIncrediblyLongLengthWhicIsTooMuch");
-    String password = new String("goodPassword");
+    String userName = "badUsernameWithAnIncrediblyLongLengthWhicIsTooMuch";
+    String password = "goodPassword";
 
     String user[] = Getter.authUser(applicationRoot, userName, password);
     if (user == null || user[0].isEmpty()) {
@@ -309,8 +313,8 @@ public class GetterIT {
   @Test
   public void testAuthUserCorrectNonLatinUsername() {
     // Here is a non-latin username
-    String userName = new String("nonLatinåäöÅÄÖ");
-    String password = new String("goodPassword");
+    String userName = "nonLatinåäöÅÄÖ";
+    String password = "goodPassword";
 
     log.debug("Attempting to authenticate as " + userName);
     String user[] = Getter.authUser(applicationRoot, userName, password);
@@ -341,8 +345,8 @@ public class GetterIT {
   @Disabled
   public void testAuthUserCorrectEmojiUsername() {
     // Here is a very non-latin username
-    String userName = new String("😃😅😍💩👍‌𝑓ᶃ我璃မ္ယက္‌");
-    String password = new String("goodEmojiPassword");
+    String userName = "😃😅😍💩👍‌𝑓ᶃ我璃မ္ယက္‌";
+    String password = "goodEmojiPassword";
 
     log.debug("Attempting to authenticate as " + userName);
     String user[] = Getter.authUser(applicationRoot, userName, password);
@@ -371,9 +375,9 @@ public class GetterIT {
 
   @Test
   public void testAuthUserCorrectNonLatinPassword() {
-    String userName = new String("NonLatinPass");
+    String userName = "NonLatinPass";
     // Here is a very non-latin password
-    String password = new String("אذاसтьᚩᚾåäö123ÅÄÖǎ𝓫𝚌Ⴛḗ𝑓ᶃ");
+    String password = "אذاसтьᚩᚾåäö123ÅÄÖǎ𝓫𝚌Ⴛḗ𝑓ᶃ";
 
     try {
       String user[] = Getter.authUser(applicationRoot, userName, password);
@@ -398,7 +402,7 @@ public class GetterIT {
 
   @Test
   public void testAuthUserCorrectCredentialsLongPassword() {
-    String userName = new String("authWithGoodCredsLongPass");
+    String userName = "authWithGoodCredsLongPass";
 
     // A 160 character password should work!
     String password =
@@ -2502,7 +2506,8 @@ public class GetterIT {
     try {
       String classId = findCreateClassId("playersByClass");
       String userName = new String("playersByClass");
-      for (int i = 0; i <= 9; i++) {
+      int expectedPlayerCount = 10;
+      for (int i = 0; i < expectedPlayerCount; i++) {
         if (verifyTestUser(applicationRoot, userName + i, userName + i, classId)) {
           log.debug("Created User " + userName + i);
         } else {
@@ -2519,14 +2524,11 @@ public class GetterIT {
             fail("Incorrect User from Different Class Returned");
           }
         }
-        if (i != 9) {
-          if (i < 9) {
+        if (i != expectedPlayerCount) {
+          if (i < expectedPlayerCount) {
             fail("Too Few Users Returned");
-          } else if (i > 9) {
-            fail("Too Many Users Returned");
           } else {
-            log.fatal("Then surely the number WAS 9? How did this happen");
-            fail("Incorrect Amount of Users Returned");
+            fail("Too Many Users Returned");
           }
         }
       } catch (Exception e) {
@@ -3189,6 +3191,108 @@ public class GetterIT {
       } else {
         log.debug("PASS: User Could Authenticate after unsuspension");
       }
+    }
+  }
+
+  /**
+   * Exercises the existing-user SSO re-login path: the first call creates the user, the second call
+   * finds the existing (non-suspended) user. This drives Phase 1 (found) -> skip create -> Phase 3
+   * of the try-with-resources refactor (#840) and asserts the user identity is stable across
+   * logins.
+   */
+  @Test
+  public void testSSOAuthExistingUserRelogin() {
+    String userName = "SSOReloginUser Lastname";
+    String ssoName = "ssoreloginuser@example.com";
+
+    String[] first = Getter.authUserSSO(applicationRoot, null, userName, ssoName, "player");
+    assertNotNull(first, "First SSO auth (user creation) should succeed");
+    assertFalse(first[0].isEmpty(), "Newly created SSO user should have a userId");
+
+    String[] second = Getter.authUserSSO(applicationRoot, null, userName, ssoName, "player");
+    assertNotNull(second, "Second SSO auth (existing user) should succeed");
+    assertEquals(
+        first[0],
+        second[0],
+        "Existing-user re-login should return the same userId, not create a new user");
+    assertEquals(first[1], second[1], "Existing-user re-login should return the same userName");
+  }
+
+  /**
+   * Verifies Getter.getAdminCheatStatus reads the value Setter.setAdminCheatStatus wrote. Catches
+   * any regression in the try-with-resources refactor of these methods (#834-follow-up). Restores
+   * the original setting after running.
+   */
+  @Test
+  public void testGetAdminCheatStatus() throws SQLException {
+    boolean original = Getter.getAdminCheatStatus(applicationRoot);
+    try {
+      Setter.setAdminCheatStatus(applicationRoot, true);
+      assertTrue(
+          Getter.getAdminCheatStatus(applicationRoot),
+          "getAdminCheatStatus should reflect setAdminCheatStatus(true)");
+
+      Setter.setAdminCheatStatus(applicationRoot, false);
+      assertFalse(
+          Getter.getAdminCheatStatus(applicationRoot),
+          "getAdminCheatStatus should reflect setAdminCheatStatus(false)");
+    } finally {
+      Setter.setAdminCheatStatus(applicationRoot, original);
+    }
+  }
+
+  /**
+   * Verifies Getter.getModulesJson returns a well-formed JSON structure: a 2-element array with a
+   * levelMode header object followed by a modules object whose `modules` field is a non-empty array
+   * of well-formed module entries. Catches any regression in the try-with-resources refactor of
+   * this method.
+   */
+  @Test
+  public void testGetModulesJson() throws SQLException {
+    String userName = "modulesJsonUser";
+    if (!verifyTestUser(applicationRoot, userName, userName)) {
+      fail("Could not verify user " + userName);
+    }
+    String userId = Getter.getUserIdFromName(applicationRoot, userName);
+    assertNotNull(userId, "verifyTestUser should leave the user retrievable by name");
+
+    // Ensure modules are open so getMyModules returns rows. openAllModules only opens one
+    // category per call (safe when unsafe=false, unsafe when unsafe=true), so call both.
+    if (!Setter.openAllModules(applicationRoot, false)
+        || !Setter.openAllModules(applicationRoot, true)) {
+      fail("Could not open all modules");
+    }
+
+    JSONArray output = Getter.getModulesJson(userId, "open", locale);
+    assertNotNull(output, "getModulesJson should never return null");
+    assertEquals(
+        2,
+        output.length(),
+        "getModulesJson should return a 2-element array: [levelMode header, modules wrapper]");
+
+    JSONObject header = output.getJSONObject(0);
+    assertEquals("open", header.getString("levelMode"), "header should carry the floor argument");
+
+    JSONObject wrapper = output.getJSONObject(1);
+    assertTrue(wrapper.has("modules"), "second element should carry a `modules` field");
+    JSONArray modules = wrapper.getJSONArray("modules");
+    assertTrue(
+        modules.length() > 0,
+        "modules array should be non-empty when modules are open and the user exists");
+
+    // Each module entry should have the documented fields populated.
+    JSONObject firstModule = modules.getJSONObject(0);
+    for (String field :
+        new String[] {
+          "moduleId",
+          "moduleName",
+          "moduleCategory",
+          "moduleType",
+          "moduleScore",
+          "moduleRank",
+          "moduleCompleted",
+        }) {
+      assertTrue(firstModule.has(field), "module entry should have `" + field + "` field");
     }
   }
 }
