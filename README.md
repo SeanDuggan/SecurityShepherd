@@ -1,4 +1,3 @@
-https://trello.com/b/V1LZYBvT/owasp-security-shepherd
 
  
 # OWASP Security Shepherd [![OWASP Flagship](https://img.shields.io/badge/owasp-flagship%20project-48A646.svg)](https://www.owasp.org/index.php/OWASP_Project_Inventory#tab=Flagship_Projects) 
