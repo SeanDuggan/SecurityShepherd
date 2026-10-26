@@ -8,6 +8,11 @@
         </trust-anchors>
     </base-config>
 
+    <!-- Intentionally insecure host used by the Insecure Communication lesson. -->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="false">analytics.internal.app</domain>
+    </domain-config>
+
     <!-- Debug builds additionally trust user-installed CAs, so a local development
          server with a self-signed certificate can be used. Ignored in release builds. -->
     <debug-overrides>
