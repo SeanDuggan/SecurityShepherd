@@ -54,6 +54,12 @@
 
 
 
+        <!-- Insecure Data Storage Lesson: Internal Debug Activity -->
+        <activity
+            android:name=".ui.lessons.insecuredata.DataStorageDebugActivity"
+            android:exported="false"
+            android:label="Data Storage Debug" />
+
         <!-- FileProvider for camera image capture -->
         <provider
             android:name="androidx.core.content.FileProvider"

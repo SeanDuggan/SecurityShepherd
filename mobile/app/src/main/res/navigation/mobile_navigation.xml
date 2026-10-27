@@ -27,4 +27,16 @@
         android:label="@string/menu_scoreboard"
         tools:layout="@layout/fragment_scoreboard" />
 
+    <fragment
+        android:id="@+id/nav_insecure_data_lesson"
+        android:name="org.owasp.mobileshepherd.ui.lessons.insecuredata.InsecureDataLessonFragment"
+        android:label="@string/menu_insecure_data_lesson"
+        tools:layout="@layout/fragment_insecure_data_lesson" />
+
+    <fragment
+        android:id="@+id/nav_insecure_data1"
+        android:name="org.owasp.mobileshepherd.ui.challenges.insecuredata1.InsecureData1Fragment"
+        android:label="@string/menu_insecure_data1"
+        tools:layout="@layout/fragment_insecure_data1" />
+
 </navigation>

@@ -48,7 +48,8 @@ public class MainActivity extends AppCompatActivity {
     private static final Map<Integer, KeyValidator.Module> NAV_TO_MODULE_MAP = new HashMap<>();
 
     static {
-        // Each lesson/challenge PR registers its nav destination here.
+        NAV_TO_MODULE_MAP.put(R.id.nav_insecure_data_lesson, KeyValidator.Module.IDS_LESSON);
+        NAV_TO_MODULE_MAP.put(R.id.nav_insecure_data1, KeyValidator.Module.IDS_CHALLENGE_1);
     }
 
     @Override
@@ -177,7 +178,9 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_adb_reference, R.id.nav_scoreboard
+                R.id.nav_home,
+                R.id.nav_insecure_data_lesson, R.id.nav_insecure_data1,
+                R.id.nav_adb_reference, R.id.nav_scoreboard
         ).setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
@@ -200,7 +203,20 @@ public class MainActivity extends AppCompatActivity {
         // Home
         items.add(new NavigationItem(1, "Home", R.drawable.ic_menu_home, R.id.nav_home));
         
-        // Lessons and challenges are added per category.
+        // Lessons group
+        NavigationItem lessonsGroup = new NavigationItem(2, "Lessons", R.drawable.ic_menu_camera);
+        addChildIfNotCompleted(lessonsGroup, new NavigationItem(22, "Insecure Data Storage", 0, R.id.nav_insecure_data_lesson));
+        if (lessonsGroup.getChildren().size() > 0) items.add(lessonsGroup);
+
+        // Challenges group
+        NavigationItem challengesGroup = new NavigationItem(3, "Challenges", R.drawable.ic_menu_code);
+
+        // Insecure Data Storage sub-group
+        NavigationItem insecureDataGroup = new NavigationItem(44, "Insecure Data Storage", 0);
+        addChildIfNotCompleted(insecureDataGroup, new NavigationItem(45, "Insecure Data Storage 1", 0, R.id.nav_insecure_data1));
+        if (insecureDataGroup.getChildren().size() > 0) challengesGroup.addChild(insecureDataGroup);
+
+        if (challengesGroup.getChildren().size() > 0) items.add(challengesGroup);
 
         // ADB Reference
         items.add(new NavigationItem(4, "ADB Reference", R.drawable.ic_menu_code, R.id.nav_adb_reference));
@@ -231,6 +247,8 @@ public class MainActivity extends AppCompatActivity {
     
     private String getTitleForNavId(int navId) {
         // Map navigation IDs to readable titles
+        if (navId == R.id.nav_insecure_data_lesson) return "Insecure Data Storage Lesson";
+        if (navId == R.id.nav_insecure_data1) return "Insecure Data Storage 1";
         return "Module";
     }
     

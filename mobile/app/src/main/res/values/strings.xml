@@ -19,6 +19,8 @@
     <!-- Nav drawer menu labels -->
     <string name="menu_home">Home</string>
     <string name="menu_scoreboard">Scoreboard</string>
+    <string name="menu_insecure_data_lesson">Insecure Data Lesson</string>
+    <string name="menu_insecure_data1">Insecure Data 1</string>
 
     <!-- Preferences screen -->
     <string name="dialog_based_preferences">Server Preferences</string>
@@ -190,5 +192,39 @@ https://www.owasp.org/index.php/OWASP_Security_Shepherd </string>
     <string name="username_title">Username</string>
     <string name="password_title">Password</string>
     <string name="challenge">Challenge</string>
+
+
+    <!-- =========================================================== -->
+    <!--  INSECURE DATA STORAGE (M9)                                  -->
+    <!-- =========================================================== -->
+
+    <string name="ids_ok">OK</string>
+
+    <!-- Lesson -->
+    <string name="ids_enter_credentials_label">Enter the credentials you found in the database:</string>
+    <string name="ids_credentials_hint">username:password</string>
+    <string name="ids_submit">Submit</string>
+    <string name="ids_enter_credentials">Enter credentials in username:password format</string>
+    <string name="ids_credentials_format">Format: username:password</string>
+    <string name="ids_credentials_incorrect">Incorrect credentials.</string>
+    <string name="ids_key_validation_failed">The key could not be validated. Check that you are signed in.</string>
+    <string name="ids_key_result">Key: %1$s%2$s</string>
+    <string name="ids_user_row">• %1$s  [%2$s]  password: •••••</string>
+    <string name="ids_password_masked">  •  Password: ******</string>
+    <string name="ids_incorrect_password">Incorrect password.</string>
+    <string name="ids_success_title">Success!</string>
+    <string name="ids_success_message">Challenge complete.\n\nKey: %1$s%2$s</string>
+    <string name="ids_completed_times">\n(Completed %1$d times)</string>
+    <string name="extract_sensitive_data_from_unencrypted">Data is stored in plaintext in a local SQLite database. Get access to this data to find the key.</string>
+    <string name="enter_cracked_password">Enter the cracked password</string>
+    <string name="verify_password_button">Submit</string>
+    <string name="verify_password_card_title">Cracked Password</string>
+    <string name="database_users">Database Users</string>
+    <string name="members_stored_in_unencrypted_sqlite_dat">Members stored in unencrypted SQLite database:</string>
+    <string name="npasswords_are_hidden_here_but_stored_in">\nPasswords are hidden here but stored in plaintext in:\n/data/data/org.owasp.mobileshepherd/databases/lesson_users.db</string>
+
+    <!-- Challenge 1 - SQLite hash cracking -->
+    <string name="insecure_data1_description">This app stores the Admin\'s password in a local SQLite database as an unsalted MD5 hash — a fast, rainbow-table-crackable algorithm. Extract the database, crack the hash to recover the plaintext password, then enter it below.</string>
+    <string name="insecure_data1_db_path">\nPasswords are masked here but stored as unsalted MD5 hashes in:\n/data/data/org.owasp.mobileshepherd/databases/passwordDB</string>
 
 </resources>

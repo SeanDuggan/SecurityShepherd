@@ -47,7 +47,20 @@ public final class ModuleInfoHelper {
             new EnumMap<>(KeyValidator.Module.class);
 
     static {
-        // Each lesson/challenge PR registers its module info here.
+        REGISTRY.put(
+                KeyValidator.Module.IDS_LESSON,
+                new ModuleInfo(
+                        "lesson",
+                        "Insecure Data Storage",
+                        "M9",
+                        "org.owasp.mobileshepherd.ui.lessons.insecuredata"));
+        REGISTRY.put(
+                KeyValidator.Module.IDS_CHALLENGE_1,
+                new ModuleInfo(
+                        "challenge",
+                        "Insecure Data Storage 1",
+                        "M9",
+                        "org.owasp.mobileshepherd.ui.challenges.insecuredata1"));
     }
 
     public static void showDialog(Context context, KeyValidator.Module module) {
