@@ -59,7 +59,7 @@ public class InsecureData1Fragment extends Fragment {
             displayUsers();
         });
 
-        // The player cracks the hash from the extracted database and enters the plaintext here
+        // The player recovers the plaintext from the extracted database's hash and enters it here
         binding.validateButton.setOnClickListener(v -> {
             String enteredPassword = binding.keyInput.getText().toString().trim();
             if (md5(enteredPassword).equals(md5(ADMIN_PASSWORD))) {

@@ -216,9 +216,9 @@ https://www.owasp.org/index.php/OWASP_Security_Shepherd </string>
     <string name="ids_success_message">Challenge complete.\n\nKey: %1$s%2$s</string>
     <string name="ids_completed_times">\n(Completed %1$d times)</string>
     <string name="extract_sensitive_data_from_unencrypted">Data is stored in plaintext in a local SQLite database. Get access to this data to find the key.</string>
-    <string name="enter_cracked_password">Enter the cracked password</string>
+    <string name="enter_recovered_password">Enter the recovered password</string>
     <string name="verify_password_button">Submit</string>
-    <string name="verify_password_card_title">Cracked Password</string>
+    <string name="verify_password_card_title">Recovered Password</string>
     <string name="database_users">Database Users</string>
     <string name="members_stored_in_unencrypted_sqlite_dat">Members stored in unencrypted SQLite database:</string>
     <string name="npasswords_are_hidden_here_but_stored_in">\nPasswords are hidden here but stored in plaintext in:\n/data/data/org.owasp.mobileshepherd/databases/lesson_users.db</string>
