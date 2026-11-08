@@ -25,6 +25,7 @@ A07 = { name = "A07:2025 Authentication Failures", url = "https://top10.owasp.or
 [top10.mobile]
 M3 = { name = "M3: Insecure Authentication/Authorization" }
 M4 = { name = "M4: Insufficient Input/Output Validation" }
+M5 = { name = "M5: Insecure Communication" }
 M6 = { name = "M6: Inadequate Privacy Controls" }
 M7 = { name = "M7: Insufficient Binary Protections" }
 M8 = { name = "M8: Security Misconfiguration" }
@@ -114,6 +115,11 @@ cwe = 807
 name = "Client-side injection"
 top10 = "M4"
 cwe = 89
+
+[topics."Mobile Insecure Communication"]
+name = "Insecure communication"
+top10 = "M5"
+cwe = 319
 
 [topics."Mobile Poor Authentication"]
 name = "Poor authentication"

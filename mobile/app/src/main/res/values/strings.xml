@@ -191,4 +191,19 @@ https://www.owasp.org/index.php/OWASP_Security_Shepherd </string>
     <string name="password_title">Password</string>
     <string name="challenge">Challenge</string>
 
+    <!-- Insecure Communication -->
+    <string name="menu_insecure_comm_lesson">Insecure Communication Lesson</string>
+    <string name="menu_insecure_comm_challenge">Insecure Communication 1</string>
+    <string name="analytics_event">Analytics Event</string>
+    <string name="insecure_comm_challenge_desc">This app sends traffic to multiple endpoints, some over HTTP. Set up a proxy and capture the unencrypted request to find the key.</string>
+    <string name="insecure_comm_intro">Insecure communication occurs when mobile apps transmit sensitive data without proper encryption. Any attacker on the same network can intercept, read, and modify unencrypted traffic, leading to credential theft, session hijacking, and data breaches.</string>
+    <string name="insecure_comm_vulnerabilities">Common Issues:\n\n- Sending credentials over HTTP\n- Accepting invalid/self-signed certificates\n- Using weak cipher suites or deprecated TLS versions\n- Disabling certificate pinning for convenience\n- Sensitive data in URLs (visible in logs/history)\n- Mixed HTTP/HTTPS sessions exposing session tokens</string>
+    <string name="network_monitor">Network Monitor</string>
+    <string name="ready_to_monitor_network_traffic">Ready to monitor network traffic...</string>
+    <string name="ready_to_send_request">Ready to send request...</string>
+    <string name="send_analytics_event">Send Analytics Event</string>
+    <string name="set_up_a_proxy_eg_burp_suite_on_12700180">Set up a proxy (e.g., Burp Suite on 127.0.0.1:8080) and configure the emulator to use it. When you click the button below, the app will send analytics data to a third-party service over HTTP with the API key in the headers.</string>
+    <string name="start_monitoring">Start Monitoring</string>
+    <string name="this_app_sends_analytics_data_to_a_third">This app transmits sensitive data over the network without adequate protection. Intercept the app\'s traffic to find the key.</string>
+
 </resources>
